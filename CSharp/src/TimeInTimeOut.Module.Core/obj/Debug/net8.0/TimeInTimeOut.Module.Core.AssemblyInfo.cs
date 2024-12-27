@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TimeInTimeOut.Module.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+78fbcc38a379c695bb37cce70be9cdc6608c11eb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e0de02be387ddf19f0967e50e049533aff0e2368")]
 [assembly: System.Reflection.AssemblyProductAttribute("TimeInTimeOut.Module.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TimeInTimeOut.Module.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

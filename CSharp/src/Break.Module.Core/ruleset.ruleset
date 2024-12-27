@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="MyRuleset" Description="Custom ruleset for the project" ToolsVersion="15.0">
+    <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
+        <Rule Id="CS1591" Action="Warning" />
+        <Rule Id="CS0618" Action="Error" />
+    </Rules>
+    <Rules AnalyzerId="Microsoft.CodeAnalysis.Analyzers" RuleNamespace="Microsoft.CodeAnalysis.Analyzers">
+        <Rule Id="CA1001" Action="Warning" />
+        <Rule Id="CA2000" Action="Error" />
+    </Rules>
+</RuleSet>
