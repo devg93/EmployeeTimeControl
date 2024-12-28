@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TT8Hp/rzG4szlZIoiNqUNsnKJ4CGKK5Zi343mH/25gtWoj4wVtLCXdtkyap6egZV5gOlAoJxVEAb7BWfCGo8PQ==",
+  "dgSpecHash": "kML3Dpbg0PY=",
   "success": true,
-  "projectFilePath": "/home/neo/Desktop/TimeTracker/CSharp/src/Workschedule.Module.Api/Workschedule.Module.Api.csproj",
+  "projectFilePath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Workschedule.Module.Api/Workschedule.Module.Api.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

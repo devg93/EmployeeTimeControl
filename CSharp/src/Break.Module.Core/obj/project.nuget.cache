@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CIVgkWrY1C8FxXEfO9Q+klvX2IH6ibbDtH256SbXyXJy3BoDz8k1NRoMXj2jbL4pee30ZTO85ZaHv5lq9JVNEQ==",
+  "dgSpecHash": "jhN55Tke7xo=",
   "success": true,
-  "projectFilePath": "/home/neo/Desktop/TimeTracker/CSharp/src/Break.Module.Core/Break.Module.Core.csproj",
+  "projectFilePath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/Break.Module.Core.csproj",
   "expectedPackageFiles": [
     "/home/neo/.nuget/packages/microsoft.extensions.configuration/9.0.0/microsoft.extensions.configuration.9.0.0.nupkg.sha512",
     "/home/neo/.nuget/packages/microsoft.extensions.configuration.abstractions/9.0.0/microsoft.extensions.configuration.abstractions.9.0.0.nupkg.sha512",

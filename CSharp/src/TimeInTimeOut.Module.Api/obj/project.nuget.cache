@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XVzLsVKCs90SRayzlfEjC/YAsRnNdlwLHSRhfV0sip5Lzqho359PXh9WjzKtlKztirgkzgbIfgW1FCxDPw9ySw==",
+  "dgSpecHash": "gtH3T1PDQYo=",
   "success": true,
-  "projectFilePath": "/home/neo/Desktop/TimeTracker/CSharp/src/TimeInTimeOut.Module.Api/TimeInTimeOut.Module.Api.csproj",
+  "projectFilePath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/TimeInTimeOut.Module.Api.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

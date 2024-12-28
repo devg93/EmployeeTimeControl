@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/neo/Desktop/TimeTracker/CSharp/src/Break.Module.Core/Break.Module.Core.csproj": {}
+    "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/Break.Module.Core.csproj": {}
   },
   "projects": {
-    "/home/neo/Desktop/TimeTracker/CSharp/src/Break.Module.Core/Break.Module.Core.csproj": {
+    "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/Break.Module.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/neo/Desktop/TimeTracker/CSharp/src/Break.Module.Core/Break.Module.Core.csproj",
+        "projectUniqueName": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/Break.Module.Core.csproj",
         "projectName": "Break.Module.Core",
-        "projectPath": "/home/neo/Desktop/TimeTracker/CSharp/src/Break.Module.Core/Break.Module.Core.csproj",
+        "projectPath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/Break.Module.Core.csproj",
         "packagesPath": "/home/neo/.nuget/packages/",
-        "outputPath": "/home/neo/Desktop/TimeTracker/CSharp/src/Break.Module.Core/obj/",
+        "outputPath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/neo/.nuget/NuGet/NuGet.Config"
@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -67,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.111/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.404/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

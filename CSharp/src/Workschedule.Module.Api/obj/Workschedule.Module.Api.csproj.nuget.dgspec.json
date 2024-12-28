@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/neo/Desktop/TimeTracker/CSharp/src/Workschedule.Module.Api/Workschedule.Module.Api.csproj": {}
+    "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Workschedule.Module.Api/Workschedule.Module.Api.csproj": {}
   },
   "projects": {
-    "/home/neo/Desktop/TimeTracker/CSharp/src/Workschedule.Module.Api/Workschedule.Module.Api.csproj": {
+    "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Workschedule.Module.Api/Workschedule.Module.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/neo/Desktop/TimeTracker/CSharp/src/Workschedule.Module.Api/Workschedule.Module.Api.csproj",
+        "projectUniqueName": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Workschedule.Module.Api/Workschedule.Module.Api.csproj",
         "projectName": "Workschedule.Module.Api",
-        "projectPath": "/home/neo/Desktop/TimeTracker/CSharp/src/Workschedule.Module.Api/Workschedule.Module.Api.csproj",
+        "projectPath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Workschedule.Module.Api/Workschedule.Module.Api.csproj",
         "packagesPath": "/home/neo/.nuget/packages/",
-        "outputPath": "/home/neo/Desktop/TimeTracker/CSharp/src/Workschedule.Module.Api/obj/",
+        "outputPath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Workschedule.Module.Api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/neo/.nuget/NuGet/NuGet.Config"
@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -53,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.111/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.404/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
