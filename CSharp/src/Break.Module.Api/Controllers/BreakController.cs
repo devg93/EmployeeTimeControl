@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyApp.Namespace
+namespace Break.Module.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
