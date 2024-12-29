@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Break.Module.Core.Entity
 {
-    public class BrakeWorkSchedule
+    public class BrakeTime
     {
         public int Id { get; set; }
         public ICollection<DateTimeWorkSchedule>? StartTime { get; }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Workschedule.Module.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ea2829318b4f7bfbe4bc75133c58502a460eb39f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a334b4fcc387f477a8fe470b26854fdbedd16b3c")]
 [assembly: System.Reflection.AssemblyProductAttribute("Workschedule.Module.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Workschedule.Module.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

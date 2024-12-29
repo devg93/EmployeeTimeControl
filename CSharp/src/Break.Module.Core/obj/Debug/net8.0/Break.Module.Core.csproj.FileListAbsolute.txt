@@ -11,3 +11,16 @@
 /home/neo/Desktop/TimeTracker/CSharp/src/Break.Module.Core/obj/Debug/net8.0/Break.Module.Core.pdb
 /home/neo/Desktop/TimeTracker/CSharp/src/Break.Module.Core/obj/Debug/net8.0/ref/Break.Module.Core.dll
 /home/neo/Desktop/TimeTracker/CSharp/src/Break.Module.Core/obj/Debug/net8.0/Break.Module.Core.csproj.AssemblyReference.cache
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/bin/Debug/net8.0/Break.Module.Core.deps.json
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/bin/Debug/net8.0/Break.Module.Core.dll
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/bin/Debug/net8.0/Break.Module.Core.pdb
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/obj/Debug/net8.0/Break.Module.Core.csproj.AssemblyReference.cache
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/obj/Debug/net8.0/Break.Module.Core.GeneratedMSBuildEditorConfig.editorconfig
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/obj/Debug/net8.0/Break.Module.Core.AssemblyInfoInputs.cache
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/obj/Debug/net8.0/Break.Module.Core.AssemblyInfo.cs
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/obj/Debug/net8.0/Break.Module.Core.csproj.CoreCompileInputs.cache
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/obj/Debug/net8.0/Break.Module.Core.sourcelink.json
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/obj/Debug/net8.0/Break.Module.Core.dll
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/obj/Debug/net8.0/refint/Break.Module.Core.dll
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/obj/Debug/net8.0/Break.Module.Core.pdb
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/obj/Debug/net8.0/ref/Break.Module.Core.dll
