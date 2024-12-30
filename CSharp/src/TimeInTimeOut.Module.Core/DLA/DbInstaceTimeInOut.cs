@@ -11,7 +11,7 @@ namespace TimeInTimeOut.Module.Core.DLA
         public DbInstaceTimeInOut(DbContextOptions<DbInstaceTimeInOut> options) : base(options)
         {
         }
-        public DbSet<ComingAndgoing>? TimeInOuts { get; set; }
+        public DbSet<ComingAndgoing>?  comingAndgoings { get; set; }
         public DbSet<DateTimeTimeInTimeOut>? DateTimeTimeInTimeOuts { get; set; }
 
 

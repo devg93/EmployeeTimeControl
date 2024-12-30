@@ -11,7 +11,28 @@ namespace Break.Module.Core.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<BrakeTime> builder)
         {
-            throw new System.NotImplementedException();
+            builder.HasKey(ws => ws.Id);
+
+           
+            builder
+                .HasOne(ws => ws.busyChecker)
+                .WithOne() 
+                .HasForeignKey<BrakeTime>(ws => ws.busyId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            
+            builder
+                .HasMany(ws => ws.StartTime)
+                .WithOne()
+                .OnDelete(DeleteBehavior.SetNull);
+         
+
+            builder
+                .HasMany(ws => ws.EndTime)
+                .WithOne() 
+                .OnDelete(DeleteBehavior.SetNull);
+           
+
         }
     }
 }
