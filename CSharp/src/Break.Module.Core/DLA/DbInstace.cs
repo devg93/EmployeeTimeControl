@@ -30,10 +30,10 @@ namespace Break.Module.Core.DLA
     {
         public DbInstace CreateDbContext(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("ConnectionStringsDB.json")
-                .Build();
+            // var configuration = new ConfigurationBuilder()
+            //     .SetBasePath(Directory.GetCurrentDirectory())
+            //     .AddJsonFile("ConnectionStringsDB.json")
+            //     .Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<DbInstace>();
             optionsBuilder.UseMySql(
