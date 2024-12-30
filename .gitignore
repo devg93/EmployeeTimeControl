@@ -1,0 +1,26 @@
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.vs/
+.vscode/
+
+# Logs
+*.log
+
+# Dependencies
+packages/
+*.nupkg
+*.lock.json
+
+# IDE files
+*.suo
+*.userosscache
+*.userprefs
+
+# Compiled DLLs and PDBs
+*.dll
+*.pdb
+
