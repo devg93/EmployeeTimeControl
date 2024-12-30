@@ -1,0 +1,12 @@
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/bin/Debug/net8.0/TimeInTimeOut.Module.Api.deps.json
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/bin/Debug/net8.0/TimeInTimeOut.Module.Api.dll
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/bin/Debug/net8.0/TimeInTimeOut.Module.Api.pdb
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/obj/Debug/net8.0/TimeInTimeOut.Module.Api.GeneratedMSBuildEditorConfig.editorconfig
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/obj/Debug/net8.0/TimeInTimeOut.Module.Api.AssemblyInfoInputs.cache
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/obj/Debug/net8.0/TimeInTimeOut.Module.Api.AssemblyInfo.cs
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/obj/Debug/net8.0/TimeInTimeOut.Module.Api.csproj.CoreCompileInputs.cache
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/obj/Debug/net8.0/TimeInTimeOut.Module.Api.sourcelink.json
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/obj/Debug/net8.0/TimeInTimeOut.Module.Api.dll
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/obj/Debug/net8.0/refint/TimeInTimeOut.Module.Api.dll
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/obj/Debug/net8.0/TimeInTimeOut.Module.Api.pdb
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/obj/Debug/net8.0/ref/TimeInTimeOut.Module.Api.dll

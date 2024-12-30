@@ -11,3 +11,6 @@
 /home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Api/obj/Debug/net8.0/refint/Break.Module.Api.dll
 /home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Api/obj/Debug/net8.0/Break.Module.Api.pdb
 /home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Api/obj/Debug/net8.0/ref/Break.Module.Api.dll
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Api/bin/Debug/net8.0/Break.Module.Core.dll
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Api/bin/Debug/net8.0/Break.Module.Core.pdb
+/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Api/obj/Debug/net8.0/Break.Module.Api.csproj.CopyComplete

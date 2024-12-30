@@ -25,18 +25,20 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Api/Break.Module.Api.csproj": {
+                "projectPath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Api/Break.Module.Api.csproj"
+              },
+              "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/TimeInTimeOut.Module.Api.csproj": {
+                "projectPath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/TimeInTimeOut.Module.Api.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -71,7 +73,198 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.404/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.111/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Api/Break.Module.Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Api/Break.Module.Api.csproj",
+        "projectName": "Break.Module.Api",
+        "projectPath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Api/Break.Module.Api.csproj",
+        "packagesPath": "/home/neo/.nuget/packages/",
+        "outputPath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Api/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/neo/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/Break.Module.Core.csproj": {
+                "projectPath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/Break.Module.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.111/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/Break.Module.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/Break.Module.Core.csproj",
+        "projectName": "Break.Module.Core",
+        "projectPath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/Break.Module.Core.csproj",
+        "packagesPath": "/home/neo/.nuget/packages/",
+        "outputPath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/Break.Module.Core/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/neo/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.111/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/TimeInTimeOut.Module.Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/TimeInTimeOut.Module.Api.csproj",
+        "projectName": "TimeInTimeOut.Module.Api",
+        "projectPath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/TimeInTimeOut.Module.Api.csproj",
+        "packagesPath": "/home/neo/.nuget/packages/",
+        "outputPath": "/home/neo/Desktop/EmployeeTimeControl/CSharp/src/TimeInTimeOut.Module.Api/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/neo/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.111/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
