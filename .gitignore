@@ -1,26 +1,42 @@
-# Build results
-bin/
-obj/
+# Ignore auto-generated files
+**/bin/
+**/obj/
 
-# User-specific files
-*.user
-*.vs/
+# Ignore Visual Studio specific files
 .vscode/
-
-# Logs
-*.log
-
-# Dependencies
-packages/
-*.nupkg
-*.lock.json
-
-# IDE files
+*.user
 *.suo
-*.userosscache
-*.userprefs
+*.csproj.user
 
-# Compiled DLLs and PDBs
+# Ignore build results
 *.dll
+*.exe
 *.pdb
+*.log
+*.cache
+*.db
 
+# Ignore NuGet packages
+*.nupkg
+project.lock.json
+*.nuget/
+
+# Ignore Rider IDE files
+.idea/
+
+# Ignore temporary files
+*.tmp
+*.temp
+~$*
+
+# Ignore compiled configurations
+*.AssemblyInfo.cs
+*.AssemblyInfoInputs.cache
+*.csproj.AssemblyReference.cache
+
+# Ignore macOS specific files
+.DS_Store
+
+# Ignore additional temporary files
+*.bak
+Thumbs.db

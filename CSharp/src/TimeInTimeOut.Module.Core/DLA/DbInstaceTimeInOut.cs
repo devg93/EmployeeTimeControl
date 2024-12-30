@@ -12,6 +12,7 @@ namespace TimeInTimeOut.Module.Core.DLA
         {
         }
         public DbSet<ComingAndgoing>? TimeInOuts { get; set; }
+        public DbSet<DateTimeTimeInTimeOut>? DateTimeTimeInTimeOuts { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
