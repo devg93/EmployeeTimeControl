@@ -42,7 +42,7 @@
     
     <CodeAnalysisRuleSetDirectories>$(MSBuildThisFileDirectory)</CodeAnalysisRuleSetDirectories>
     <CodeAnalysisRuleSetDirectory>$(MSBuildThisFileDirectory)</CodeAnalysisRuleSetDirectory>
- <CodeAnalysisRuleSet>ruleset.ruleset</CodeAnalysisRuleSet>
+ <!-- <CodeAnalysisRuleSet>ruleset.ruleset</CodeAnalysisRuleSet> -->
 
 
 

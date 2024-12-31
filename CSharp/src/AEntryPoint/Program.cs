@@ -1,17 +1,23 @@
 using Break.Module.Core.Exstension;
+using Infrastructure;
 using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
+
 
 
 builder.Services.AddControllers().AddApplicationPart(typeof(Break.Module.Api.Controllers.BreakController).Assembly);
 builder.Services.AddDbContext(builder.Configuration);
+builder.Services.addInfrastructure();
+// foreach (var service in builder.Services)
+// {
+//     Console.WriteLine(service.ServiceType);
+// }
+
 
 var app = builder.Build();
 
@@ -22,9 +28,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
-
+   app.MapControllers();
 
 app.Run();
 
