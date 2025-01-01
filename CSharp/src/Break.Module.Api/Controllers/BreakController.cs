@@ -16,55 +16,27 @@ namespace Break.Module.Api.Controllers
             _mediatorGetService = mediatorGetService;
         }
 
-//   [HttpGet]
-// public async Task<IEnumerable<BrakeTimeDto>> Get()
-// {
-//     var breakRepository = await _mediatorGetService.GetBreakRepository.GetAllBreaksAsync();
-
-//     var breakDtos = breakRepository.Select(b => new BrakeTimeDto
-//     {
-//         Id = b.Id,
-//         StartTime = b.StartTime?.Select(s => new zShared.Dto.DateTimeWorkSchedule
-//         {
-//             dateTime = s.dateTime,
-//             // თუ სხვა თვისებებია საჭირო, აქ დაამატეთ
-//         }).ToList(),
-//         EndTime = b.EndTime?.Select(e => new zShared.Dto.DateTimeWorkSchedule
-//         {
-//             dateTime = e.dateTime,
-//             // თუ სხვა თვისებებია საჭირო, აქ დაამატეთ
-//         }).ToList(),
-//         busyId = b.busyChecker?.Id,
-//         busyChecker = b.busyChecker != null ? new zShared.Dto.busyChecker
-//         {
-//             Id = b.busyChecker.Id,
-//             busy = b.busyChecker.busy
-//         } : null
-//     });
-
-//     return breakDtos;
-// }
 
 
-        [HttpPost("create")]
-        public async Task<BrakeTimeDto> Post([FromBody] BrakeTimeDto brakeTimeDto)
-        {
-            // if (brakeTimeDto == null)
-            // {
-            //     return BadRequest("BrakeTimeDto cannot be null");
-            // }
 
-             var breakRepository = _mediatorGetService.GetBreakRepository;
+        // [HttpPost]
+        // public async Task<IActionResult> Post([FromBody] BrakeTimeDto brakeTimeDto)
+        // {
+        //     if (brakeTimeDto == null)
+        //     {
+        //         return BadRequest("BrakeTimeDto cannot be null");
+        //     }
 
-            // if (breakRepository == null)
-            // {
-            //     return StatusCode(500, "Break repository is not available");
-            // }
-            Console.WriteLine(brakeTimeDto);
+        //     var breakRepository = _mediatorGetService.GetBreakRepository;
 
-            //  await breakRepository.CreateBreakAsync(brakeTimeDto);
+        //     if (breakRepository == null)
+        //     {
+        //         return StatusCode(500, "Break repository is not available");
+        //     }
 
-            return brakeTimeDto;
-        }
+        //     await breakRepository.CreateBreakAsync(brakeTimeDto);
+
+        //     return Ok(true);
+        // }
     }
 }
