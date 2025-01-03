@@ -19,24 +19,26 @@ namespace Break.Module.Api.Controllers
 
 
 
-        // [HttpPost]
-        // public async Task<IActionResult> Post([FromBody] BrakeTimeDto brakeTimeDto)
-        // {
-        //     if (brakeTimeDto == null)
-        //     {
-        //         return BadRequest("BrakeTimeDto cannot be null");
-        //     }
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] BrakeTimeDto brakeTimeDto)
+        {
+            // if (brakeTimeDto == null)
+            // {
+            //     return BadRequest("BrakeTimeDto cannot be null");
+            // }
 
-        //     var breakRepository = _mediatorGetService.GetBreakRepository;
+            // var breakRepository = _mediatorGetService.GetBreakRepository;
 
-        //     if (breakRepository == null)
-        //     {
-        //         return StatusCode(500, "Break repository is not available");
-        //     }
+            // if (breakRepository == null)
+            // {
+            //     return StatusCode(500, "Break repository is not available");
+            // }
 
-        //     await breakRepository.CreateBreakAsync(brakeTimeDto);
+            // await breakRepository.CreateBreakAsync(brakeTimeDto);
 
-        //     return Ok(true);
-        // }
+            // return Ok(true);
+
+            return Ok("Hello World");
+        }
     }
 }
