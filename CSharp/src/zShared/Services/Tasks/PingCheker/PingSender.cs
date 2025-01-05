@@ -1,12 +1,12 @@
 using System.Net.NetworkInformation;
 using Microsoft.Extensions.Logging;
 
-namespace zShared.Services
+namespace zShared.Services.Tasks.PingCheker
 {
-    public sealed class PingIpChecker:IPingIpChecker
+    public class PingSender:IPingSender
     {
-        private readonly ILogger<PingIpChecker> logger;
-        public PingIpChecker(ILogger<PingIpChecker> logger)
+         private readonly ILogger<PingSender> logger;
+        public PingSender(ILogger<PingSender> logger)
          => this.logger = logger;
 
         public async Task<bool> PingIp(string ipAddress)
@@ -27,7 +27,6 @@ namespace zShared.Services
                 return false;
             }
         }
-
 
     }
 }
