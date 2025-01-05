@@ -1,17 +1,20 @@
 using System;
 using System.Threading.Tasks;
-using Break.Module.Core.Astractions.Iservices;
+using Break.Module.Core.Mediator;
 using Microsoft.Extensions.Logging;
+using zShared.Services.Tasks.PingCheker;
 namespace Break.Module.Core.BreakWorker
 {
     public class WorkerServiceHenlde
     {
-        private readonly IBrakeTimeService BrakeService;
+       
         private readonly ILogger<WorkerServiceHenlde> logger;
-        private readonly IPingSender _pingIpChecker;
-        public WorkerServiceHenlde( ILogger<WorkerServiceHenlde> logger 
-        ,IBrakeTimeService BrakeService)
-        => (this.BrakeService, this.logger) = (BrakeService, logger);
+        private readonly IBreakeTimeMediator breakeTimeMediator;
+        private readonly IPingSender pingIpChecker;
+        public WorkerServiceHenlde( ILogger<WorkerServiceHenlde> logger ,IBreakeTimeMediator breakeTimeMediator,
+        IPingSender pingIpChecker)
+        => (this.breakeTimeMediator, this.logger, this.pingIpChecker) 
+        = (breakeTimeMediator, logger, pingIpChecker);
           
         
        
@@ -23,9 +26,9 @@ namespace Break.Module.Core.BreakWorker
             { 
                  // get user  -->>>>   from db
 
-                 var PingResponseStatus= await _pingIpChecker.PingIp("");
+                 var PingResponseStatus= await pingIpChecker.PingIp("");
 
-                await BrakeService.addService(1, PingResponseStatus);
+                 await breakeTimeMediator.UpdateAsync(1, PingResponseStatus);
             }
 
             catch (Exception ex)
