@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Break.Module.Core.Astractions.Iservices;
 using Break.Module.Core.Dto;
@@ -14,9 +16,9 @@ namespace Break.Module.Core.Mediator
         {
              var workSchedule = new BrakeTimeDtoReqvest
             {
-                // UserId = userId,
-                // StartTime = pingResponseStatus ? new List<DateTime>() : new List<DateTime> { DateTime.Now },
-                // EndTime = pingResponseStatus ? new List<DateTime> { DateTime.Now } : new List<DateTime>()
+                UserId = userId,
+                StartTime = pingResponseStatus ? new List<DateTime>() : new List<DateTime> { DateTime.Now },
+                EndTime = pingResponseStatus ? new List<DateTime> { DateTime.Now } : new List<DateTime>()
             };
 
             await brakeTimeService.addService(workSchedule, pingResponseStatus);
