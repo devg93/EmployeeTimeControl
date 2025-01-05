@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace zShared.Services.Tasks.PingCheker
 {
-    public class PingSender:IPingSender
+    public sealed class PingSender:IPingSender
     {
          private readonly ILogger<PingSender> logger;
         public PingSender(ILogger<PingSender> logger)

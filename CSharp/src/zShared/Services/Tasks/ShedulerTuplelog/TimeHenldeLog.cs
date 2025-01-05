@@ -1,6 +1,6 @@
 namespace zShared.Services.Tasks.ShedulerTuplelog
 {
-    public class TimeHenldeLog
+    public sealed class TimeHenldeLog
     {
 
     }
