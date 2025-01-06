@@ -2,7 +2,7 @@ using System;
 using Break.Module.Core.Repository.Busy;
 namespace Break.Module.Core.Factory
 {
-    public class FactoryBusy
+    public class FactoryBusy:IFactoryBusy
     {
         public object GetRepository(Dbcommand repositoryType)
         {
@@ -12,7 +12,7 @@ namespace Break.Module.Core.Factory
                 Dbcommand.Command => new busyRepositoryCommand(),
                 _ => throw new ArgumentException("Invalid repository type", nameof(repositoryType))
             };
-        
+
         }
     }
 }
