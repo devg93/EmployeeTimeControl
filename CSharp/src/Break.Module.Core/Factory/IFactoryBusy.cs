@@ -1,8 +1,8 @@
 
 namespace Break.Module.Core.Factory
 {
-    public class IFactoryBusy
+    public abstract class IFactoryBusy
     {
-
+      public abstract object GetRepository(string repositoryType);
     }
 }
