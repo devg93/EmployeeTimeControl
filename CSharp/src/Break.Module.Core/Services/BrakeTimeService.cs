@@ -38,9 +38,8 @@ namespace Break.Module.Core.Services
             /// <see cref="  await RepositoryContract.busyRepositoryQeury.GetBusyByIdAsync(1);"/> object
             /// </summary>
             /// <returns> bool </returns>
-
-
-
+         
+      
             return true;
         }
 

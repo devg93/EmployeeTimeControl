@@ -8,4 +8,8 @@ namespace zShared.Mediator
        
         public IPingIpChecker? GetPingIpChecker => throw new NotImplementedException();
     }
+
+    public interface IPingIpChecker
+    {
+    }
 }
