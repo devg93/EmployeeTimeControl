@@ -8,7 +8,7 @@ namespace Infrastructure
     {
         public static  IServiceCollection addInfrastructure(this IServiceCollection services)
         {
-            services.AddScoped<IMediatorGetService, MediatorGetService>();
+            services.AddScoped<IMediatorGetService>();
             return services;
         }
 
