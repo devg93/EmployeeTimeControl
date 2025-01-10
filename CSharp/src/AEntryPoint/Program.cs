@@ -1,4 +1,5 @@
 
+using Break.Module.Api;
 using Infrastructure;
 using Microsoft.Extensions.Configuration;
 
@@ -12,7 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers().AddApplicationPart(typeof(Break.Module.Api.Controllers.BreakController).Assembly);
 // builder.Services.AddDbContext(builder.Configuration);
-builder.Services.addSharedServices();
+builder.Services.RegisterModuleBreak();
 // foreach (var service in builder.Services)
 // {
 //     Console.WriteLine(service.ServiceType);
