@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TimeInTimeOut.Module.Core.Services
 {
-    public class NewClass
+    public class NewClass:IGetServiceTimeInTimeOut
     {
 
     }

@@ -4,7 +4,8 @@ using Break.Module.Core.Astractions.Dbcontracts;
 using Break.Module.Core.Astractions.Irepository;
 using Break.Module.Core.Astractions.Iservices;
 using Break.Module.Core.Dto;
-using Break.Module.Core.Factory;
+using zShared.Dto;
+using zShared.Services.Tasks.ShedulerTuplelog;
 namespace Break.Module.Core.Services
 {
     public class BrakeTimeService : IBrakeTimeService
@@ -18,27 +19,22 @@ namespace Break.Module.Core.Services
         {
             if (entity is null) throw new ArgumentNullException(nameof(entity));
 
+            var exsitBrake = await RepositoryContract.brakeTimeRepositoryQeury.GetBreakByIdAsinc(entity.Id);
 
-            /// <summary>
-            /// get data module TimeInTimeOut
-            /// </summary>
-            /// 
-            /// <returns>
-            /// <see cref="TimeInTimeOutDtoResponse"/> object
-            /// </returns>
+            var exsitTimeInTimeOut = await RepositoryContract.getServiceTimeInTimeOut.GetByIdAsync();
+             var tupleHendleLogService = new TimeHenldeLogService();
 
 
+          TupleReqvestDto tupleReqvestDto = new TupleReqvestDto()
+          {
+            //   EndTime = entity.EndTime,
+            //   StartTime = entity.StartTime,
+            //   OnlineTime = entity.OnlineTime,
+            //   OflineTime = entity.OflineTime
 
-            /// <summary>
-            /// <see cref=" var exitdataBreak = await RepositoryContract.brakeTimeRepositoryCommand.CreateBreakAsync(int id);"/> object
-            /// </summary>
-            /// 
+          };
+          var result = await RepositoryContract.busyRepositoryQeury.GetBusyByIdAsync(entity.Id);
 
-            /// <summary>
-            /// <see cref="  await RepositoryContract.busyRepositoryQeury.GetBusyByIdAsync(1);"/> object
-            /// </summary>
-            /// <returns> bool </returns>
-         
       
             return true;
         }

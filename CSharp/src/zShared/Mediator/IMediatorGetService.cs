@@ -1,13 +1,16 @@
 
-using Break.Module.Core.Astractions;
+
 using zShared.Services;
+using zShared.Services.Tasks.PingCheker;
+using zShared.Services.Tasks.ShedulerTuplelog;
 
 namespace zShared.Mediator
 {
     public interface IMediatorGetService
     {
-        //  public IbreakRepository? GetBreakRepository { get; }
+       ITimeHenldeLogService TimeHandleLogService { get; }   
+       IPingSender pingSender { get; }
 
-        public IPingIpChecker? GetPingIpChecker { get; }
+        
     }
 }

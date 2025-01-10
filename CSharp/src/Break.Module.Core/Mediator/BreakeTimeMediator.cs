@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 using Break.Module.Core.Astractions.Iservices;
 using Break.Module.Core.Dto;
 
-namespace Break.Module.Core.Mediator
-{
+
+
+namespace Break.Module.Core.Mediator;
+
     public class BreakeTimeMediator:IBreakeTimeMediator
     {
         private readonly IBrakeTimeService brakeTimeService;
@@ -25,4 +27,3 @@ namespace Break.Module.Core.Mediator
             return true;
         }
     }
-}
