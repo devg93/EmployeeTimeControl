@@ -9,6 +9,7 @@ namespace Modules.Break.Module.Api;
         public static IServiceCollection RegisterModuleBreak(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext(configuration); 
+            services.AddBreakCoreServices();
             return services;
         }
     }
