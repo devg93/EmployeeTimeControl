@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeInTimeOut.Module.Core", "TimeInTimeOut.Module.Core\TimeInTimeOut.Module.Core.csproj", "{FFA34D14-773A-4291-AA21-28A1A073C5EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeInTimeOut.Module.Core", "Modules\TimeInTimeOut.Module.Core\TimeInTimeOut.Module.Core.csproj", "{FFA34D14-773A-4291-AA21-28A1A073C5EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Break.Module.Core", "Break.Module.Core\Break.Module.Core.csproj", "{C8494348-7DB8-4D7A-BE85-00824B81F02D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Break.Module.Core", "Modules\Break.Module.Core\Break.Module.Core.csproj", "{C8494348-7DB8-4D7A-BE85-00824B81F02D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeInTimeOut.Module.Api", "TimeInTimeOut.Module.Api\TimeInTimeOut.Module.Api.csproj", "{B11A25C5-4F36-44BE-A251-FF55033089C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeInTimeOut.Module.Api", "Modules\TimeInTimeOut.Module.Api\TimeInTimeOut.Module.Api.csproj", "{B11A25C5-4F36-44BE-A251-FF55033089C2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Break.Module.Api", "Break.Module.Api\Break.Module.Api.csproj", "{39A4FB75-B805-4DB8-BAAE-5158CC4FF0EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Break.Module.Api", "Modules\Break.Module.Api\Break.Module.Api.csproj", "{39A4FB75-B805-4DB8-BAAE-5158CC4FF0EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workschedule.Module.Api", "Workschedule.Module.Api\Workschedule.Module.Api.csproj", "{B414944E-6AB0-4941-91DC-0EA24FF267D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workschedule.Module.Api", "Modules\Workschedule.Module.Api\Workschedule.Module.Api.csproj", "{B414944E-6AB0-4941-91DC-0EA24FF267D5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workschedule.Module.Core", "Workschedule.Module.Core\Workschedule.Module.Core.csproj", "{775E4202-F870-423E-80DF-8F661F5E45DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workschedule.Module.Core", "Modules\Workschedule.Module.Core\Workschedule.Module.Core.csproj", "{775E4202-F870-423E-80DF-8F661F5E45DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AEntryPoint", "AEntryPoint\AEntryPoint.csproj", "{999AC901-C6BE-41D5-828D-44A183508075}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryPoint", "EntryPoint\EntryPoint.csproj", "{999AC901-C6BE-41D5-828D-44A183508075}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "zShared\Shared.csproj", "{CFC0A583-80CA-45AE-8B8C-D54FC57818CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{CFC0A583-80CA-45AE-8B8C-D54FC57818CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
