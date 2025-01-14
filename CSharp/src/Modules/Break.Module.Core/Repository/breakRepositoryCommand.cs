@@ -5,8 +5,8 @@ using Modules.Break.Module.Core.DLA;
 using Modules.Break.Module.Core.Entity;
 
 
-namespace Modules.Break.Module.Core.Repository
-{
+namespace Modules.Break.Module.Core.Repository;
+
     public class breakRepositoryCommand : IbreakRepositoryCommand
     {
         private readonly DbInstace dbcontext;
@@ -22,4 +22,3 @@ namespace Modules.Break.Module.Core.Repository
             return "Break created";
         }
     }
-}

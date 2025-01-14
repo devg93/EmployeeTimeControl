@@ -8,8 +8,8 @@ using Modules.Break.Module.Core.Astractions.Irepository;
 using Modules.Break.Module.Core.DLA;
 using Modules.Break.Module.Core.Entity;
 
-namespace Modules. Break.Module.Core.Repository
-{
+namespace Modules. Break.Module.Core.Repository;
+
     public class breakRepositoryQeury : IbreakRepositoryQeury
     {
         private readonly DbInstace dbcontext;
@@ -34,4 +34,3 @@ namespace Modules. Break.Module.Core.Repository
             return brakeTime ?? new BrakeTime();
         }
     }
-}

@@ -3,8 +3,8 @@ using Modules.Break.Module.Core.Dto;
 
 
 namespace Modules.Break.Module.Core.Astractions.Iservices;
-    public interface IBrakeTimeService
+    public interface IAggregatorServiceBrakeTime
     {
-         Task<bool> addService(BrakeTimeDtoReqvest entity, bool Status);
+         Task<bool> AddOrUpdateBrakeTime(BrakeTimeDtoReqvest entity, bool Status);
 
     }

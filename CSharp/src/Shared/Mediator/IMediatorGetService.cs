@@ -1,10 +1,9 @@
 
-
 using Shared.Services.Tasks.PingCheker;
 using Shared.Services.Tasks.ShedulerTuplelog;
 
-namespace Shared.Mediator
-{
+namespace Shared.Mediator;
+
     public interface IMediatorGetService
     {
        ITimeHenldeLogService TimeHandleLogService { get; }   
@@ -14,4 +13,3 @@ namespace Shared.Mediator
 
         
     }
-}

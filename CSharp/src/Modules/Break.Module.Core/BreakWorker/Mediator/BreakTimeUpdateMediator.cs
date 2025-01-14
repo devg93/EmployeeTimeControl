@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Modules.Break.Module.Core.Astractions.Iservices;
 using Modules.Break.Module.Core.Dto;
-
-
+using Modules.Break.Module.Core.Iservices;
 
 
 namespace Modules. Break.Module.Core.Mediator;
 
-    public class BreakeTimeMediator:IBreakeTimeMediator
+    public class BreakTimeUpdateMediator:IBreakTimeUpdateMediator
     {
-        private readonly IBrakeTimeService brakeTimeService;
-        public BreakeTimeMediator(IBrakeTimeService brakeTimeService)
+        private readonly IAggregatorServiceBrakeTime brakeTimeService;
+        public BreakTimeUpdateMediator(IAggregatorServiceBrakeTime brakeTimeService)
         => this.brakeTimeService = brakeTimeService;
 
-        public async Task<bool> UpdateAsync(int userId, bool pingResponseStatus)
+        public async Task<bool> UpdateBreakTimeAsync(int userId, bool pingResponseStatus)
         {
              var workSchedule = new BrakeTimeDtoReqvest
             {
@@ -24,7 +23,7 @@ namespace Modules. Break.Module.Core.Mediator;
                 EndTime = pingResponseStatus ? new List<DateTime> { DateTime.Now } : new List<DateTime>()
             };
 
-            await brakeTimeService.addService(workSchedule, pingResponseStatus);
+            await brakeTimeService.AddOrUpdateBrakeTime(workSchedule, pingResponseStatus);
             return true;
         }
     }

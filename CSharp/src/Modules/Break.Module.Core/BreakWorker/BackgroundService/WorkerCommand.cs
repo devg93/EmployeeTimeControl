@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Modules.Break.Module.Core.BreakWorker
-{
-    public class WorkerServiceCommand : BackgroundService
+namespace Modules.Break.Module.Core.BreakWorker.Command;
+
+    public class WorkerCommand : BackgroundService
     {
-        private readonly ILogger<WorkerServiceCommand> logger;
-        public WorkerServiceCommand(ILogger<WorkerServiceCommand> logger)
+        private readonly ILogger<WorkerCommand> logger;
+        public WorkerCommand(ILogger<WorkerCommand> logger)
         {
             this.logger = logger;
         }
@@ -22,4 +22,3 @@ namespace Modules.Break.Module.Core.BreakWorker
             }
         }
     }
-}

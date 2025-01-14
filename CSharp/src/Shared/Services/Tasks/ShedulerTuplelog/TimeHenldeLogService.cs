@@ -8,7 +8,7 @@ namespace Shared.Services.Tasks.ShedulerTuplelog;
     {
 
 
-        public Task<object> GetTimeResult(TimeDtoReqvest entity, bool status, bool busy, ServiceResponseType responseType)
+        public Task<object> GetTimeResult(TimeDtoReqvest entity, bool status, bool busy)
         {
             throw new System.NotImplementedException();
         }
