@@ -1,6 +1,5 @@
 
-
-using Shared.Services.Tasks.ShedulerTuplelog.Dto;
+using Shared.Dto;
 using Shared.Services.Tasks.ShedulerTuplelog.Enum;
 
 namespace Shared.Services.Tasks.ShedulerTuplelog;

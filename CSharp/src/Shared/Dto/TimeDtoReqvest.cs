@@ -1,5 +1,5 @@
 
-namespace Shared.Services.Tasks.ShedulerTuplelog.Dto
+namespace Shared.Dto
 {
     public class TimeDtoReqvest
     {

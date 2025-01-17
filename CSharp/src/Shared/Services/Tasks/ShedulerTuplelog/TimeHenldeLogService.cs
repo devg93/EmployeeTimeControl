@@ -1,5 +1,5 @@
 
-using Shared.Services.Tasks.ShedulerTuplelog.Dto;
+using Shared.Dto;
 using Shared.Services.Tasks.ShedulerTuplelog.Enum;
 
 namespace Shared.Services.Tasks.ShedulerTuplelog;
@@ -8,7 +8,7 @@ namespace Shared.Services.Tasks.ShedulerTuplelog;
     {
 
 
-        public Task<object> GetTimeResult(TimeDtoReqvest entity, bool status, bool busy)
+        public Task<object> GetTimeResult(TimeDtoReqvest entity, bool status, bool busy, ServiceResponseType responseType)
         {
             throw new System.NotImplementedException();
         }

@@ -15,7 +15,7 @@ namespace TimeInTimeOut.Module.Core.Repository
         public async Task<bool> Add(ComingAndgoing entity)
         {
 
-            if (dbInstaceTimeInOut == null || dbInstaceTimeInOut.comingAndgoings == null)
+            if (dbInstaceTimeInOut is null || dbInstaceTimeInOut.comingAndgoings is null)
             {
                 throw new InvalidOperationException("Database instance or comingAndgoings collection is null.");
             }
@@ -37,7 +37,7 @@ namespace TimeInTimeOut.Module.Core.Repository
 
         public async Task<ComingAndgoing> GetById(int id)
     {
-        if (dbInstaceTimeInOut.comingAndgoings == null)
+        if (dbInstaceTimeInOut.comingAndgoings is null)
         {
             throw new InvalidOperationException("Database instance or comingAndgoings collection is null.");
         }
@@ -45,7 +45,7 @@ namespace TimeInTimeOut.Module.Core.Repository
         var result = await dbInstaceTimeInOut.comingAndgoings.Include(ws => ws.OnlineTime)
             .Include(ws => ws.OflineTime).FirstOrDefaultAsync(ws => ws.Id == id);
 
-        if (result == null)
+        if (result is null)
         {
             throw new KeyNotFoundException($"Entity with id {id} not found.");
         }

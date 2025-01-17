@@ -4,7 +4,7 @@ namespace TimeInTimeOut.Module.Core.Abstractions
 {
     public interface IcomingAndgoingRepository
     {
-         public Task<IEnumerable<ComingAndgoing>> GetAll();
+        public Task<IEnumerable<ComingAndgoing>> GetAll();
         public Task<ComingAndgoing> GetById(int id);
 
         public Task<bool> Add(ComingAndgoing entity);

@@ -12,6 +12,6 @@ namespace Modules.Break.Module.Core.Astractions.Dbcontracts;
         IbreakRepositoryQeury brakeTimeRepositoryQeury { get; }
         IbusyRepositoryCommand busyRepositoryCommand { get; }
         IbusyRepositoryQeury busyRepositoryQeury { get; }
-        IGetServiceTimeInTimeOut getServiceTimeInTimeOut { get; }
+        IGetServiceFtomTimeInTimeOutById getServiceTimeInTimeOut { get; }
 
     }

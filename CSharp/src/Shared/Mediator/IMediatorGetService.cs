@@ -8,8 +8,8 @@ namespace Shared.Mediator;
     {
        ITimeHenldeLogService TimeHandleLogService { get; }   
        IPingSender pingSender { get; }
-       IGetServiceBreake getServiceBreake {get;}
-       IGetServiceTimeInTimeOut getServiceTimeInTimeOut {get;}
+       IGetServiceFromBreakById getServiceBreake {get;}
+       IGetServiceFtomTimeInTimeOutById getServiceTimeInTimeOut {get;}
 
         
     }
