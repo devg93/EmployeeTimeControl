@@ -13,7 +13,7 @@ namespace Modules. Break.Module.Core.Repository.Busy
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> UpdateBusy(busyChecker entity)
+        public Task<bool> UpdateBusy(int UserId,bool param)
         {
             throw new System.NotImplementedException();
         }

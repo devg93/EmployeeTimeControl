@@ -11,8 +11,8 @@ using Shared.Records;
 using Shared.Services.Tasks.ShedulerTuplelog.Enum;
 
 
-namespace Break.Module.Core.BreakWorker.OrchestratorService
-{
+namespace Break.Module.Core.BreakWorker.OrchestratorService;
+
   public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
   {
     private readonly IRepositoryContract RepositoryContract;
@@ -52,10 +52,10 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService
 
             exsitBrake?.EndTime?.Add(new DateTimeWorkSchedule
             {
-              dateTime = DateTime.Now 
+              dateTime = DateTime.Now
             });
-
-       
+            await RepositoryContract.busyRepositoryCommand.UpdateBusy(entity.Id, false);
+            return await RepositoryContract.brakeTimeRepositoryCommand.Save();
 
           }
           else if (resultTimne.OnlineTimeDateDay && !resultTimne.OfflineTimeDateDay)
@@ -64,10 +64,21 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService
             if (resultTimne.workSchedulPingLog)
             {
 
-            
+              BrakeTime brakeTime = new BrakeTime
+              {
+                Id = entity.Id,
+                StartTime = entity.StartTime?.Select
+                (dateTime => new DateTimeWorkSchedule { dateTime = dateTime }).ToList(),
+                EndTime = entity.EndTime?.Select
+                (dateTime => new DateTimeWorkSchedule { dateTime = dateTime }).ToList()
+              };
+
+              await RepositoryContract.brakeTimeRepositoryCommand.CreateBreakAsync(brakeTime);
+              await RepositoryContract.busyRepositoryCommand.UpdateBusy(entity.Id, true);
+              return true;
 
             }
-           
+
             return true;
           }
         }
@@ -84,4 +95,3 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService
 
   }
 
-}
