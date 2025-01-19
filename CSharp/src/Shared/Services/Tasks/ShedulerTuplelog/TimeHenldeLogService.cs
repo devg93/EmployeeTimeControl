@@ -1,5 +1,6 @@
 
 using Shared.Dto;
+using Shared.Records;
 using Shared.Services.Tasks.ShedulerTuplelog.Enum;
 
 namespace Shared.Services.Tasks.ShedulerTuplelog;
@@ -8,14 +9,14 @@ namespace Shared.Services.Tasks.ShedulerTuplelog;
     {
 
 
-        public Task<object> GetTimeResult(TimeDtoReqvest entity, bool status, bool busy, ServiceResponseType responseType)
+        public async Task<object> GetTimeResult(TimeDtoReqvest entity, bool status, bool busy, ServiceResponseType responseType)
         {
            if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             switch (responseType)
             {
-                case ResponseType.BrakeTime:
-                    return await Task.FromResult(new ResponseResultBrakeTime
+                case ServiceResponseType.BrakeTime:
+                    return Task.FromResult<object>(new ResponseResultBrakeTime
                     {
 
                         StartTimeValidWorkSchedule = entity != null && entity.StartTime != null &&
@@ -30,12 +31,12 @@ namespace Shared.Services.Tasks.ShedulerTuplelog;
                         workSchedulPingLog = !status && entity?.StartTime?.Any()==true &&
                         entity?.OflineTime?.Any(day => day.Day == DateTime.Now.Day) == false && !busy
                     });
-                case ResponseType.ComingAndgoing:
+                case ServiceResponseType.ComingAndgoing:
                   
 
                 default:
                     throw new ArgumentException("Invalid response type");
-            }
+           }
         }
     }
         

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <!-- General Project Settings -->
-  <PropertyGroup>
+  <!-- <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -17,7 +17,7 @@
     <EnableMicrosoftExtensionsConfigurationBinderSourceGenerator>true</EnableMicrosoftExtensionsConfigurationBinderSourceGenerator>
     <GenerateSBOM>true</GenerateSBOM>
     <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-  </PropertyGroup>
+  </PropertyGroup> -->
 
   <!-- Package References -->
   <ItemGroup>
