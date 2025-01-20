@@ -1,6 +1,6 @@
 
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using Modules.Break.Module.Core.Astractions.Irepository;
 using Modules.Break.Module.Core.DLA;
 using Modules.Break.Module.Core.Entity;
@@ -12,9 +12,7 @@ public class breakRepositoryCommand : IbreakRepositoryCommand
 {
     private readonly DbInstace dbcontext;
     public breakRepositoryCommand(DbInstace dbcontext)
-    => this.dbcontext = dbcontext;
-
-
+    { this.dbcontext = dbcontext;}
 
     public async Task<string> CreateBreakAsync(BrakeTime brakeTime)
     {
@@ -24,7 +22,7 @@ public class breakRepositoryCommand : IbreakRepositoryCommand
     }
 
     public async Task<bool> Save()
-    =>await dbcontext.SaveChangesAsync() > 0;
+    => await dbcontext.SaveChangesAsync() > 0;
 
     
 }

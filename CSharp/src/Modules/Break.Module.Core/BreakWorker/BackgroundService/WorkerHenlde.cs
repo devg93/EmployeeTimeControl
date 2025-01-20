@@ -2,8 +2,11 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Modules.Break.Module.Core.Iservices;
-using Modules.Break.Module.Core.Mediator;
 using Shared.Mediator;
+
+
+//************************************ Service WorkerHenlde ******************************************//
+// The WorkerHenlde class coordinates operations for managing break times and handling IP-related tasks.
 
 namespace Modules.Break.Module.Core.BreakWorker.Command;
 
@@ -19,6 +22,7 @@ namespace Modules.Break.Module.Core.BreakWorker.Command;
 
         public async Task AsyncMethodBreake()
         {
+            
 
             try
             {

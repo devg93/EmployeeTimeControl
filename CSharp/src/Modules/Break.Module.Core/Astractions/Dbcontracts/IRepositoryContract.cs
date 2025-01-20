@@ -1,7 +1,7 @@
 
 using Modules.Break.Module.Core.Astractions.Irepository;
 using Modules.Break.Module.Core.Astractions.Irepository.Ibusy;
-using Shared;
+using Shared.Services.ModuleCommunication.Contracts;
 
 
 namespace Modules.Break.Module.Core.Astractions.Dbcontracts;

@@ -1,5 +1,6 @@
-using Shared;
+
 using Shared.Dto;
+using Shared.Services.ModuleCommunication.Contracts;
 using TimeInTimeOut.Module.Core.Abstractions;
 
 namespace TimeInTimeOut.Module.Core.Services

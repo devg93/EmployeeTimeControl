@@ -1,14 +1,13 @@
 
-
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Modules.Break.Module.Core.Entity;
 
-
 namespace Modules.Break.Module.Core.EntityConfiguration;
 
-public class BrakeConfiguration : IEntityTypeConfiguration<BrakeTime>
+
+ //************************************Add Entuty Configuration ********************************************//
+public sealed class  BrakeConfiguration : IEntityTypeConfiguration<BrakeTime>
 {
     public void Configure(EntityTypeBuilder<BrakeTime> builder)
     {

@@ -12,6 +12,7 @@ namespace Shared;
         {
             services.AddScoped<ITimeHenldeLogService, TimeHenldeLogService>();
             services.AddScoped<IPingSender, PingSender>();
+            services.AddScoped<IMediatorGetService,MediatorGetServices>();
          
             return services;
         }

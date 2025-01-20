@@ -1,4 +1,5 @@
 
+using Shared.Services.ModuleCommunication.Contracts;
 using Shared.Services.Tasks.PingCheker;
 using Shared.Services.Tasks.ShedulerTuplelog;
 

@@ -1,8 +1,6 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
-
 using Microsoft.EntityFrameworkCore;
 using Modules.Break.Module.Core.Astractions.Irepository;
 using Modules.Break.Module.Core.DLA;
@@ -33,4 +31,6 @@ namespace Modules. Break.Module.Core.Repository;
 
             return brakeTime ?? new BrakeTime();
         }
-    }
+
+   
+}

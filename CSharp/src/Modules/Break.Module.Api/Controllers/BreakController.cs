@@ -38,6 +38,7 @@ namespace Modules.Break.Module.Api.Controllers;
             // await breakRepository.CreateBreakAsync(brakeTimeDto);
 
             // return Ok(true);
+            Console.WriteLine("dfasfda");
 
             return Ok("Hello World");
         }

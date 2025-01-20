@@ -3,14 +3,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Modules.Break.Module.Core.Astractions.Irepository;
+using Modules.Break.Module.Core.Astractions.Irepository.Ibusy;
 using Modules.Break.Module.Core.DLA;
 using Modules.Break.Module.Core.Repository;
+using Modules.Break.Module.Core.Repository.Busy;
+using Shared.Mediator;
 
 namespace Modules.Break.Module.Core.Exstension;
 
 public static class ServiceRegistration
 {
- //*************************************************Add MySql db *************************************************************//
+    //*************************************************Add MySql db ********************************************************//
     public static IServiceCollection AddDbContext(this IServiceCollection serviceDescriptors, IConfiguration configuration)
     {
 
@@ -19,20 +22,24 @@ public static class ServiceRegistration
                "Server=localhost;Port=3306;Database=Feature;User=root;Password=password;",
                 new MySqlServerVersion(new Version(8, 0, 30))
             ));
+            
 
         return serviceDescriptors;
     }
 
-//**********************************************Add Core db Services *****************************************************//
+    //**********************************************Add Core db Services ************************************************//
 
     public static IServiceCollection AddBreakCoreServices(this IServiceCollection serviceDescriptors)
     {
 
         serviceDescriptors.AddScoped<IbreakRepositoryCommand, breakRepositoryCommand>();
         serviceDescriptors.AddScoped<IbreakRepositoryQeury, breakRepositoryQeury>();
+        serviceDescriptors.AddScoped<IbusyRepositoryCommand, busyRepositoryCommand>();
+        serviceDescriptors.AddScoped<IbusyRepositoryQeury, busyRepositoryQeury>();
+
 
 
         return serviceDescriptors;
     }
-//******************************************************************************************************************//
+    //******************************************************************************************************************//
 }

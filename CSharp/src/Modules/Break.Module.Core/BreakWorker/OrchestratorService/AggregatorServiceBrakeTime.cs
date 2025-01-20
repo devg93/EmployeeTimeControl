@@ -1,16 +1,26 @@
+
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Modules.Break.Module.Core;
 using Modules.Break.Module.Core.Astractions.Dbcontracts;
 using Modules.Break.Module.Core.Astractions.Iservices;
 using Modules.Break.Module.Core.Dto;
 using Modules.Break.Module.Core.Entity;
 using Shared.Dto;
 using Shared.Mediator;
-using Shared.Records;
 using Shared.Services.Tasks.ShedulerTuplelog.Enum;
 
 
+//************************************ Service Orchestration ******************************************//
+// The AggregatorServiceBrakeTime class is a central component for coordinating the management of brake time data. 
+// It orchestrates the interactions between repositories and mediator services to ensure consistency and accuracy
+// in updating or creating brake time records. The class implements the following key responsibilities:
+// . Validates input data and retrieves necessary information from repositories.
+// . Uses mediator services to enforce business rules and evaluate time-based conditions.
+
+
+ 
 namespace Break.Module.Core.BreakWorker.OrchestratorService;
 
   public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
