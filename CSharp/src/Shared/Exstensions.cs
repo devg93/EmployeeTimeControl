@@ -4,8 +4,8 @@ using Shared.Mediator;
 using Shared.Services.Tasks.PingCheker;
 using Shared.Services.Tasks.ShedulerTuplelog;
 
-namespace Infrastructure
-{
+namespace Shared;
+
     public static class Exstensions
     {
         public static IServiceCollection addSharedServices(this IServiceCollection services)
@@ -17,4 +17,3 @@ namespace Infrastructure
         }
 
     }
-}

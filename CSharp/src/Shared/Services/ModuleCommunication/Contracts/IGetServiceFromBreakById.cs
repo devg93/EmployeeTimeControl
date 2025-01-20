@@ -1,6 +1,6 @@
 
 
-namespace Shared;
+namespace Shared.Services.ModuleCommunication.Contracts;
 
     public interface IGetServiceFromBreakById
     {
