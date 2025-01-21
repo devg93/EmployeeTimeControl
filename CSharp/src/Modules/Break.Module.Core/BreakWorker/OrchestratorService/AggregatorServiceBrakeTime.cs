@@ -20,92 +20,106 @@ using Shared.Services.Tasks.ShedulerTuplelog.Enum;
 // . Validates input data and retrieves necessary information from repositories.
 // . Uses mediator services to enforce business rules and evaluate time-based conditions.
 
-
  
 namespace Break.Module.Core.BreakWorker.OrchestratorService;
 
   public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
-  {
-    private readonly IRepositoryContract RepositoryContract;
-   
-    private readonly ITimeHenldeLogService timeHenldeLogService;
+{
+    private readonly IRepositoryContract _repositoryContract;
+    private readonly ITimeHenldeLogService _timeHenldeLogService;
 
-    public AggregatorServiceBrakeTime(IRepositoryContract RepositoryContract,
-    ITimeHenldeLogService timeHenldeLogService )
-    => (this.RepositoryContract, this.timeHenldeLogService)
-    = (RepositoryContract, timeHenldeLogService);
-
-    public async Task<bool> AddOrUpdateBrakeTime(BrakeTimeDtoReqvest entity, bool Status)
+    public AggregatorServiceBrakeTime(IRepositoryContract repositoryContract, ITimeHenldeLogService timeHenldeLogService)
     {
-      if (entity is null) throw new ArgumentNullException(nameof(entity));
-
-      var exsitBrake = await RepositoryContract.brakeTimeRepositoryQeury.GetBreakByIdAsinc(entity.Id);
-
-      var exsitTimeInTimeOut = await RepositoryContract.getServiceTimeInTimeOut.GetByIdAsync(entity.Id);
-
-
-      TimeDtoReqvest timeDtoReqvest = new TimeDtoReqvest()
-      {
-        EndTime = exsitBrake.EndTime?.Select(schedule => schedule.dateTime).ToList(),
-        StartTime = exsitBrake.StartTime?.Select(schedule => schedule.dateTime).ToList(),
-        OnlineTime = exsitTimeInTimeOut.OnlineTime?.Select(schedule => schedule.TimeIn).ToList(),
-        OflineTime = exsitTimeInTimeOut.OflineTime?.Select(schedule => schedule.TimeOut).ToList()
-      };
-
-
-      var resultBusy = await RepositoryContract.busyRepositoryQeury.GetBusyByIdAsync(entity.Id);
-
-      ResponseResultBrakeTime resultTimne = (ResponseResultBrakeTime)await timeHenldeLogService.GetTimeResult
-      (timeDtoReqvest, Status, true, ServiceResponseType.ComingAndgoing);
-
-      try
-      {
-        {
-          if (resultTimne.StartTimeValidWorkSchedule && !resultTimne.OfflineTimeDateDay)
-          {
-
-            exsitBrake?.EndTime?.Add(new DateTimeWorkSchedule
-            {
-              dateTime = DateTime.Now
-            });
-            await RepositoryContract.busyRepositoryCommand.UpdateBusy(entity.Id, false);
-            return await RepositoryContract.brakeTimeRepositoryCommand.Save();
-
-          }
-          else if (resultTimne.OnlineTimeDateDay && !resultTimne.OfflineTimeDateDay)
-          {
-
-            if (resultTimne.workSchedulPingLog)
-            {
-
-              BrakeTime brakeTime = new BrakeTime
-              {
-                Id = entity.Id,
-                StartTime = entity.StartTime?.Select
-                (dateTime => new DateTimeWorkSchedule { dateTime = dateTime }).ToList(),
-                EndTime = entity.EndTime?.Select
-                (dateTime => new DateTimeWorkSchedule { dateTime = dateTime }).ToList()
-              };
-
-              await RepositoryContract.brakeTimeRepositoryCommand.CreateBreakAsync(brakeTime);
-              await RepositoryContract.busyRepositoryCommand.UpdateBusy(entity.Id, true);
-              return true;
-
-            }
-
-            return true;
-          }
-        }
-      }
-
-      catch (Exception ex)
-      {
-        throw new Exception("Database error occurred while saving changes.", ex.InnerException ?? ex);
-      }
-
-      return true;
+        _repositoryContract = repositoryContract;
+        _timeHenldeLogService = timeHenldeLogService;
     }
 
+    public async Task<bool> AddOrUpdateBrakeTime(BrakeTimeDtoReqvest entity, bool status)
+    {
+        if (entity == null)
+            throw new ArgumentNullException(nameof(entity));
 
-  }
+   
+        var existingBrake = await FetchExistingBrakeTime(entity.Id);
+        var existingTimeInOut = await FetchServiceTime(entity.Id);
 
+        if (existingBrake == null || existingTimeInOut == null)
+        throw new InvalidOperationException("Required data could not be retrieved from the repository.");
+
+  
+        var timeDto = PrepareTimeDto(existingBrake, existingTimeInOut);
+
+        var response = await _timeHenldeLogService.GetTimeResult(timeDto, status, true, ServiceResponseType.ComingAndgoing);
+        var resultTime = (ResponseResultBrakeTime)response;
+
+        try
+        {
+            
+            if (resultTime.StartTimeValidWorkSchedule && !resultTime.OfflineTimeDateDay)
+            {
+                return await HandleValidWorkSchedule(existingBrake, entity.Id);
+            }
+            else if (resultTime.OnlineTimeDateDay && !resultTime.OfflineTimeDateDay)
+            {
+                return await HandleOnlineTimeValid(resultTime, entity);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Database error occurred while saving changes.", ex);
+        }
+
+        return true;
+    }
+
+    private async Task<BrakeTime?> FetchExistingBrakeTime(int id)
+    {
+        return await _repositoryContract.brakeTimeRepositoryQeury.GetBreakByIdAsinc(id);
+    }
+
+    private async Task<TimeInOut?> FetchServiceTime(int id)
+    {
+        return await _repositoryContract.getServiceTimeInTimeOut.GetByIdAsync(id);
+    }
+
+    private TimeDtoReqvest PrepareTimeDto(BrakeTime existingBrake, TimeInOut existingTimeInOut)
+    {
+        return new TimeDtoReqvest
+        {
+            StartTime = existingBrake.StartTime?.Select(s => s.dateTime).ToList(),
+            EndTime = existingBrake.EndTime?.Select(e => e.dateTime).ToList(),
+            OnlineTime = existingTimeInOut.OnlineTime?.Select(o => o.TimeIn).ToList(),
+            OflineTime = existingTimeInOut.OflineTime?.Select(o => o.TimeOut).ToList()
+        };
+    }
+
+    private async Task<bool> HandleValidWorkSchedule(BrakeTime existingBrake, int id)
+    {
+        existingBrake.EndTime?.Add(new DateTimeWorkSchedule { dateTime = DateTime.Now });
+        return await UpdateBusyStatus(id, false);
+    }
+
+    private async Task<bool> HandleOnlineTimeValid(ResponseResultBrakeTime resultTime, BrakeTimeDtoReqvest entity)
+    {
+        if (resultTime.workSchedulPingLog)
+        {
+            var newBrakeTime = new BrakeTime
+            {
+                Id = entity.Id,
+                StartTime = entity.StartTime?.Select(t => new DateTimeWorkSchedule { dateTime = t }).ToList(),
+                EndTime = entity.EndTime?.Select(t => new DateTimeWorkSchedule { dateTime = t }).ToList()
+            };
+
+            await _repositoryContract.brakeTimeRepositoryCommand.CreateBreakAsync(newBrakeTime);
+            return await UpdateBusyStatus(entity.Id, true);
+        }
+
+        return true;
+    }
+
+    private async Task<bool> UpdateBusyStatus(int id, bool status)
+    {
+        await _repositoryContract.busyRepositoryCommand.UpdateBusy(id, status);
+        return await _repositoryContract.brakeTimeRepositoryCommand.Save();
+    }
+}

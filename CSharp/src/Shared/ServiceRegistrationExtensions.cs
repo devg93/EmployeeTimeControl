@@ -13,8 +13,8 @@ public static class ServiceRegistrationExtensions
 
     public static IServiceCollection addSharedServices(this IServiceCollection services)
     {
-        services.AddScoped<ITimeHenldeLogService, TimeHenldeLogService>();
-        services.AddScoped<IPingSender, PingSender>();
+        services.AddSingleton<ITimeHenldeLogService, TimeHenldeLogService>();
+        services.AddSingleton<IPingSender, PingSender>();
         
 
         return services;

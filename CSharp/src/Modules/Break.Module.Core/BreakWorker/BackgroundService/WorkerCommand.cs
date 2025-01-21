@@ -19,27 +19,28 @@ public class WorkerCommand : BackgroundService
     public WorkerCommand(ILogger<WorkerCommand> logger, IWorkerHenlde workerHenlde, IServiceScopeFactory serviceScopeFactory)
     => (this.logger, this.workerHenlde, this.serviceScopeFactory) = (logger, workerHenlde, serviceScopeFactory);
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        logger.LogInformation("WorkerCommand started.");
+
         while (!stoppingToken.IsCancellationRequested)
         {
-           using (var scope = serviceScopeFactory.CreateScope())
+            try
             {
-             
-                var workerHenlde =scope.ServiceProvider.GetRequiredService<IWorkerHenlde>();
+                using var scope = serviceScopeFactory.CreateScope();
+                var workerHandler = scope.ServiceProvider.GetRequiredService<IWorkerHenlde>();
 
-                try
-                {
-                    await workerHenlde.AsyncMethodBreake();
-                }
-                catch (Exception ex)
-                {
-                    logger.LogError(ex, "Error occurred while executing worker.");
-                }
-
-                await Task.Delay(1000, stoppingToken).ConfigureAwait(false);
+                await workerHandler.AsyncMethodBreake();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Unhandled exception in WorkerCommand.");
             }
 
+           
+            await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken).ConfigureAwait(false);
         }
+
+        logger.LogInformation("WorkerCommand stopped.");
     }
 }
