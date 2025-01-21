@@ -1,0 +1,42 @@
+# Ignore auto-generated files
+**/bin/
+**/obj/
+
+# Ignore Visual Studio specific files
+.vscode/
+*.user
+*.suo
+*.csproj.user
+
+# Ignore build results
+*.dll
+*.exe
+*.pdb
+*.log
+*.cache
+*.db
+
+# Ignore NuGet packages
+*.nupkg
+project.lock.json
+*.nuget/
+
+# Ignore Rider IDE files
+.idea/
+
+# Ignore temporary files
+*.tmp
+*.temp
+~$*
+
+# Ignore compiled configurations
+*.AssemblyInfo.cs
+*.AssemblyInfoInputs.cache
+*.csproj.AssemblyReference.cache
+
+# Ignore macOS specific files
+.DS_Store
+
+# Ignore additional temporary files
+*.bak
+Thumbs.db
