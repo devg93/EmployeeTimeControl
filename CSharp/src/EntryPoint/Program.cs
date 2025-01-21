@@ -1,5 +1,6 @@
 
 using Modules.Break.Module.Api;
+using Modules.Break.Module.Core.Exstension;
 using Shared;
 
 
@@ -13,6 +14,7 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddControllers().AddApplicationPart(typeof(Modules.Break.Module.Api.Controllers.BreakController).Assembly);
+builder.Services.AddBreakWorkerServices();
 // builder.Services.AddDbContext(builder.Configuration);
 builder.Services.RegisterModuleBreak(builder.Configuration);
 builder.Services.AddServicesRegisterByInterface();

@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Break.Module.Core.BreakWorker.BackgroundService;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Modules.Break.Module.Core.Iservices;
 using Shared.Services.Tasks.PingCheker;
@@ -11,25 +12,26 @@ using Shared.Services.Tasks.PingCheker;
 
 namespace Modules.Break.Module.Core.BreakWorker.Command;
 
-    public class WorkerHenlde:IWorkerHenlde
+public class WorkerHenlde : IWorkerHenlde
+{
+    
+    private readonly ILogger<WorkerHenlde> logger;
+    private readonly IBreakTimeUpdateMediator breakeTimeMediator;
+    private readonly IPingSender pingSender;
+    public WorkerHenlde(ILogger<WorkerHenlde> logger, IBreakTimeUpdateMediator breakeTimeMediator,IPingSender pingIpChecker)
+    => (this.breakeTimeMediator, this.logger, this.pingSender) = (breakeTimeMediator, logger, pingIpChecker);
+
+    public async Task AsyncMethodBreake()
     {
 
-        private readonly ILogger<WorkerHenlde> logger;
-        private readonly IBreakTimeUpdateMediator breakeTimeMediator;
-         private readonly IPingSender pingSender;
-        public WorkerHenlde(ILogger<WorkerHenlde> logger, IBreakTimeUpdateMediator breakeTimeMediator,
-        IPingSender pingIpChecker)
-        => (this.breakeTimeMediator, this.logger, this.pingSender)= (breakeTimeMediator, logger, pingIpChecker);
-
-        public async Task AsyncMethodBreake()
+      
         {
-            
-
             try
             {
                 // get user  -->>>>   from db
 
-                var PingResponseStatus = await pingSender.PingIp("");
+                var PingResponseStatus = await pingSender.PingIp("192.168.1.204");
+              
 
                 await breakeTimeMediator.UpdateBreakTimeAsync(1, PingResponseStatus);
             }
@@ -41,5 +43,5 @@ namespace Modules.Break.Module.Core.BreakWorker.Command;
 
             }
         }
-
     }
+}

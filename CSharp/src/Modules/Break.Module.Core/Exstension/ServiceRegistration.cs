@@ -54,7 +54,7 @@ public static class ServiceRegistration
      public static IServiceCollection AddBreakWorkerServices(this IServiceCollection serviceDescriptors)
     {
 
-        serviceDescriptors.AddSingleton<WorkerCommand>();
+        serviceDescriptors.AddHostedService<WorkerCommand>();
         serviceDescriptors.AddScoped<IWorkerHenlde,WorkerHenlde>();
         serviceDescriptors.AddScoped<IBreakTimeUpdateMediator, BreakTimeUpdateMediator>();
         serviceDescriptors.AddScoped<IAggregatorServiceBrakeTime, AggregatorServiceBrakeTime>();

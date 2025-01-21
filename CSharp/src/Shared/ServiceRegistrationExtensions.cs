@@ -20,7 +20,7 @@ public static class ServiceRegistrationExtensions
         return services;
     }
 
-    //*******************************Init DI Services Witch Reflection***************************************************
+    //*******************************Init DI Services Witch Reflection Manuel***************************************************
 
     public static IServiceCollection AddServicesByInterface<TInterface>(this IServiceCollection services, Assembly assembly,
     ServiceLifetime lifetime = ServiceLifetime.Scoped
@@ -41,15 +41,10 @@ public static class ServiceRegistrationExtensions
     public static IServiceCollection AddServicesRegisterByInterface(this IServiceCollection services)
     {
         services.Scan(scan => scan.FromAssemblies(Assembly.GetExecutingAssembly())
-                .AddClasses(classes =>
-                    classes
-                        .AssignableTo<IGetServiceFromBreakById>()
-                        )
+                .AddClasses(classes =>classes.AssignableTo<IGetServiceFromBreakById>())
                         .AddClasses(classes =>
                             classes.AssignableTo<IGetServiceFtomTimeInTimeOutById>()
-                )
-                .AsImplementedInterfaces()
-                .WithScopedLifetime()
+                ).AsImplementedInterfaces().WithScopedLifetime()
         );
 
         return services;
