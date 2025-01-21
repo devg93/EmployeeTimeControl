@@ -8,7 +8,8 @@ using Modules.Break.Module.Core.Astractions.Iservices;
 using Modules.Break.Module.Core.Dto;
 using Modules.Break.Module.Core.Entity;
 using Shared.Dto;
-using Shared.Mediator;
+using Shared.Services.Tasks.PingCheker;
+using Shared.Services.Tasks.ShedulerTuplelog;
 using Shared.Services.Tasks.ShedulerTuplelog.Enum;
 
 
@@ -26,10 +27,13 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService;
   public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
   {
     private readonly IRepositoryContract RepositoryContract;
-    private readonly IMediatorGetService mediatorGetService;
+   
+    private readonly ITimeHenldeLogService timeHenldeLogService;
 
-    public AggregatorServiceBrakeTime(IRepositoryContract RepositoryContract, IMediatorGetService mediatorGetService)
-    => (this.RepositoryContract, this.mediatorGetService) = (RepositoryContract, mediatorGetService);
+    public AggregatorServiceBrakeTime(IRepositoryContract RepositoryContract,
+    ITimeHenldeLogService timeHenldeLogService )
+    => (this.RepositoryContract, this.timeHenldeLogService)
+    = (RepositoryContract, timeHenldeLogService);
 
     public async Task<bool> AddOrUpdateBrakeTime(BrakeTimeDtoReqvest entity, bool Status)
     {
@@ -51,7 +55,7 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService;
 
       var resultBusy = await RepositoryContract.busyRepositoryQeury.GetBusyByIdAsync(entity.Id);
 
-      ResponseResultBrakeTime resultTimne = (ResponseResultBrakeTime)await mediatorGetService.TimeHandleLogService.GetTimeResult
+      ResponseResultBrakeTime resultTimne = (ResponseResultBrakeTime)await timeHenldeLogService.GetTimeResult
       (timeDtoReqvest, Status, true, ServiceResponseType.ComingAndgoing);
 
       try

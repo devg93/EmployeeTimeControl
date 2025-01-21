@@ -1,5 +1,6 @@
 
 using Modules.Break.Module.Api;
+using Shared;
 
 
 
@@ -15,6 +16,7 @@ builder.Services.AddControllers().AddApplicationPart(typeof(Modules.Break.Module
 // builder.Services.AddDbContext(builder.Configuration);
 builder.Services.RegisterModuleBreak(builder.Configuration);
 builder.Services.AddServicesRegisterByInterface();
+builder.Services.addSharedServices();
 // foreach (var service in builder.Services)
 // {
 //     Console.WriteLine(service.ServiceType);

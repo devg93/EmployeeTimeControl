@@ -1,7 +1,6 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Mediator;
-using Shared.Mediator;
+using Shared.Services.ModuleCommunication.Contracts;
 using Shared.Services.Tasks.PingCheker;
 using Shared.Services.Tasks.ShedulerTuplelog;
 
@@ -16,22 +15,18 @@ public static class ServiceRegistrationExtensions
     {
         services.AddScoped<ITimeHenldeLogService, TimeHenldeLogService>();
         services.AddScoped<IPingSender, PingSender>();
-        // services.AddScoped<IMediatorGetService, MediatorGetServices>();
+        
 
         return services;
     }
 
     //*******************************Init DI Services Witch Reflection***************************************************
 
-    public static IServiceCollection AddServicesByInterface<TInterface>(
-        this IServiceCollection services,
-        Assembly assembly,
-        ServiceLifetime lifetime = ServiceLifetime.Scoped
+    public static IServiceCollection AddServicesByInterface<TInterface>(this IServiceCollection services, Assembly assembly,
+    ServiceLifetime lifetime = ServiceLifetime.Scoped
     )
     {
-        var implementations = assembly
-            .GetTypes()
-            .Where(t => t.IsClass && !t.IsAbstract && typeof(TInterface).IsAssignableFrom(t));
+        var implementations = assembly.GetTypes().Where(t => t.IsClass && !t.IsAbstract && typeof(TInterface).IsAssignableFrom(t));
 
         foreach (var implementation in implementations)
         {
@@ -43,16 +38,15 @@ public static class ServiceRegistrationExtensions
 
     //**********************************Init DI Services Witch Scrutor*************************************************
 
-    public static IServiceCollection AddServicesRegisterByInterface(
-        this IServiceCollection services
-    )
+    public static IServiceCollection AddServicesRegisterByInterface(this IServiceCollection services)
     {
-        services.Scan(scan =>
-            scan.FromAssemblies(Assembly.GetExecutingAssembly())
+        services.Scan(scan => scan.FromAssemblies(Assembly.GetExecutingAssembly())
                 .AddClasses(classes =>
                     classes
                         .AssignableTo<IGetServiceFromBreakById>()
-                        .OrAssignableTo<IGetServiceFtomTimeInTimeOutById>()
+                        )
+                        .AddClasses(classes =>
+                            classes.AssignableTo<IGetServiceFtomTimeInTimeOutById>()
                 )
                 .AsImplementedInterfaces()
                 .WithScopedLifetime()

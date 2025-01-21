@@ -1,46 +1,41 @@
 
 using Microsoft.AspNetCore.Mvc;
-using Modules.Break.Module.Api.DTO;
-using Shared.Mediator;
+using Modules.Break.Module.Core.Astractions.Irepository;
+using Modules.Break.Module.Core.Entity;
+
 
 
 namespace Modules.Break.Module.Api.Controllers;
 
-    [Route("api/[controller]")]
-    [ApiController]
-    public class BreakController : ControllerBase
+[Route("api/[controller]")]
+[ApiController]
+public class BreakController : ControllerBase
+{
+    private readonly IbreakRepositoryCommand ibreakRepositoryCommand;
+    private readonly IbreakRepositoryQeury ibreakRepositoryQeury;
+    public BreakController(IbreakRepositoryCommand ibreakRepositoryCommand,IbreakRepositoryQeury ibreakRepositoryQeury)
+    => (this.ibreakRepositoryCommand, this.ibreakRepositoryQeury) = (ibreakRepositoryCommand, ibreakRepositoryQeury);
+
+    [HttpPost]
+    public async Task<IActionResult> Post([FromBody] BrakeTime brakeTimeDto)
     {
-        private readonly IMediatorGetService _mediatorGetService;
+        
 
-        public BreakController(IMediatorGetService mediatorGetService)
-        {
-            _mediatorGetService = mediatorGetService;
-        }
+       var BrakeTime= await ibreakRepositoryCommand.CreateBreakAsync(brakeTimeDto);
 
 
-
-
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] BrakeTimeDto brakeTimeDto)
-        {
-            // if (brakeTimeDto == null)
-            // {
-            //     return BadRequest("BrakeTimeDto cannot be null");
-            // }
-
-            // var breakRepository = _mediatorGetService.GetBreakRepository;
-
-            // if (breakRepository == null)
-            // {
-            //     return StatusCode(500, "Break repository is not available");
-            // }
-
-            // await breakRepository.CreateBreakAsync(brakeTimeDto);
-
-            // return Ok(true);
-            Console.WriteLine("dfasfda");
-
-            return Ok("Hello World");
-        }
+        return Ok(BrakeTime);
     }
+
+     [HttpGet]
+    public async Task<BrakeTime> Get(int id)
+    {
+        
+
+       var BrakeTime= await ibreakRepositoryQeury.GetBreakByIdAsinc(id);
+
+
+        return BrakeTime;
+    }
+}
 

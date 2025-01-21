@@ -1,8 +1,9 @@
 using System;
 using System.Threading.Tasks;
+using Break.Module.Core.BreakWorker.BackgroundService;
 using Microsoft.Extensions.Logging;
 using Modules.Break.Module.Core.Iservices;
-using Shared.Mediator;
+using Shared.Services.Tasks.PingCheker;
 
 
 //************************************ Service WorkerHenlde ******************************************//
@@ -10,15 +11,15 @@ using Shared.Mediator;
 
 namespace Modules.Break.Module.Core.BreakWorker.Command;
 
-    public class WorkerHenlde
+    public class WorkerHenlde:IWorkerHenlde
     {
 
         private readonly ILogger<WorkerHenlde> logger;
         private readonly IBreakTimeUpdateMediator breakeTimeMediator;
-        private readonly IMediatorGetService getService;
+         private readonly IPingSender pingSender;
         public WorkerHenlde(ILogger<WorkerHenlde> logger, IBreakTimeUpdateMediator breakeTimeMediator,
-        IMediatorGetService pingIpChecker)
-        => (this.breakeTimeMediator, this.logger, this.getService)= (breakeTimeMediator, logger, pingIpChecker);
+        IPingSender pingIpChecker)
+        => (this.breakeTimeMediator, this.logger, this.pingSender)= (breakeTimeMediator, logger, pingIpChecker);
 
         public async Task AsyncMethodBreake()
         {
@@ -28,14 +29,13 @@ namespace Modules.Break.Module.Core.BreakWorker.Command;
             {
                 // get user  -->>>>   from db
 
-                var PingResponseStatus = await getService.pingSender.PingIp("");
+                var PingResponseStatus = await pingSender.PingIp("");
 
                 await breakeTimeMediator.UpdateBreakTimeAsync(1, PingResponseStatus);
             }
 
             catch (Exception ex)
             {
-
 
                 logger.LogError(ex, "Error in WorkerServiceHenlde");
 

@@ -10,6 +10,7 @@ namespace Modules.Break.Module.Api;
         {
             services.AddDbContext(configuration); 
             services.AddBreakCoreServices();
+            services.AddBreakWorkerServices();
             return services;
         }
     }

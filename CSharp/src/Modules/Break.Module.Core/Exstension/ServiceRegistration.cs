@@ -1,13 +1,21 @@
 using System;
+using Break.Module.Core.Astractions.Dbcontracts;
+using Break.Module.Core.BreakWorker.BackgroundService;
+using Break.Module.Core.BreakWorker.OrchestratorService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Modules.Break.Module.Core.Astractions.Dbcontracts;
 using Modules.Break.Module.Core.Astractions.Irepository;
 using Modules.Break.Module.Core.Astractions.Irepository.Ibusy;
+using Modules.Break.Module.Core.Astractions.Iservices;
+using Modules.Break.Module.Core.BreakWorker.Command;
 using Modules.Break.Module.Core.DLA;
+using Modules.Break.Module.Core.Iservices;
+using Modules.Break.Module.Core.Mediator;
 using Modules.Break.Module.Core.Repository;
 using Modules.Break.Module.Core.Repository.Busy;
-using Shared.Mediator;
+
 
 namespace Modules.Break.Module.Core.Exstension;
 
@@ -36,10 +44,20 @@ public static class ServiceRegistration
         serviceDescriptors.AddScoped<IbreakRepositoryQeury, breakRepositoryQeury>();
         serviceDescriptors.AddScoped<IbusyRepositoryCommand, busyRepositoryCommand>();
         serviceDescriptors.AddScoped<IbusyRepositoryQeury, busyRepositoryQeury>();
-
+        serviceDescriptors.AddTransient<IRepositoryContract, RepositoryContractImplementation>();
 
 
         return serviceDescriptors;
     }
-    //******************************************************************************************************************//
+    //*******************************************Add Worker Services *****************************************************//
+
+     public static IServiceCollection AddBreakWorkerServices(this IServiceCollection serviceDescriptors)
+    {
+
+        serviceDescriptors.AddSingleton<WorkerCommand>();
+        serviceDescriptors.AddScoped<IWorkerHenlde,WorkerHenlde>();
+        serviceDescriptors.AddScoped<IBreakTimeUpdateMediator, BreakTimeUpdateMediator>();
+        serviceDescriptors.AddScoped<IAggregatorServiceBrakeTime, AggregatorServiceBrakeTime>();
+        return serviceDescriptors;
+    }
 }

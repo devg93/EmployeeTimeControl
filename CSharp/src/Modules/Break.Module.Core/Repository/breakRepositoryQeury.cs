@@ -14,8 +14,10 @@ namespace Modules. Break.Module.Core.Repository;
         public breakRepositoryQeury(DbInstace dbcontext)
         => this.dbcontext = dbcontext;
         public async Task<List<BrakeTime>> GetAllBreaksAsync()
-        => dbcontext.BrakeTimes != null ? await dbcontext.BrakeTimes.Include(ws => ws.EndTime).
-        Include(ws => ws.StartTime).ToListAsync() : new List<BrakeTime>();
+        => dbcontext.BrakeTimes != null ? 
+        await dbcontext.BrakeTimes.Include(ws => ws.EndTime).
+        Include(ws => ws.StartTime).Include(bs=>bs.busyChecker)
+        .ToListAsync() : new List<BrakeTime>();
 
         public async Task<BrakeTime> GetBreakByIdAsinc(int Id)
         {
@@ -27,6 +29,7 @@ namespace Modules. Break.Module.Core.Repository;
             var brakeTime = await dbcontext.BrakeTimes
                 .Include(ws => ws.EndTime)
                 .Include(ws => ws.StartTime)
+                .Include(bs=>bs.busyChecker)
                 .FirstOrDefaultAsync(x => x.Id == Id);
 
             return brakeTime ?? new BrakeTime();
