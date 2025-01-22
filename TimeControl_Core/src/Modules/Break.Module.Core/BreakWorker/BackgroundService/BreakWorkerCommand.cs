@@ -11,12 +11,12 @@ namespace Modules.Break.Module.Core.BreakWorker.Command;
 
 //******************************** Service WorkerCommand **************************************//
 // The WorkerCommand class is a background service that continuously executes tasks in a loop
-public class WorkerCommand : BackgroundService
+public class BreakWorkerCommand : BackgroundService
 {
-    private readonly ILogger<WorkerCommand> _logger;
+    private readonly ILogger<BreakWorkerCommand> _logger;
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
-    public WorkerCommand(ILogger<WorkerCommand> logger, IServiceScopeFactory serviceScopeFactory)
+    public BreakWorkerCommand(ILogger<BreakWorkerCommand> logger, IServiceScopeFactory serviceScopeFactory)
     => (_logger, _serviceScopeFactory) = (logger ?? throw new ArgumentNullException(nameof(logger))
      , serviceScopeFactory ?? throw new ArgumentNullException(nameof(serviceScopeFactory)));
 

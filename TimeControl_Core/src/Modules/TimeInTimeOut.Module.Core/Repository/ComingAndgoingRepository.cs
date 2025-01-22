@@ -53,7 +53,6 @@ namespace TimeInTimeOut.Module.Core.Repository
         return result;
     }
 
-
         public Task<ComingAndgoing> Update(ComingAndgoing entity)
         {
             throw new NotImplementedException();
