@@ -72,9 +72,6 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
 
 
-
-
-
     //***************************************Private Async Methods ***********************************************************//
 
     private async Task<BrakeTime?> FetchExistingBrakeTime(int id)
