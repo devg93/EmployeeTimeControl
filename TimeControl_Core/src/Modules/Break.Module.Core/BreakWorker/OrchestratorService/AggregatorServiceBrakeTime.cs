@@ -15,46 +15,44 @@ using Shared.Services.Tasks.ShedulerTuplelog.Enum;
 
 //************************************ Service Orchestration ******************************************//
 // The AggregatorServiceBrakeTime class is a central component for coordinating the management of brake time data. 
-// It orchestrates the interactions between repositories and mediator services to ensure consistency and accuracy
+// It orchestrates the interactions between repositories witch DI modules 
 // in updating or creating brake time records. The class implements the following key responsibilities:
 // . Validates input data and retrieves necessary information from repositories.
-// . Uses mediator services to enforce business rules and evaluate time-based conditions.
 
- 
+
+
 namespace Break.Module.Core.BreakWorker.OrchestratorService;
 
-  public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
+public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 {
     private readonly IRepositoryContract _repositoryContract;
     private readonly ITimeHenldeLogService _timeHenldeLogService;
 
     public AggregatorServiceBrakeTime(IRepositoryContract repositoryContract, ITimeHenldeLogService timeHenldeLogService)
+    => (_repositoryContract, _timeHenldeLogService) = (repositoryContract, timeHenldeLogService);
+
+
+    public async Task<bool> AddOrUpdateBrakeTime(BrakeTimeDtoReqvest entity, bool IpStatus)
     {
-        _repositoryContract = repositoryContract;
-        _timeHenldeLogService = timeHenldeLogService;
-    }
+        if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-    public async Task<bool> AddOrUpdateBrakeTime(BrakeTimeDtoReqvest entity, bool status)
-    {
-        if (entity == null)
-            throw new ArgumentNullException(nameof(entity));
+        var existingBrake = await FetchExistingBrakeTime(1); //entity.Id
+        var existingTimeInOut = await FetchServiceTimeInTimeOut(1);//entity.Id
+        bool BusyStatus = await GetBusyStatus(1);
 
-   
-        var existingBrake = await FetchExistingBrakeTime(entity.Id);
-        var existingTimeInOut = await FetchServiceTime(entity.Id);
 
-        if (existingBrake == null || existingTimeInOut == null)
-        throw new InvalidOperationException("Required data could not be retrieved from the repository.");
+        if (existingBrake is null || existingTimeInOut is null)
+            throw new InvalidOperationException("Required data could not be retrieved from the repository.");
 
-  
+
         var timeDto = PrepareTimeDto(existingBrake, existingTimeInOut);
 
-        var response = await _timeHenldeLogService.GetTimeResult(timeDto, status, true, ServiceResponseType.ComingAndgoing);
+        var response = await _timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.ComingAndgoing);
         var resultTime = (ResponseResultBrakeTime)response;
 
         try
         {
-            
+
             if (resultTime.StartTimeValidWorkSchedule && !resultTime.OfflineTimeDateDay)
             {
                 return await HandleValidWorkSchedule(existingBrake, entity.Id);
@@ -72,17 +70,24 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService;
         return true;
     }
 
+
+
+
+
+
+    //***************************************Private Async Methods ***********************************************************//
+
     private async Task<BrakeTime?> FetchExistingBrakeTime(int id)
     {
         return await _repositoryContract.brakeTimeRepositoryQeury.GetBreakByIdAsinc(id);
     }
 
-    private async Task<TimeInOut?> FetchServiceTime(int id)
+    private async Task<ComingAndGoingDto?> FetchServiceTimeInTimeOut(int id)
     {
         return await _repositoryContract.getServiceTimeInTimeOut.GetByIdAsync(id);
     }
 
-    private TimeDtoReqvest PrepareTimeDto(BrakeTime existingBrake, TimeInOut existingTimeInOut)
+    private TimeDtoReqvest PrepareTimeDto(BrakeTime existingBrake, ComingAndGoingDto existingTimeInOut)
     {
         return new TimeDtoReqvest
         {
@@ -122,4 +127,12 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService;
         await _repositoryContract.busyRepositoryCommand.UpdateBusy(id, status);
         return await _repositoryContract.brakeTimeRepositoryCommand.Save();
     }
+
+    private async Task<bool> GetBusyStatus(int Userid)
+    {
+        var busyChecker = await _repositoryContract.busyRepositoryQeury.GetBusyByIdAsync(Userid);
+        return true;
+    }
+
+    //***************************************************************************************************************************//
 }

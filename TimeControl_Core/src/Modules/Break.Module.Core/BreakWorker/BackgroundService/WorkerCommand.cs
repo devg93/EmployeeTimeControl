@@ -13,34 +13,35 @@ namespace Modules.Break.Module.Core.BreakWorker.Command;
 // The WorkerCommand class is a background service that continuously executes tasks in a loop
 public class WorkerCommand : BackgroundService
 {
-    private readonly ILogger<WorkerCommand> logger;
-    private readonly IWorkerHenlde workerHenlde;
-    private readonly IServiceScopeFactory serviceScopeFactory;
-    public WorkerCommand(ILogger<WorkerCommand> logger, IWorkerHenlde workerHenlde, IServiceScopeFactory serviceScopeFactory)
-    => (this.logger, this.workerHenlde, this.serviceScopeFactory) = (logger, workerHenlde, serviceScopeFactory);
+    private readonly ILogger<WorkerCommand> _logger;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
 
-     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    public WorkerCommand(ILogger<WorkerCommand> logger, IServiceScopeFactory serviceScopeFactory)
+    => (_logger, _serviceScopeFactory) = (logger ?? throw new ArgumentNullException(nameof(logger))
+     , serviceScopeFactory ?? throw new ArgumentNullException(nameof(serviceScopeFactory)));
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        logger.LogInformation("WorkerCommand started.");
+        _logger.LogInformation("WorkerCommand started.");
 
         while (!stoppingToken.IsCancellationRequested)
         {
             try
             {
-                using var scope = serviceScopeFactory.CreateScope();
+                using var scope = _serviceScopeFactory.CreateScope();
                 var workerHandler = scope.ServiceProvider.GetRequiredService<IWorkerHenlde>();
 
                 await workerHandler.AsyncMethodBreake();
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Unhandled exception in WorkerCommand.");
+                _logger.LogError(ex, "Unhandled exception in WorkerCommand.");
             }
 
-           
             await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken).ConfigureAwait(false);
         }
 
-        logger.LogInformation("WorkerCommand stopped.");
+        _logger.LogInformation("WorkerCommand stopped.");
     }
+
 }
