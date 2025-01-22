@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Shared.Services.ModuleCommunication.Contracts;
 using TimeInTimeOut.Module.Core.Abstractions;
 using TimeInTimeOut.Module.Core.Repository;
-using TimeInTimeOut.Module.Core.Services;
+using TimeInTimeOut.Module.Core.ServicesCommunication;
 using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.BackgroundService;
 using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService;
 
