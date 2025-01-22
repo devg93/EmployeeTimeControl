@@ -3,9 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Shared.Services.ModuleCommunication.Contracts;
 using TimeInTimeOut.Module.Core.Abstractions;
 using TimeInTimeOut.Module.Core.Repository;
-using TimeInTimeOut.Module.Core.ServicesCommunication;
 using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.BackgroundService;
 using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService;
+using TimeInTimeOut.Module.Core.Services;
 
 namespace TimeInTimeOut.Module.Core.Exstension
 {
@@ -14,7 +14,7 @@ namespace TimeInTimeOut.Module.Core.Exstension
         public static IServiceCollection AddTimeInTimeOutCoreServicesDb(this IServiceCollection serviceDescriptors)
         {
 
-            serviceDescriptors.AddScoped<IGetServiceFtomTimeInTimeOutById, SendDataToBreakModule>();
+            serviceDescriptors.AddScoped<ISendDataToBreakModule, SendDataToBreakModule>();
             serviceDescriptors.AddScoped<IcomingAndgoingRepository, ComingAndgoingRepository>();
 
             return serviceDescriptors;

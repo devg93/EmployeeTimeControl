@@ -5,7 +5,7 @@ using TimeInTimeOut.Module.Core.Abstractions;
 
 namespace TimeInTimeOut.Module.Core.Services
 {
-    public class SendDataToBreakModule : IGetServiceFtomTimeInTimeOutById
+    public class SendDataToBreakModule : ISendDataToBreakModule
     {
         private readonly IcomingAndgoingRepository _icomingAndgoingRepository;
 

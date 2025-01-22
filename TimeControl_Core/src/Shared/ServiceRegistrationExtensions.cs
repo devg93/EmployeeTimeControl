@@ -4,7 +4,7 @@ using Shared.Services.ModuleCommunication.Contracts;
 using Shared.Services.Tasks.PingCheker;
 using Shared.Services.Tasks.ShedulerTuplelog;
 
-namespace Shared;
+namespace Shared;       
 
 public static class ServiceRegistrationExtensions
 {
@@ -15,7 +15,7 @@ public static class ServiceRegistrationExtensions
     {
         services.AddSingleton<ITimeHenldeLogService, TimeHenldeLogService>();
         services.AddSingleton<IPingSender, PingSender>();
-        
+
 
         return services;
     }
@@ -41,7 +41,7 @@ public static class ServiceRegistrationExtensions
     public static IServiceCollection AddServicesRegisterByInterface(this IServiceCollection services)
     {
         services.Scan(scan => scan.FromAssemblies(Assembly.GetExecutingAssembly())
-                .AddClasses(classes =>classes.AssignableTo<IGetServiceFromBreakById>())
+                .AddClasses(classes => classes.AssignableTo<IGetServiceFromBreakById>())
                         .AddClasses(classes =>
                             classes.AssignableTo<IGetServiceFtomTimeInTimeOutById>()
                 ).AsImplementedInterfaces().WithScopedLifetime()
