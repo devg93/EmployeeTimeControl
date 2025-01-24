@@ -1,7 +1,7 @@
 using System.Net.WebSockets;
 using Microsoft.EntityFrameworkCore;
 using TimeInTimeOut.Module.Core.Abstractions;
-using TimeInTimeOut.Module.Core.DLA;
+using TimeInTimeOut.Module.Core.DAL;
 using TimeInTimeOut.Module.Core.Domain.Entity;
 
 namespace TimeInTimeOut.Module.Core.Repository

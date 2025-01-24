@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using TimeInTimeOut.Module.Core.Domain.Entity;
 
-namespace TimeInTimeOut.Module.Core.DLA
+namespace TimeInTimeOut.Module.Core.DAL
 {
     public class DbInstaceTimeInOut : DbContext
     {
@@ -33,7 +33,7 @@ namespace TimeInTimeOut.Module.Core.DLA
 
             var optionsBuilder = new DbContextOptionsBuilder<DbInstaceTimeInOut>();
             optionsBuilder.UseMySql(
-                   "Server=localhost;Port=3306;Database=Feature;User=root;Password=password;",
+                   "Server=localhost;Port=3306;Database=TimeInTimeOut;User=root;Password=password;",
                     new MySqlServerVersion(new Version(8, 0, 30))
                 );
 

@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TimeInTimeOut.Module.Core.Domain.Entity;
 
-namespace TimeInTimeOut.Module.Core.EntityConfiguration
+namespace TimeInTimeOut.Module.Core.EntityConfiguration.DAL
 {
     public class ConfigurationComingAndgoing : IEntityTypeConfiguration<ComingAndgoing>
     {

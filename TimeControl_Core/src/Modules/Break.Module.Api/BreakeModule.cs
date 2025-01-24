@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Modules.Break.Module.Core.Exstension;
 using Modules.Break.Module.Core.Exstension.DAL;
 using TimeInTimeOut.Module.Core.Exstension;
+using TimeInTimeOut.Module.Core.Exstension.DAL;
 
 namespace Modules.Break.Module.Api;
 

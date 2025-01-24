@@ -7,10 +7,10 @@ using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.BackgroundService;
 using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService;
 
 using TimeInTimeOut.Module.Core.ServicesCommunication;
-using TimeInTimeOut.Module.Core.DLA;
+using TimeInTimeOut.Module.Core.DAL;
 using Microsoft.EntityFrameworkCore;
 
-namespace TimeInTimeOut.Module.Core.Exstension
+namespace TimeInTimeOut.Module.Core.Exstension.DAL
 {
     public static class ServiceRegistration
     {
@@ -31,7 +31,7 @@ namespace TimeInTimeOut.Module.Core.Exstension
         public static IServiceCollection AddTimeInTimeOutCoreServicesDb(this IServiceCollection serviceDescriptors)
         {
 
-            // serviceDescriptors.AddScoped<ISendServiceToBreakModule, SendDataToBreakModule>();
+        
             serviceDescriptors.AddScoped<IcomingAndgoingRepository, ComingAndgoingRepository>();
 
             return serviceDescriptors;

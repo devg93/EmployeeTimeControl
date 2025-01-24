@@ -9,8 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{DDCC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workschedule.Module.Core", "Modules\Workschedule.Module.Core\Workschedule.Module.Core.csproj", "{75333F24-E2B1-4E8F-B5A7-7EC2E77F2AB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workschedule.Module.Api", "Modules\Workschedule.Module.Api\Workschedule.Module.Api.csproj", "{39509F7F-DB06-436A-AFFE-87407067E4E2}"
-EndProject
+
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeInTimeOut.Module.Core", "Modules\TimeInTimeOut.Module.Core\TimeInTimeOut.Module.Core.csproj", "{E00C0DB5-F849-45DC-ADD3-1213FCB801FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeInTimeOut.Module.Api", "Modules\TimeInTimeOut.Module.Api\TimeInTimeOut.Module.Api.csproj", "{F8970976-DED1-4083-8466-3F6EAD283B01}"
