@@ -1,5 +1,7 @@
 {
   "expo": {
+    "license": "MIT",
+
     "name": "usermanagment",
     "slug": "usermanagment",
     "version": "1.0.0",

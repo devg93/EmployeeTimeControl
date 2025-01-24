@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Modules.Break.Module.Core.Entity;
 
-namespace Modules.Break.Module.Core.DLA;
+namespace Modules.Break.Module.Core.DAL;
 
 public class DbInstace : DbContext
 {
@@ -35,7 +35,7 @@ public class DbInstaceBreakeFactory : IDesignTimeDbContextFactory<DbInstace>
 
         var optionsBuilder = new DbContextOptionsBuilder<DbInstace>();
         optionsBuilder.UseMySql(
-               "Server=localhost;Port=3306;Database=Feature;User=root;Password=password;",
+               "Server=localhost;Port=3306;Database=Break;User=root;Password=password;",
                 new MySqlServerVersion(new Version(8, 0, 30))
             );
 

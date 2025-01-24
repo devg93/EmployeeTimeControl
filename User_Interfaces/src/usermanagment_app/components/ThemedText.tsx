@@ -1,4 +1,4 @@
-import { Text, type TextProps, StyleSheet } from 'react-native';
+import { Text,View, type TextProps, StyleSheet } from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 
@@ -18,6 +18,8 @@ export function ThemedText({
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
   return (
+    <View>
+      <Text>Hello</Text>
     <Text
       style={[
         { color },
@@ -29,7 +31,7 @@ export function ThemedText({
         style,
       ]}
       {...rest}
-    />
+    /></View>
   );
 }
 

@@ -3,11 +3,13 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Modules.Break.Module.Core;
-using Modules.Break.Module.Core.Astractions.Dbcontracts;
+using Modules.Break.Module.Core.Astractions.Irepository;
+using Modules.Break.Module.Core.Astractions.Irepository.Ibusy;
 using Modules.Break.Module.Core.Astractions.Iservices;
 using Modules.Break.Module.Core.Dto;
 using Modules.Break.Module.Core.Entity;
 using Shared.Dto;
+using Shared.Services.ModuleCommunication.Contracts;
 using Shared.Services.Tasks.PingCheker;
 using Shared.Services.Tasks.ShedulerTuplelog;
 using Shared.Services.Tasks.ShedulerTuplelog.Enum;
@@ -25,11 +27,21 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService;
 
 public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 {
-    private readonly IRepositoryContract _repositoryContract;
-    private readonly ITimeHenldeLogService _timeHenldeLogService;
+    private readonly IbreakRepositoryCommand  breakRepositoryCommand;
+    private readonly IbreakRepositoryQeury breakRepositoryQeury;
+    private readonly ITimeHenldeLogService timeHenldeLogService;
+    private readonly IbusyRepositoryCommand busyRepositoryCommand;
+    private readonly IbusyRepositoryQeury busyRepositoryQeury;
+    private readonly ISendServiceToBreakModule GetServiceToTimeInTimeOutModule;
 
-    public AggregatorServiceBrakeTime(IRepositoryContract repositoryContract, ITimeHenldeLogService timeHenldeLogService)
-    => (_repositoryContract, _timeHenldeLogService) = (repositoryContract, timeHenldeLogService);
+    public AggregatorServiceBrakeTime(IbreakRepositoryCommand ibreakRepositoryCommand, 
+    ITimeHenldeLogService timeHenldeLogService,IbreakRepositoryQeury ibreakRepositoryQeury,
+    ISendServiceToBreakModule sendServiceToTimeInTimeOutModule,
+    IbusyRepositoryCommand ibusyRepositoryCommand,IbusyRepositoryQeury ibusyRepositoryQeury)
+    => (this.breakRepositoryCommand, this.timeHenldeLogService, this.breakRepositoryQeury, this.GetServiceToTimeInTimeOutModule,
+    this.busyRepositoryCommand, this.busyRepositoryQeury) = 
+    (ibreakRepositoryCommand, timeHenldeLogService, ibreakRepositoryQeury,
+     sendServiceToTimeInTimeOutModule, ibusyRepositoryCommand, ibusyRepositoryQeury);
 
 
     public async Task<bool> AddOrUpdateBrakeTime(BrakeTimeDtoReqvest entity, bool IpStatus)
@@ -47,7 +59,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
         var timeDto = PrepareTimeDto(existingBrake, existingTimeInOut);
 
-        var response = await _timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.ComingAndgoing);
+        var response = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.ComingAndgoing);
         var resultTime = (ResponseResultBrakeTime)response;
 
         try
@@ -79,20 +91,20 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
     private async Task<BrakeTime?> FetchExistingBrakeTime(int id)
     {
-        return await _repositoryContract.brakeTimeRepositoryQeury.GetBreakByIdAsinc(id);
+        return await breakRepositoryQeury.GetBreakByIdAsinc(id);
     }
 
     private async Task<ComingAndGoingDto?> FetchServiceTimeInTimeOut(int id)
     {
-        return await _repositoryContract.getServiceTimeInTimeOut.GetByIdAsync(id);
+        return await GetServiceToTimeInTimeOutModule.GetByIdAsync(id);
     }
 
     private TimeDtoReqvest PrepareTimeDto(BrakeTime existingBrake, ComingAndGoingDto existingTimeInOut)
     {
         return new TimeDtoReqvest
         {
-            StartTime = existingBrake.StartTime?.Select(s => s.dateTime).ToList(),
-            EndTime = existingBrake.EndTime?.Select(e => e.dateTime).ToList(),
+            StartTime = existingBrake.StartTime?.Select(s => s.StartTime).ToList(),
+            EndTime = existingBrake.EndTime?.Select(e => e.EndTime).ToList(),
             OnlineTime = existingTimeInOut.OnlineTime?.Select(o => o.TimeIn).ToList(),
             OflineTime = existingTimeInOut.OflineTime?.Select(o => o.TimeOut).ToList()
         };
@@ -100,7 +112,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
     private async Task<bool> HandleValidWorkSchedule(BrakeTime existingBrake, int id)
     {
-        existingBrake.EndTime?.Add(new DateTimeWorkSchedule { dateTime = DateTime.Now });
+        existingBrake.EndTime?.Add(new DateTimeWorkSchedule { EndTime = DateTime.Now });
         return await UpdateBusyStatus(id, false);
     }
 
@@ -111,11 +123,11 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
             var newBrakeTime = new BrakeTime
             {
                 Id = entity.Id,
-                StartTime = entity.StartTime?.Select(t => new DateTimeWorkSchedule { dateTime = t }).ToList(),
-                EndTime = entity.EndTime?.Select(t => new DateTimeWorkSchedule { dateTime = t }).ToList()
+                StartTime = entity.StartTime?.Select(t => new DateTimeWorkSchedule { StartTime = t }).ToList(),
+                EndTime = entity.EndTime?.Select(t => new DateTimeWorkSchedule { EndTime = t }).ToList()
             };
 
-            await _repositoryContract.brakeTimeRepositoryCommand.CreateBreakAsync(newBrakeTime);
+            await breakRepositoryCommand.CreateBreakAsync(newBrakeTime);
             return await UpdateBusyStatus(entity.Id, true);
         }
 
@@ -124,13 +136,13 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
     private async Task<bool> UpdateBusyStatus(int id, bool status)
     {
-        await _repositoryContract.busyRepositoryCommand.UpdateBusy(id, status);
-        return await _repositoryContract.brakeTimeRepositoryCommand.Save();
+        await busyRepositoryCommand.UpdateBusy(id, status);
+        return await busyRepositoryCommand.Save();
     }
 
     private async Task<bool> GetBusyStatus(int Userid)
     {
-        var busyChecker = await _repositoryContract.busyRepositoryQeury.GetBusyByIdAsync(Userid);
+        var busyChecker = await busyRepositoryQeury.GetBusyByIdAsync(Userid);
         return true;
     }
 

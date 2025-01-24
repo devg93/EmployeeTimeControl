@@ -7,5 +7,6 @@ namespace Modules.Break.Module.Core.Astractions.Irepository.Ibusy;
     {
         Task<bool> CreateBusy(busyChecker entity);
         Task<bool> UpdateBusy(int UserId, bool param);
+        Task<bool>Save();
 
     }

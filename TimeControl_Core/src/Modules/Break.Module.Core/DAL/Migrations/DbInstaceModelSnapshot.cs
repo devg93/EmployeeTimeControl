@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Modules.Break.Module.Core.DLA;
+using Modules.Break.Module.Core.DAL;
 
 #nullable disable
 
-namespace Break.Module.Core.Migrations
+namespace Break.Module.Core.DAL.Migrations
 {
     [DbContext(typeof(DbInstace))]
     partial class DbInstaceModelSnapshot : ModelSnapshot
@@ -57,7 +57,10 @@ namespace Break.Module.Core.Migrations
                     b.Property<int?>("BrakeTimeId1")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("dateTime")
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");

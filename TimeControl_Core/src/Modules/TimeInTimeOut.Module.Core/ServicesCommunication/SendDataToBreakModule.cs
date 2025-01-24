@@ -3,9 +3,9 @@ using Shared.Dto;
 using Shared.Services.ModuleCommunication.Contracts;
 using TimeInTimeOut.Module.Core.Abstractions;
 
-namespace TimeInTimeOut.Module.Core.Services
+namespace TimeInTimeOut.Module.Core.ServicesCommunication
 {
-    public class SendDataToBreakModule : ISendDataToBreakModule
+    public class SendDataToBreakModule : ISendServiceToBreakModule
     {
         private readonly IcomingAndgoingRepository _icomingAndgoingRepository;
 

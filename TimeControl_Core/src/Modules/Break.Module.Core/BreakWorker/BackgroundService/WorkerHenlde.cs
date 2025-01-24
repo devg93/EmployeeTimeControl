@@ -32,7 +32,7 @@ public class WorkerHenlde : IWorkerHenlde
                 var PingResponseStatus = await pingSender.PingIp("192.168.1.204");
               
 
-                // await breakeTimeMediator.UpdateBreakTimeAsync(1, PingResponseStatus);
+                 await breakeTimeMediator.UpdateBreakTimeAsync(1, PingResponseStatus);
             }
 
             catch (Exception ex)

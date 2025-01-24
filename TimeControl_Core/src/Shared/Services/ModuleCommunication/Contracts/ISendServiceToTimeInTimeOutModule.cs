@@ -4,7 +4,8 @@ using Shared.Dto;
 
 namespace Shared.Services.ModuleCommunication.Contracts;
 
-    public interface ISendDataToTimeInTimeOutModule
+    public interface ISendServiceToTimeInTimeOutModule
     {
          Task<BrakeTimeDto> GetByIdAsync(int id);
     }
+

@@ -24,7 +24,7 @@ namespace Modules. Break.Module.Core.Mediator;
                 EndTime = pingResponseStatus ? new List<DateTime> { DateTime.Now } : new List<DateTime>()
             };
 
-            await brakeTimeService.AddOrUpdateBrakeTime(workSchedule, pingResponseStatus);
+             await brakeTimeService.AddOrUpdateBrakeTime(workSchedule, pingResponseStatus);
             return true;
         }
     }

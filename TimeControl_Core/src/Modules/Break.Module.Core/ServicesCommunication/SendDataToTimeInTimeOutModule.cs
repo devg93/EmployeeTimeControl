@@ -7,7 +7,7 @@ using Shared.Services.ModuleCommunication.Contracts;
 
 namespace Break.Module.Core.ServicesCommunication
 {
-    public class SendDataToTimeInTimeOutModule:ISendDataToTimeInTimeOutModule
+    public class SendDataToTimeInTimeOutModule:ISendServiceToTimeInTimeOutModule
     {
         private readonly IbreakRepositoryQeury getservice;
         public SendDataToTimeInTimeOutModule(IbreakRepositoryQeury getservice)

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Modules.Break.Module.Core.Astractions.Irepository;
-using Modules.Break.Module.Core.DLA;
+using Modules.Break.Module.Core.DAL;
 using Modules.Break.Module.Core.Entity;
 
 

@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Break.Module.Core.Migrations
+namespace Break.Module.Core.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class @break : Migration
+    public partial class breakEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -55,7 +55,8 @@ namespace Break.Module.Core.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    dateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    StartTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     BrakeTimeId = table.Column<int>(type: "int", nullable: true),
                     BrakeTimeId1 = table.Column<int>(type: "int", nullable: true)
                 },

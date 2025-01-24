@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Modules.Break.Module.Core.Entity;
 
-namespace Modules.Break.Module.Core.EntityConfiguration;
+namespace Modules.Break.Module.Core.EntityConfiguration.DAL;
 
 
  //************************************Add Entuty Configuration ********************************************//

@@ -4,7 +4,7 @@ using Shared.Services.ModuleCommunication.Contracts;
 using Shared.Services.Tasks.PingCheker;
 using Shared.Services.Tasks.ShedulerTuplelog;
 
-namespace Shared;       
+namespace Shared;
 
 public static class ServiceRegistrationExtensions
 {
@@ -38,15 +38,27 @@ public static class ServiceRegistrationExtensions
 
     //**********************************Init DI Services Witch Scrutor*************************************************
 
+
     public static IServiceCollection AddServicesRegisterByInterface(this IServiceCollection services)
     {
-        services.Scan(scan => scan.FromAssemblies(Assembly.GetExecutingAssembly())
-                .AddClasses(classes => classes.AssignableTo<IGetServiceFromBreakById>())
-                        .AddClasses(classes =>
-                            classes.AssignableTo<IGetServiceFtomTimeInTimeOutById>()
-                ).AsImplementedInterfaces().WithScopedLifetime()
+
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+            .Where(a => !a.IsDynamic && !string.IsNullOrWhiteSpace(a.FullName))
+            .ToArray();
+
+        services.Scan(scan => scan
+            .FromAssemblies(assemblies)
+            .AddClasses(classes => classes.AssignableTo<ISendServiceToBreakModule>())
+                .AsImplementedInterfaces()
+                .WithScopedLifetime()
+            .AddClasses(classes => classes.AssignableTo<ISendServiceToTimeInTimeOutModule>())
+                .AsImplementedInterfaces()
+                .WithScopedLifetime()
         );
 
         return services;
     }
+
+
+
 }

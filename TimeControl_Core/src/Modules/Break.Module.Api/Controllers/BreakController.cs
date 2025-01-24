@@ -13,8 +13,10 @@ public class BreakController : ControllerBase
 {
     private readonly IbreakRepositoryCommand ibreakRepositoryCommand;
     private readonly IbreakRepositoryQeury ibreakRepositoryQeury;
+  
     public BreakController(IbreakRepositoryCommand ibreakRepositoryCommand,IbreakRepositoryQeury ibreakRepositoryQeury)
-    => (this.ibreakRepositoryCommand, this.ibreakRepositoryQeury) = (ibreakRepositoryCommand, ibreakRepositoryQeury);
+    => (this.ibreakRepositoryCommand, this.ibreakRepositoryQeury) = 
+    (ibreakRepositoryCommand, ibreakRepositoryQeury);
 
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] BrakeTime brakeTimeDto)
@@ -32,8 +34,9 @@ public class BreakController : ControllerBase
     {
         
 
-       var BrakeTime= await ibreakRepositoryQeury.GetBreakByIdAsinc(id);
-
+        var BrakeTime= await ibreakRepositoryQeury.GetBreakByIdAsinc(id);
+      
+    
 
         return BrakeTime;
     }
