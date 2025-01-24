@@ -31,7 +31,7 @@ namespace TimeInTimeOut.Module.Core.Exstension
         public static IServiceCollection AddTimeInTimeOutCoreServicesDb(this IServiceCollection serviceDescriptors)
         {
 
-            serviceDescriptors.AddScoped<ISendServiceToBreakModule, SendDataToBreakModule>();
+            // serviceDescriptors.AddScoped<ISendServiceToBreakModule, SendDataToBreakModule>();
             serviceDescriptors.AddScoped<IcomingAndgoingRepository, ComingAndgoingRepository>();
 
             return serviceDescriptors;

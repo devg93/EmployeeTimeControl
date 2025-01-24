@@ -55,8 +55,19 @@ public static class ServiceRegistrationExtensions
                 .AsImplementedInterfaces()
                 .WithScopedLifetime()
         );
+        var registeredTypes = assemblies.SelectMany(a => a.GetTypes())
+       .Where(type => typeof(ISendServiceToBreakModule).IsAssignableFrom(type)
+                      || typeof(ISendServiceToTimeInTimeOutModule).IsAssignableFrom(type))
+       .ToList();
+
+        foreach (var type in registeredTypes)
+        {
+            Console.WriteLine($"Registered class: {type.FullName}");
+        }
 
         return services;
+
+
     }
 
 
