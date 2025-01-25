@@ -12,6 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared.csproj" />
-    <ProjectReference Include="..\..\Modules\TimeInTimeOut.Module.Core\TimeInTimeOut.Module.Core.csproj" /> 
+    <ProjectReference Include="..\TimeInTimeOut.Module.Core\TimeInTimeOut.Module.Core.csproj" />
+  
+  
+  
+    
   </ItemGroup>
 </Project>

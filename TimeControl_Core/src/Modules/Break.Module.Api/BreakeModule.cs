@@ -17,13 +17,16 @@ namespace Modules.Break.Module.Api;
             return services;
         }
 
-
-          public static IServiceCollection RegisterTimeInTimeOutModule(this IServiceCollection services, IConfiguration configuration)
+         public static IServiceCollection RegisterTimeInTimeOutModule(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTimeInTimeOutDbContext(); 
             services.AddTimeInTimeOutCoreServicesDb();
             services.AddTimeInTimeOutCoreServicesWorker();
+            
+            
+        
             return services;
         }
+
     }
 

@@ -13,10 +13,11 @@
 
  <ItemGroup>
     <ProjectReference Include="..\Modules\Break.Module.Api\Break.Module.Api.csproj" />
-      <ProjectReference Include="..\Modules\TimeInTimeOut.Module.Api\TimeInTimeOut.Module.Api.csproj" />
-
-      
+   
     <ProjectReference Include="..\Shared\Shared.csproj" />
+   
+    <ProjectReference Include="..\Modules\TimeInTimeOut.Module.Core\TimeInTimeOut.Module.Core.csproj" />
+    
  
   </ItemGroup>
 
