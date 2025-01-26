@@ -16,7 +16,7 @@
    
     <ProjectReference Include="..\Shared\Shared.csproj" />
    
-    <ProjectReference Include="..\Modules\TimeInTimeOut.Module.Core\TimeInTimeOut.Module.Core.csproj" />
+    <ProjectReference Include="..\Modules\TimeInTimeOut.Module.Api\TimeInTimeOut.Module.Api.csproj" />
     
  
   </ItemGroup>

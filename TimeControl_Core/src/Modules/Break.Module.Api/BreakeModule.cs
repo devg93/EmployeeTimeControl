@@ -2,8 +2,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Modules.Break.Module.Core.Exstension;
 using Modules.Break.Module.Core.Exstension.DAL;
-using TimeInTimeOut.Module.Core.Exstension;
-using TimeInTimeOut.Module.Core.Exstension.DAL;
+// using TimeInTimeOut.Module.Core.Exstension;
+// using TimeInTimeOut.Module.Core.Exstension.DAL;
 
 namespace Modules.Break.Module.Api;
 
@@ -17,16 +17,16 @@ namespace Modules.Break.Module.Api;
             return services;
         }
 
-         public static IServiceCollection RegisterTimeInTimeOutModule(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddTimeInTimeOutDbContext(); 
-            services.AddTimeInTimeOutCoreServicesDb();
-            services.AddTimeInTimeOutCoreServicesWorker();
+        //  public static IServiceCollection RegisterTimeInTimeOutModule(this IServiceCollection services)
+        // {
+        //     services.AddTimeInTimeOutDbContext(); 
+        //     services.AddTimeInTimeOutCoreServicesDb();
+        //     services.AddTimeInTimeOutCoreServicesWorker();
             
             
         
-            return services;
-        }
+        //     return services;
+        // }
 
     }
 

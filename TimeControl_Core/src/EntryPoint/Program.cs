@@ -4,6 +4,7 @@ using Modules.Break.Module.Api;
 using Modules.Break.Module.Core.Exstension;
 using Modules.Break.Module.Core.Exstension.DAL;
 using Shared;
+using TimeInTimeOut.Module.Api;
 
 
 
@@ -21,7 +22,7 @@ builder.Services.AddControllers().AddApplicationPart(typeof(Modules.Break.Module
 builder.Services.AddBreakWorkerServices();
 // builder.Services.AddDbContext(builder.Configuration);
 builder.Services.RegisterModuleBreak(builder.Configuration);
-// builder.Services.RegisterTimeInTimeOutModule(builder.Configuration);
+ builder.Services.RegisterTimeInTimeOutModule();
 builder.Services.AddServicesRegisterByInterface();
 builder.Services.addSharedServices();
 

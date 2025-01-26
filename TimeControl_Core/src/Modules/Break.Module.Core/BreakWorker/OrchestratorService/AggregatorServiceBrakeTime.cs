@@ -57,12 +57,12 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
             throw new InvalidOperationException("Required data could not be retrieved from the repository.");
 
 
-        var timeDto = PrepareTimeDto(existingBrake, existingTimeInOut);
+        TimeDtoReqvest timeDto = PrepareTimeDto(existingBrake, existingTimeInOut);
 
-        var response = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.ComingAndgoing);
-        var resultTime = (ResponseResultBrakeTime)response;
-
-        try
+        ResponseResultBrakeTime resultTime =(ResponseResultBrakeTime)
+        await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.ComingAndgoing);
+      
+        // try
         {
 
             if (resultTime.StartTimeValidWorkSchedule && !resultTime.OfflineTimeDateDay)
@@ -74,10 +74,10 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
                 return await HandleOnlineTimeValid(resultTime, entity);
             }
         }
-        catch (Exception ex)
-        {
-            throw new Exception("Database error occurred while saving changes.", ex);
-        }
+        // catch (Exception ex)
+        // {
+        //     throw new Exception("Database error occurred while saving changes.", ex);
+        // }
 
         return true;
     }

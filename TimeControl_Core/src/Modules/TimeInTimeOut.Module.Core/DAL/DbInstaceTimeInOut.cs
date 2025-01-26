@@ -26,10 +26,10 @@ namespace TimeInTimeOut.Module.Core.DAL
     {
         public DbInstaceTimeInOut CreateDbContext(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("ConnectionStringsDB.json")
-                .Build();
+            // var configuration = new ConfigurationBuilder()
+            //     .SetBasePath(Directory.GetCurrentDirectory())
+            //     .AddJsonFile("ConnectionStringsDB.json")
+            //     .Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<DbInstaceTimeInOut>();
             optionsBuilder.UseMySql(
