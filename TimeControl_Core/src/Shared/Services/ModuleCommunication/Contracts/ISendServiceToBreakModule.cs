@@ -6,5 +6,5 @@ namespace Shared.Services.ModuleCommunication.Contracts;
 
     public interface ISendServiceToBreakModule
     {
-         Task<ComingAndGoingDto> GetByIdAsync(int id);
+          public Task<ResponseComingAndgoin<ComingAndGoingDto>>  GetByIdAsync(int id);
     }

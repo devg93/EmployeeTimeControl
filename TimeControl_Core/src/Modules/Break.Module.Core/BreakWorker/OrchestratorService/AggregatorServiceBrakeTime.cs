@@ -49,7 +49,8 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         if (entity == null) throw new ArgumentNullException(nameof(entity));
 
         var existingBrake = await FetchExistingBrakeTime(1); //entity.Id
-        var existingTimeInOut = await FetchServiceTimeInTimeOut(1);//entity.Id
+        var existingTimeInOutResponse = await FetchServiceTimeInTimeOut(1);//entity.Id
+        var existingTimeInOut = existingTimeInOutResponse.Data;
         bool BusyStatus = await GetBusyStatus(1);
 
 
@@ -94,7 +95,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         return await breakRepositoryQeury.GetBreakByIdAsinc(id);
     }
 
-    private async Task<ComingAndGoingDto?> FetchServiceTimeInTimeOut(int id)
+    private async Task<ResponseComingAndgoin<ComingAndGoingDto>> FetchServiceTimeInTimeOut(int id)
     {
         return await GetServiceToTimeInTimeOutModule.GetByIdAsync(id);
     }

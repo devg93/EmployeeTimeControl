@@ -5,6 +5,7 @@ using Modules.Break.Module.Core.Exstension;
 using Modules.Break.Module.Core.Exstension.DAL;
 using Shared;
 using TimeInTimeOut.Module.Api;
+using TimeInTimeOut.Module.Api.Controllers;
 
 
 
@@ -18,6 +19,7 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddControllers().AddApplicationPart(typeof(Modules.Break.Module.Api.Controllers.BreakController).Assembly);
+//  builder.Services.AddControllers().AddApplicationPart(typeof(Modules.TimeInTimeOut.Module.Api.Controllers.TimeInTimeOutiController).Assembly);
 
 builder.Services.AddBreakWorkerServices();
 // builder.Services.AddDbContext(builder.Configuration);

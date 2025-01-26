@@ -1,8 +1,10 @@
 using System.Net.WebSockets;
 using Microsoft.EntityFrameworkCore;
+using Shared.Dto;
 using TimeInTimeOut.Module.Core.Abstractions;
 using TimeInTimeOut.Module.Core.DAL;
 using TimeInTimeOut.Module.Core.Domain.Entity;
+using TimeInTimeOut.Module.Core.Dto;
 
 namespace TimeInTimeOut.Module.Core.Repository
 {
@@ -34,24 +36,38 @@ namespace TimeInTimeOut.Module.Core.Repository
         => dbInstaceTimeInOut.comingAndgoings != null ?
         await dbInstaceTimeInOut.comingAndgoings.Include(ws => ws.OnlineTime).
         Include(ws => ws.OflineTime).ToListAsync() : new List<ComingAndgoing>();
-
-        public async Task<ComingAndgoing> GetById(int id)
-    {
-        if (dbInstaceTimeInOut.comingAndgoings is null)
+        public async Task<ResponseComingAndgoin<ComingAndgoing>> GetById(int id)
         {
-            throw new InvalidOperationException("Database instance or comingAndgoings collection is null.");
+            if (dbInstaceTimeInOut.comingAndgoings is null)
+            {
+                return new ResponseComingAndgoin<ComingAndgoing>
+                {
+                    IsSuccess = false,
+                    Message = "Database instance or comingAndgoings collection is null."
+                };
+            }
+
+            var result = await dbInstaceTimeInOut.comingAndgoings
+                .Include(ws => ws.OnlineTime)
+                .Include(ws => ws.OflineTime)
+                .FirstOrDefaultAsync(ws => ws.Id == id);
+
+            if (result is null)
+            {
+                return new ResponseComingAndgoin<ComingAndgoing>
+                {
+                    IsSuccess = false,
+                    Message = "Data not found."
+                };
+            }
+
+            return new ResponseComingAndgoin<ComingAndgoing>
+            {
+                IsSuccess = true,
+                Data = result
+            };
         }
 
-        var result = await dbInstaceTimeInOut.comingAndgoings.Include(ws => ws.OnlineTime)
-            .Include(ws => ws.OflineTime).FirstOrDefaultAsync(ws => ws.Id == id);
-
-        if (result is null)
-        {
-            throw new KeyNotFoundException($"Entity with id {id} not found.");
-        }
-
-        return result;
-    }
 
         public Task<ComingAndgoing> Update(ComingAndgoing entity)
         {

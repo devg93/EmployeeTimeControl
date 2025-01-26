@@ -1,11 +1,13 @@
+using Shared.Dto;
 using TimeInTimeOut.Module.Core.Domain.Entity;
+using TimeInTimeOut.Module.Core.Dto;
 
 namespace TimeInTimeOut.Module.Core.Abstractions
 {
     public interface IcomingAndgoingRepository
     {
         public Task<IEnumerable<ComingAndgoing>> GetAll();
-        public Task<ComingAndgoing> GetById(int id);
+        public Task<ResponseComingAndgoin<ComingAndgoing>> GetById(int id);
 
         public Task<bool> Add(ComingAndgoing entity);
         public Task<ComingAndgoing> Update(ComingAndgoing entity);
