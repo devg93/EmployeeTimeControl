@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Modules.Break.Module.Core.Astractions.Irepository;
 using Modules.Break.Module.Core.Entity;
+using Shared.Dto;
 
 
 
@@ -30,7 +31,7 @@ public class BreakController : ControllerBase
     }
 
      [HttpGet]
-    public async Task<BrakeTime> Get(int id)
+    public async Task<ResponseChecker<BrakeTime>> Get(int id)
     {
         
 

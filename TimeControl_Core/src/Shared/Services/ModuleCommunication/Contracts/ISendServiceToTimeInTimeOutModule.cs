@@ -6,6 +6,6 @@ namespace Shared.Services.ModuleCommunication.Contracts;
 
     public interface ISendServiceToTimeInTimeOutModule
     {
-         Task<BrakeTimeDto> GetByIdAsync(int id);
+         Task<ResponseChecker<BrakeTimeDto>> GetByIdAsync(int id);
     }
 

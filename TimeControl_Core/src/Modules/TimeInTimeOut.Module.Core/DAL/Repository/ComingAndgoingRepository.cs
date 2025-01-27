@@ -36,11 +36,11 @@ namespace TimeInTimeOut.Module.Core.Repository
         => dbInstaceTimeInOut.comingAndgoings != null ?
         await dbInstaceTimeInOut.comingAndgoings.Include(ws => ws.OnlineTime).
         Include(ws => ws.OflineTime).ToListAsync() : new List<ComingAndgoing>();
-        public async Task<ResponseComingAndgoin<ComingAndgoing>> GetById(int id)
+        public async Task<ResponseChecker<ComingAndgoing>> GetById(int id)
         {
             if (dbInstaceTimeInOut.comingAndgoings is null)
             {
-                return new ResponseComingAndgoin<ComingAndgoing>
+                return new ResponseChecker<ComingAndgoing>
                 {
                     IsSuccess = false,
                     Message = "Database instance or comingAndgoings collection is null."
@@ -54,14 +54,14 @@ namespace TimeInTimeOut.Module.Core.Repository
 
             if (result is null)
             {
-                return new ResponseComingAndgoin<ComingAndgoing>
+                return new ResponseChecker<ComingAndgoing>
                 {
                     IsSuccess = false,
                     Message = "Data not found."
                 };
             }
 
-            return new ResponseComingAndgoin<ComingAndgoing>
+            return new ResponseChecker<ComingAndgoing>
             {
                 IsSuccess = true,
                 Data = result

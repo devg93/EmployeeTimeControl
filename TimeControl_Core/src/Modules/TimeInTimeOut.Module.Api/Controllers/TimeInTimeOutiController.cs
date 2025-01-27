@@ -16,7 +16,7 @@ namespace TimeInTimeOut.Module.Api.Controllers
         =>this.icomingAndgoingRepository=icomingAndgoingRepository;
 
         [HttpGet]
-        public async Task<ResponseComingAndgoin<ComingAndgoing>> Get(int Id)
+        public async Task<ResponseChecker<ComingAndgoing>> Get(int Id)
         {
             return await icomingAndgoingRepository.GetById(Id);
         }

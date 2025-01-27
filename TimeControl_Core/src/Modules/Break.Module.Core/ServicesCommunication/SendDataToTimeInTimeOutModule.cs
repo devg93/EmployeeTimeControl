@@ -1,4 +1,5 @@
 
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using Modules.Break.Module.Core.Astractions.Irepository;
@@ -13,21 +14,33 @@ namespace Break.Module.Core.ServicesCommunication
         public SendDataToTimeInTimeOutModule(IbreakRepositoryQeury getservice)
         =>this.getservice=getservice;
 
-        public async Task<BrakeTimeDto> GetByIdAsync(int id)
+        public async Task<ResponseChecker<BrakeTimeDto>> GetByIdAsync(int id)
         {
             var brakeTime = await getservice.GetBreakByIdAsinc(id);
-            return new BrakeTimeDto
+            if (brakeTime == null || brakeTime.Data == null)
             {
-                Id = brakeTime.Id,
-                StartTime = brakeTime.StartTime?.Select(tm=>new DateTimeWorkScheduleDto
+                return new ResponseChecker<BrakeTimeDto>
                 {
-                    StartTime=tm.StartTime
-                }).ToList(),
-                EndTime = brakeTime.EndTime?.Select(tm => new DateTimeWorkScheduleDto
+                    IsSuccess = false,
+                    Message = "Brake time data not found"
+                };
+            }
+
+            return new ResponseChecker<BrakeTimeDto>
+            {
+                IsSuccess = true,
+                Data = new BrakeTimeDto
                 {
-                    EndTime = tm.EndTime
-                }).ToList()
-                
+                    Id = brakeTime.Data.Id,
+                    StartTime = brakeTime.Data.StartTime?.Select(tm => new DateTimeWorkScheduleDto
+                    {
+                        StartTime = tm.StartTime
+                    }).ToList(),
+                    EndTime = brakeTime.Data.EndTime?.Select(tm => new DateTimeWorkScheduleDto
+                    {
+                        EndTime = tm.EndTime
+                    }).ToList()
+                }
             };
         }
     }

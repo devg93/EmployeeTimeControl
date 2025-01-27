@@ -16,13 +16,13 @@ namespace TimeInTimeOut.Module.Core.ServicesCommunication
             _icomingAndgoingRepository = icomingAndgoingRepository;
         }
 
-        public async Task<ResponseComingAndgoin<ComingAndGoingDto>> GetByIdAsync(int id)
+        public async Task<ResponseChecker<ComingAndGoingDto>> GetByIdAsync(int id)
         {
             var entity = await _icomingAndgoingRepository.GetById(id);
 
             if (entity is null)
             {
-                return new ResponseComingAndgoin<ComingAndGoingDto>
+                return new ResponseChecker<ComingAndGoingDto>
                 {
                     IsSuccess = false,
                     Message = $"Entity with ID {id} not found.",
@@ -32,7 +32,7 @@ namespace TimeInTimeOut.Module.Core.ServicesCommunication
 
             if (entity.Data is null)
             {
-                return new ResponseComingAndgoin<ComingAndGoingDto>
+                return new ResponseChecker<ComingAndGoingDto>
                 {
                     IsSuccess = false,
                     Message = $"Entity data with ID {id} is null.",
@@ -54,7 +54,7 @@ namespace TimeInTimeOut.Module.Core.ServicesCommunication
                 }).ToList() ?? new List<DateTimeDto>()
             };
 
-            return new ResponseComingAndgoin<ComingAndGoingDto>
+            return new ResponseChecker<ComingAndGoingDto>
             {
                 IsSuccess = true,
                 Message = "Entity retrieved successfully.",
