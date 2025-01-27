@@ -1,3 +1,5 @@
+using System;
+
 namespace Shared.Dto
 {
     public class BrakeTimeDto

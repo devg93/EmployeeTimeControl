@@ -1,5 +1,5 @@
 
-namespace Modules. Break.Module.Core
+namespace Modules.Break.Module.Core
 {
     public record ResponseResultBrakeTime
     {

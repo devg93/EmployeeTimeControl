@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryPoint", "EntryPoint\EntryPoint.csproj", "{9CC9AF04-64AD-4672-8888-A1FAF530409A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{2D91670A-9319-4E55-BC35-AD65748EBF46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Break.Module.Api", "Modules\Break.Module.Api\Break.Module.Api.csproj", "{4EE5D41E-F053-4E37-B0AD-BAD99FF85753}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Break.Module.Core", "Modules\Break.Module.Core\Break.Module.Core.csproj", "{0BD4CF8C-8264-47E1-81A2-96C6306E2D2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeInTimeOut.Module.Api", "Modules\TimeInTimeOut.Module.Api\TimeInTimeOut.Module.Api.csproj", "{0319E119-5920-4359-906C-FC0A1A055104}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeInTimeOut.Module.Core", "Modules\TimeInTimeOut.Module.Core\TimeInTimeOut.Module.Core.csproj", "{02D5BFD7-E2C3-4420-8FA6-253B252BEC88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workschedule.Module.Core", "Modules\Workschedule.Module.Core\Workschedule.Module.Core.csproj", "{AC3D1632-96A7-49FA-B736-E8531E5FADA9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9CC9AF04-64AD-4672-8888-A1FAF530409A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CC9AF04-64AD-4672-8888-A1FAF530409A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CC9AF04-64AD-4672-8888-A1FAF530409A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CC9AF04-64AD-4672-8888-A1FAF530409A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EE5D41E-F053-4E37-B0AD-BAD99FF85753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EE5D41E-F053-4E37-B0AD-BAD99FF85753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EE5D41E-F053-4E37-B0AD-BAD99FF85753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EE5D41E-F053-4E37-B0AD-BAD99FF85753}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BD4CF8C-8264-47E1-81A2-96C6306E2D2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BD4CF8C-8264-47E1-81A2-96C6306E2D2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BD4CF8C-8264-47E1-81A2-96C6306E2D2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BD4CF8C-8264-47E1-81A2-96C6306E2D2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0319E119-5920-4359-906C-FC0A1A055104}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0319E119-5920-4359-906C-FC0A1A055104}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0319E119-5920-4359-906C-FC0A1A055104}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0319E119-5920-4359-906C-FC0A1A055104}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02D5BFD7-E2C3-4420-8FA6-253B252BEC88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02D5BFD7-E2C3-4420-8FA6-253B252BEC88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02D5BFD7-E2C3-4420-8FA6-253B252BEC88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02D5BFD7-E2C3-4420-8FA6-253B252BEC88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC3D1632-96A7-49FA-B736-E8531E5FADA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC3D1632-96A7-49FA-B736-E8531E5FADA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC3D1632-96A7-49FA-B736-E8531E5FADA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC3D1632-96A7-49FA-B736-E8531E5FADA9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4EE5D41E-F053-4E37-B0AD-BAD99FF85753} = {2D91670A-9319-4E55-BC35-AD65748EBF46}
+		{0BD4CF8C-8264-47E1-81A2-96C6306E2D2A} = {2D91670A-9319-4E55-BC35-AD65748EBF46}
+		{0319E119-5920-4359-906C-FC0A1A055104} = {2D91670A-9319-4E55-BC35-AD65748EBF46}
+		{02D5BFD7-E2C3-4420-8FA6-253B252BEC88} = {2D91670A-9319-4E55-BC35-AD65748EBF46}
+		{AC3D1632-96A7-49FA-B736-E8531E5FADA9} = {2D91670A-9319-4E55-BC35-AD65748EBF46}
+	EndGlobalSection
+EndGlobal

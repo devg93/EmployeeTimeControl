@@ -49,7 +49,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
         var existingTimeInOutResponse = await FetchServiceTimeInTimeOut(1);//entity.Id
         var existingTimeInOut = existingTimeInOutResponse.Data;
-        if (existingTimeInOutResponse.IsSuccess is false) return false;
+       // if (existingTimeInOutResponse.IsSuccess is false) return false;
 
 
 
@@ -62,17 +62,19 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         TimeDtoReqvest timeDto = PrepareTimeDto(existingBrake, existingTimeInOut);
         #pragma warning restore CS8604 
 
-        ResponseResultBrakeTime resultTime = (ResponseResultBrakeTime)
-        await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.ComingAndgoing);
+        // ResponseResultBrakeTime resultTime = (ResponseResultBrakeTime)
+        // await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
+
+        var resultTime = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime) as ResponseResultBrakeTime;
 
         try
         {
 
-            if (resultTime.StartTimeValidWorkSchedule && !resultTime.OfflineTimeDateDay)
+            if (resultTime is not null&&resultTime.StartTimeValidWorkSchedule  && !resultTime.OfflineTimeDateDay)
             {
                 return await HandleValidWorkSchedule(existingBrake, entity.Id);
             }
-            else if (resultTime.OnlineTimeDateDay && !resultTime.OfflineTimeDateDay)
+            else if (resultTime is not null&&resultTime.OnlineTimeDateDay && !resultTime.OfflineTimeDateDay)
             {
                 return await HandleOnlineTimeValid(resultTime, entity);
             }

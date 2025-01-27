@@ -26,17 +26,17 @@ public class BreakWorkerCommand : BackgroundService
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            // try
+             try
             {
                 using var scope = _serviceScopeFactory.CreateScope();
                 var workerHandler = scope.ServiceProvider.GetRequiredService<IWorkerHenlde>();
 
                 await workerHandler.AsyncMethodBreake();
             }
-            // catch (Exception ex)
-            // {
-            //     _logger.LogError(ex, "Unhandled exception in WorkerCommand.");
-            // }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unhandled exception in WorkerCommand.");
+            }
 
             await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken).ConfigureAwait(false);
         }

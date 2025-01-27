@@ -1,6 +1,6 @@
 
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Modules.Break.Module.Core.Entity;
 
