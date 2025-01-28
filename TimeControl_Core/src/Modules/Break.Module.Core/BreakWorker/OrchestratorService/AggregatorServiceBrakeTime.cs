@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Modules.Break.Module.Core;
 using Modules.Break.Module.Core.Astractions.Irepository;
@@ -66,19 +67,48 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         // ResponseResultBrakeTime resultTime = (ResponseResultBrakeTime)
         // await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
 
-        var resultTime = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime)
-         as ResponseResultBrakeTime;
+        // var resultTime = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime)
+        //  as ResponseResultBrakeTime;
+
+        // var resultTime = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
+
+        // if (resultTime is ResponseResultBrakeTime brakeTimeResult)
+        // {
+        //     Console.WriteLine(brakeTimeResult.StartTimeValidWorkSchedule);
+        // }
+        // else
+        // {
+        //     Console.WriteLine("Object is not of type ResponseResultBrakeTime");
+        // }
+
+
+          var resultTime = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
+              ResponseResultBrakeTime resul = resultTime as ResponseResultBrakeTime ?? throw new InvalidOperationException("resultTime is null");
+
+        Console.WriteLine($"Original type: {resultTime.GetType().FullName}");
+    
+
+
+/*
+         var pointer = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
+            GCHandle handle = GCHandle.FromIntPtr((IntPtr)pointer);
+            handle.Free();
+*/
+    
+ 
+ 
+
 
         try
         {
 
-            if (resultTime is not null && resultTime.StartTimeValidWorkSchedule && !resultTime.OfflineTimeDateDay)
+            if (resultTime is ResponseResultBrakeTime brakeTimeResult && brakeTimeResult.StartTimeValidWorkSchedule && !brakeTimeResult.OfflineTimeDateDay)
             {
                 return await HandleValidWorkSchedule(existingBrake, entity.Id);
             }
-            else if (resultTime is not null && resultTime.OnlineTimeDateDay && !resultTime.OfflineTimeDateDay)
+            else if (resultTime is ResponseResultBrakeTime brakeTimeResult2 && brakeTimeResult2.OnlineTimeDateDay && !brakeTimeResult2.OfflineTimeDateDay)
             {
-                return await HandleOnlineTimeValid(resultTime, entity);
+                return await HandleOnlineTimeValid((ResponseResultBrakeTime)resultTime, entity);
             }
         }
         catch (Exception ex)
@@ -112,9 +142,9 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
             {
                 StartTime = existingBrake.StartTime?.Select(s => s.StartTime).ToList(),
                 EndTime = existingBrake.EndTime?.Select(e => e.EndTime).ToList(),
-                OnlineTime = new List<DateTime> { DateTime.Now },
-                OflineTime = new List<DateTime> { DateTime.Now },
-           
+                OnlineTime = new List<DateTime> { },
+                OflineTime = new List<DateTime> { },
+
 
 
             };

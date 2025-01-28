@@ -2,12 +2,42 @@
 using Shared.Dto;
 using Shared.Records;
 using Shared.Services.Tasks.ShedulerTuplelog.Enum;
+using System;
+using System.Runtime.InteropServices;
 
 namespace Shared.Services.Tasks.ShedulerTuplelog;
 
 public sealed class TimeHenldeLogService : ITimeHenldeLogService
 {
 
+//***this retrunet alocted memory to the unmanaged code
+   
+/*
+    public async Task<nint> GetTimeResult(TimeDtoReqvest entity, bool status, bool busy, ServiceResponseType responseType)
+    {
+        if (entity == null) throw new ArgumentNullException(nameof(entity));
+
+        object res;
+        switch (responseType)
+        {
+            case ServiceResponseType.BrakeTime:
+                res = await FetchExistingBrakeTime(entity, status, busy);
+                break;
+
+            case ServiceResponseType.ComingAndgoing:
+                res = await FetchExistingComingAndgoing(entity, status, busy);
+                break;
+
+            default:
+                throw new InvalidOperationException("Invalid ServiceResponseType");
+        }
+
+
+        Console.WriteLine($"Allocated type: {res.GetType().FullName}");
+        return GCHandle.ToIntPtr(GCHandle.Alloc(res));
+    }
+
+*/
 
     public async Task<object> GetTimeResult(TimeDtoReqvest entity, bool status, bool busy, ServiceResponseType responseType)
     {
@@ -29,6 +59,7 @@ public sealed class TimeHenldeLogService : ITimeHenldeLogService
                 return ("Invalid ServiceResponseType", nameof(responseType));
         }
     }
+
     //******************************************Async Methods ********************************************************************
 
     /// <summary>
@@ -67,13 +98,13 @@ public sealed class TimeHenldeLogService : ITimeHenldeLogService
             // OfflineTimeDateDay = entity?.OflineTime?.Any(day => day.Day == DateTime.Now.Day) ?? false,
             // workSchedulPingLog = !status && entity?.StartTime?.Any() == true &&
             // entity?.OflineTime?.Any(day => day.Day == DateTime.Now.Day) == false && !busy
-            StartTimeValidWorkSchedule=true,
-            EndTimeLastMinute=true,
-            StartTimeTimeLastMinute=true,
-            OnlineTimeDateDay=true,
-            StartTimeBreak=true,
-            OfflineTimeDateDay=true,
-            workSchedulPingLog=false
+            StartTimeValidWorkSchedule = true,
+            EndTimeLastMinute = true,
+            StartTimeTimeLastMinute = true,
+            OnlineTimeDateDay = true,
+            StartTimeBreak = true,
+            OfflineTimeDateDay = true,
+            workSchedulPingLog = false
 
 
         });

@@ -6,5 +6,6 @@ namespace Shared.Services.Tasks.ShedulerTuplelog;
 
     public interface ITimeHenldeLogService
     {
+       // Task<IntPtr> GetTimeResult(TimeDtoReqvest entity, bool status, bool busy, ServiceResponseType responseType);
         Task<object> GetTimeResult(TimeDtoReqvest entity, bool status, bool busy, ServiceResponseType responseType);
     }
