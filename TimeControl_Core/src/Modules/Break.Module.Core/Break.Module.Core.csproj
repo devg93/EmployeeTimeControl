@@ -54,8 +54,8 @@
   <!-- Code Analysis Settings -->
   <PropertyGroup>
     
-    <CodeAnalysisRuleSetDirectories>$(MSBuildThisFileDirectory)</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisRuleSetDirectory>$(MSBuildThisFileDirectory)</CodeAnalysisRuleSetDirectory>
+    <!-- <CodeAnalysisRuleSetDirectories>$(MSBuildThisFileDirectory)</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleSetDirectory>$(MSBuildThisFileDirectory)</CodeAnalysisRuleSetDirectory> -->
  <!-- <CodeAnalysisRuleSet>ruleset.ruleset</CodeAnalysisRuleSet> -->
 
 
@@ -63,8 +63,8 @@
   </PropertyGroup>
 
   <!-- Neutral Resources Language -->
-  <PropertyGroup>
+  <!-- <PropertyGroup>
     <GenerateNeutralResourcesLanguageAttribute>true</GenerateNeutralResourcesLanguageAttribute>
-  </PropertyGroup>
+  </PropertyGroup> -->
 
 </Project>

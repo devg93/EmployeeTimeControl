@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Modules.Break.Module.Core;
@@ -49,7 +50,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
         var existingTimeInOutResponse = await FetchServiceTimeInTimeOut(1);//entity.Id
         var existingTimeInOut = existingTimeInOutResponse.Data;
-       // if (existingTimeInOutResponse.IsSuccess is false) return false;
+        // if (existingTimeInOutResponse.IsSuccess is false) return false;
 
 
 
@@ -58,23 +59,24 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         bool BusyStatus = await GetBusyStatus(1);
 
 
-        #pragma warning disable CS8604 
-        TimeDtoReqvest timeDto = PrepareTimeDto(existingBrake, existingTimeInOut);
-        #pragma warning restore CS8604 
+#pragma warning disable CS8604
+        var timeDto = PrepareTimeDto(existingBrake, existingTimeInOut);
+#pragma warning restore CS8604
 
         // ResponseResultBrakeTime resultTime = (ResponseResultBrakeTime)
         // await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
 
-        var resultTime = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime) as ResponseResultBrakeTime;
+        var resultTime = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime)
+         as ResponseResultBrakeTime;
 
         try
         {
 
-            if (resultTime is not null&&resultTime.StartTimeValidWorkSchedule  && !resultTime.OfflineTimeDateDay)
+            if (resultTime is not null && resultTime.StartTimeValidWorkSchedule && !resultTime.OfflineTimeDateDay)
             {
                 return await HandleValidWorkSchedule(existingBrake, entity.Id);
             }
-            else if (resultTime is not null&&resultTime.OnlineTimeDateDay && !resultTime.OfflineTimeDateDay)
+            else if (resultTime is not null && resultTime.OnlineTimeDateDay && !resultTime.OfflineTimeDateDay)
             {
                 return await HandleOnlineTimeValid(resultTime, entity);
             }
@@ -95,22 +97,39 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
     //***************************************Private Async Methods ***********************************************************//
 
     private async Task<ResponseChecker<BrakeTime>> FetchExistingBrakeTime(int id)
-    =>await breakRepositoryQeury.GetBreakByIdAsinc(id);
-    
+    => await breakRepositoryQeury.GetBreakByIdAsinc(id);
+
 
     private async Task<ResponseChecker<ComingAndGoingDto>> FetchServiceTimeInTimeOut(int id)
     => await GetServiceToTimeInTimeOutModule.GetByIdAsync(id);
-    
+
 
     private TimeDtoReqvest PrepareTimeDto(BrakeTime existingBrake, ComingAndGoingDto existingTimeInOut)
-    => new TimeDtoReqvest
+    {
+        if (existingTimeInOut is null)
+        {
+            return new TimeDtoReqvest
+            {
+                StartTime = existingBrake.StartTime?.Select(s => s.StartTime).ToList(),
+                EndTime = existingBrake.EndTime?.Select(e => e.EndTime).ToList(),
+                OnlineTime = new List<DateTime> { DateTime.Now },
+                OflineTime = new List<DateTime> { DateTime.Now },
+           
+
+
+            };
+        }
+
+
+        return new TimeDtoReqvest
         {
             StartTime = existingBrake.StartTime?.Select(s => s.StartTime).ToList(),
             EndTime = existingBrake.EndTime?.Select(e => e.EndTime).ToList(),
             OnlineTime = existingTimeInOut.OnlineTime?.Select(o => o.TimeIn).ToList(),
             OflineTime = existingTimeInOut.OflineTime?.Select(o => o.TimeOut).ToList()
         };
-    
+    }
+
 
     private async Task<bool> HandleValidWorkSchedule(BrakeTime existingBrake, int id)
     {

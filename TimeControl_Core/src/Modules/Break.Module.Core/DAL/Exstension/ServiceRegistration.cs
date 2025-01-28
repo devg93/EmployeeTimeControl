@@ -14,6 +14,7 @@ using Modules.Break.Module.Core.Iservices;
 using Modules.Break.Module.Core.Mediator;
 using Modules.Break.Module.Core.Repository;
 using Modules.Break.Module.Core.Repository.Busy;
+using Shared;
 using Shared.Services.ModuleCommunication.Contracts;
 
 
@@ -57,6 +58,7 @@ public static class ServiceRegistration
         serviceDescriptors.AddScoped<IWorkerHenlde,WorkerHenlde>();
         serviceDescriptors.AddScoped<IBreakTimeUpdateMediator, BreakTimeUpdateMediator>();
         serviceDescriptors.AddScoped<IAggregatorServiceBrakeTime, AggregatorServiceBrakeTime>();
+        serviceDescriptors.addSharedServices();
     
 
         return serviceDescriptors;
