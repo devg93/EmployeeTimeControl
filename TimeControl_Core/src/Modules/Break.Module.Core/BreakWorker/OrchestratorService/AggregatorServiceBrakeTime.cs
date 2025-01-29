@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.InteropServices;
-using System.Reflection;
 using System.Threading.Tasks;
 using Modules.Break.Module.Core;
 using Modules.Break.Module.Core.Astractions.Irepository;
@@ -68,17 +65,8 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         var timeDto = PrepareTimeDto(existingBrake, existingTimeInOut);
 #pragma warning restore CS8604
 
-   
-
-
-
-        // var resultTime = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
-     
-  
-          ResponseResultBrakeTime resultTime= ObjectMapper.MapObject<ResponseResultBrakeTime>
+          ResponseResultBrakeTime brakeTimeResult= ObjectMapper.MapObject<ResponseResultBrakeTime>
           (await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime));
-
-
 
         /*
                  var pointer = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
@@ -86,19 +74,16 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
                     handle.Free();
         */
 
-
-
-
         try
         {
 
-            if (resultTime is ResponseResultBrakeTime brakeTimeResult && brakeTimeResult.StartTimeValidWorkSchedule && !brakeTimeResult.OfflineTimeDateDay)
+            if (brakeTimeResult.StartTimeValidWorkSchedule && !brakeTimeResult.OfflineTimeDateDay)
             {
-                return await HandleValidWorkSchedule(existingBrake, entity.Id);
+                return await HandleValidWorkSchedule(existingBrake, entity.Id,IpStatus);
             }
-            else if (resultTime is ResponseResultBrakeTime brakeTimeResult2 && brakeTimeResult2.OnlineTimeDateDay && !brakeTimeResult2.OfflineTimeDateDay)
+            else if (brakeTimeResult.OnlineTimeDateDay && !brakeTimeResult.OfflineTimeDateDay)
             {
-                return await HandleOnlineTimeValid((ResponseResultBrakeTime)resultTime, entity);
+                return await HandleOnlineTimeValid(brakeTimeResult, entity,IpStatus);
             }
         }
         catch (Exception ex)
@@ -108,11 +93,6 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
         return true;
     }
-
-
-
-
-
 
     //***************************************Private Async Methods ***********************************************************//
 
@@ -151,7 +131,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
     }
 
 
-    private async Task<bool> HandleValidWorkSchedule(BrakeTime existingBrake, int id)
+    private async Task<bool> HandleValidWorkSchedule(BrakeTime existingBrake, int id,bool status)
     {
         existingBrake.EndTime?.Add(new DateTimeWorkSchedule { EndTime = DateTime.Now });
         await breakRepositoryCommand.Save();
@@ -159,7 +139,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
     }
 
 
-    private async Task<bool> HandleOnlineTimeValid(ResponseResultBrakeTime resultTime, BrakeTimeDtoReqvest entity)
+    private async Task<bool> HandleOnlineTimeValid(ResponseResultBrakeTime resultTime, BrakeTimeDtoReqvest entity, bool status)
     {
         if (resultTime.workSchedulPingLog)
         {
