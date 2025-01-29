@@ -58,7 +58,7 @@ public static class ServiceRegistration
         serviceDescriptors.AddScoped<IWorkerHenlde,WorkerHenlde>();
         serviceDescriptors.AddScoped<IBreakTimeUpdateMediator, BreakTimeUpdateMediator>();
         serviceDescriptors.AddScoped<IAggregatorServiceBrakeTime, AggregatorServiceBrakeTime>();
-        serviceDescriptors.addSharedServices();
+        // serviceDescriptors.addSharedServices();
     
 
         return serviceDescriptors;

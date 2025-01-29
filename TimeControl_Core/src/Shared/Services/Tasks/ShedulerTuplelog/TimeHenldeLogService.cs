@@ -48,6 +48,8 @@ public sealed class TimeHenldeLogService : ITimeHenldeLogService
             case ServiceResponseType.BrakeTime:
 
                 var res=await FetchExistingBrakeTime(entity, status, busy);
+                res.GetHashCode();
+                res.GetType();
 
                 return res;
 

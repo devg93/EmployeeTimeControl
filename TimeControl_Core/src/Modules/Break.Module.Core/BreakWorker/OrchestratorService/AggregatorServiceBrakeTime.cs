@@ -1,8 +1,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.InteropServices;
+using System.Reflection;
 using System.Threading.Tasks;
 using Modules.Break.Module.Core;
 using Modules.Break.Module.Core.Astractions.Irepository;
@@ -15,6 +18,7 @@ using Shared.Services.ModuleCommunication.Contracts;
 using Shared.Services.Tasks.PingCheker;
 using Shared.Services.Tasks.ShedulerTuplelog;
 using Shared.Services.Tasks.ShedulerTuplelog.Enum;
+using Shared.Services.ModuleCommunication;
 
 
 //************************************ Service Orchestration ******************************************//
@@ -64,39 +68,25 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         var timeDto = PrepareTimeDto(existingBrake, existingTimeInOut);
 #pragma warning restore CS8604
 
-        // ResponseResultBrakeTime resultTime = (ResponseResultBrakeTime)
-        // await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
+   
 
-        // var resultTime = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime)
-        //  as ResponseResultBrakeTime;
+
 
         // var resultTime = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
-
-        // if (resultTime is ResponseResultBrakeTime brakeTimeResult)
-        // {
-        //     Console.WriteLine(brakeTimeResult.StartTimeValidWorkSchedule);
-        // }
-        // else
-        // {
-        //     Console.WriteLine("Object is not of type ResponseResultBrakeTime");
-        // }
+     
+  
+          ResponseResultBrakeTime resultTime= ObjectMapper.MapObject<ResponseResultBrakeTime>
+          (await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime));
 
 
-          var resultTime = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
-              ResponseResultBrakeTime resul = resultTime as ResponseResultBrakeTime ?? throw new InvalidOperationException("resultTime is null");
 
-        Console.WriteLine($"Original type: {resultTime.GetType().FullName}");
-    
+        /*
+                 var pointer = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
+                    GCHandle handle = GCHandle.FromIntPtr((IntPtr)pointer);
+                    handle.Free();
+        */
 
 
-/*
-         var pointer = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
-            GCHandle handle = GCHandle.FromIntPtr((IntPtr)pointer);
-            handle.Free();
-*/
-    
- 
- 
 
 
         try

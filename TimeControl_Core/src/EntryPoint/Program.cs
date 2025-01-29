@@ -24,8 +24,9 @@ builder.Services.AddControllers().AddApplicationPart(typeof(Modules.Break.Module
 builder.Services.AddBreakWorkerServices();
 // builder.Services.AddDbContext(builder.Configuration);
 builder.Services.RegisterModuleBreak(builder.Configuration);
- builder.Services.RegisterTimeInTimeOutModule();
+builder.Services.RegisterTimeInTimeOutModule();
 builder.Services.AddServicesRegisterByInterface();
+builder.Services.addSharedServices();
 
 
 var assemblies = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
