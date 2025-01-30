@@ -14,7 +14,7 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.BackgroundService
         public async Task<bool> UpdateTimeInTimeOutAsync(int userId, bool pingResponseStatus)
         {
 
-            var Entity = new ComingAndgoingDto
+            var Entity = new ComingAndgoingResponseDto
             {
                 UserId = userId,
                 OnlineTime = pingResponseStatus ? new List<DateTime> { DateTime.Now } : new List<DateTime>(),

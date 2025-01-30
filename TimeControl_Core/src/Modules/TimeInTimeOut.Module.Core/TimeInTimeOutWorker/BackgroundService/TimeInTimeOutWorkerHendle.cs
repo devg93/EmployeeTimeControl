@@ -25,8 +25,8 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.BackgroundService
 
                 var PingResponseStatus = await pingSender.PingIp("192.168.1.204");
               
+              //   await breakTimeUpdateMediator.UpdateTimeInTimeOutAsync(1, PingResponseStatus);
 
-                 await breakTimeUpdateMediator.UpdateTimeInTimeOutAsync(1, PingResponseStatus);
             }
 
             catch (Exception ex)

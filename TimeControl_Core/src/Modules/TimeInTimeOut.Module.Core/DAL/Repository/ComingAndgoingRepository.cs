@@ -31,11 +31,18 @@ namespace TimeInTimeOut.Module.Core.Repository
         {
             throw new NotImplementedException();
         }
-
+        //***********************************************************************
         public async Task<IEnumerable<ComingAndgoing>> GetAll()
         => dbInstaceTimeInOut.comingAndgoings != null ?
-        await dbInstaceTimeInOut.comingAndgoings.Include(ws => ws.OnlineTime).
-        Include(ws => ws.OflineTime).ToListAsync() : new List<ComingAndgoing>();
+        await dbInstaceTimeInOut.comingAndgoings.
+        Include(ws => ws.OnlineTime).
+        Include(ws => ws.OfflineTime).ToListAsync() : new List<ComingAndgoing>();
+
+
+
+        //***********************************************************************
+
+
         public async Task<ResponseChecker<ComingAndgoing>> GetById(int id)
         {
             if (dbInstaceTimeInOut.comingAndgoings is null)
@@ -47,28 +54,64 @@ namespace TimeInTimeOut.Module.Core.Repository
                 };
             }
 
-            var result = await dbInstaceTimeInOut.comingAndgoings
-                .Include(ws => ws.OnlineTime)
-                .Include(ws => ws.OflineTime)
-                .FirstOrDefaultAsync(ws => ws.Id == id);
+            try
+            {
+                if (dbInstaceTimeInOut.DateTimeTimeInTimeOuts == null)
+                {
+                    return new ResponseChecker<ComingAndgoing>
+                    {
+                        IsSuccess = false,
+                        Message = "DateTimeTimeInTimeOuts collection is null."
+                    };
+                }
 
-            if (result is null)
+
+                var onlineTimes = await dbInstaceTimeInOut.DateTimeTimeInTimeOuts
+                    .Where(o => o.ComingAndgoingId == id && o.TimeIn != null)
+                    .ToListAsync();
+
+
+                var offlineTimes = await dbInstaceTimeInOut.DateTimeTimeInTimeOuts
+                    .Where(o => o.ComingAndgoingId == id && o.TimeOut != null)
+                    .ToListAsync();
+
+
+                var comingAndgoing = await dbInstaceTimeInOut.comingAndgoings
+                    .FirstOrDefaultAsync(c => c.Id == id);
+
+                      
+
+                if (comingAndgoing == null)
+                {
+                    return new ResponseChecker<ComingAndgoing>
+                    {
+                        IsSuccess = false,
+                        Message = $"Entity with ID {id} not found."
+                    };
+                }
+
+
+                comingAndgoing.OnlineTime = onlineTimes;
+                comingAndgoing.OfflineTime = offlineTimes;
+
+                return new ResponseChecker<ComingAndgoing>
+                {
+                    IsSuccess = true,
+                    Message = "Data retrieved successfully.",
+                    Data = comingAndgoing
+                };
+            }
+            catch (Exception ex)
             {
                 return new ResponseChecker<ComingAndgoing>
                 {
                     IsSuccess = false,
-                    Message = "Data not found."
+                    Message = ex.Message
                 };
             }
-
-            return new ResponseChecker<ComingAndgoing>
-            {
-                IsSuccess = true,
-                Data = result
-            };
         }
 
-
+        //***********************************************************************
         public Task<ComingAndgoing> Update(ComingAndgoing entity)
         {
             throw new NotImplementedException();

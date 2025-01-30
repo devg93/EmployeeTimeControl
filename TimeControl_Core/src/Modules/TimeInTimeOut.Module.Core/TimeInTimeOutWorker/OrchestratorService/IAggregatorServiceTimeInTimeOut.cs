@@ -6,6 +6,6 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
 {
     public interface IAggregatorServiceTimeInTimeOut
     {
-        Task<bool> UpdateTimeInTimeOut(ComingAndgoingDto entity, bool Status);
+        Task<bool> UpdateTimeInTimeOut(ComingAndgoingResponseDto entity, bool Status);
     }
 }

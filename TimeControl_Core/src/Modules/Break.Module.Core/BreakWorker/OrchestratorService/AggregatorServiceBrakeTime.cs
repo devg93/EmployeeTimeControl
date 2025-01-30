@@ -65,8 +65,9 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         var timeDto = PrepareTimeDto(existingBrake, existingTimeInOut);
 #pragma warning restore CS8604
 
-          ResponseResultBrakeTime brakeTimeResult= ObjectMapper.MapObject<ResponseResultBrakeTime>
-          (await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime));
+        var UserInfo = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
+
+        ResponseResultBrakeTime brakeTimeResult = ObjectMapper.MapObject<ResponseResultBrakeTime>(UserInfo);
 
         /*
                  var pointer = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
@@ -77,13 +78,13 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         try
         {
 
-            if (brakeTimeResult.StartTimeValidWorkSchedule && !brakeTimeResult.OfflineTimeDateDay)
+            if (brakeTimeResult.StartTimeValidWorkSchedule && !brakeTimeResult.UserOfflineTimeDateDay)
             {
-                return await HandleValidWorkSchedule(existingBrake, entity.Id,IpStatus);
+                return await HandleValidWorkSchedule(existingBrake, entity.Id, IpStatus);
             }
-            else if (brakeTimeResult.OnlineTimeDateDay && !brakeTimeResult.OfflineTimeDateDay)
+            else if (brakeTimeResult.UserOnlineTimeDateDay && !brakeTimeResult.UserOfflineTimeDateDay)
             {
-                return await HandleOnlineTimeValid(brakeTimeResult, entity,IpStatus);
+                return await HandleOnlineTimeValid(brakeTimeResult, entity, IpStatus);
             }
         }
         catch (Exception ex)
@@ -110,8 +111,8 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         {
             return new TimeDtoReqvest
             {
-                StartTime = existingBrake.StartTime?.Select(s => s.StartTime).ToList(),
-                EndTime = existingBrake.EndTime?.Select(e => e.EndTime).ToList(),
+                StartTime = existingBrake.BrakeStartTime?.Select(s => s.StartTime ?? DateTime.MinValue).ToList(),
+                EndTime = existingBrake.BrakeEndTime?.Select(e => e.EndTime ?? DateTime.MinValue).ToList(),
                 OnlineTime = new List<DateTime> { },
                 OflineTime = new List<DateTime> { },
 
@@ -123,17 +124,17 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
         return new TimeDtoReqvest
         {
-            StartTime = existingBrake.StartTime?.Select(s => s.StartTime).ToList(),
-            EndTime = existingBrake.EndTime?.Select(e => e.EndTime).ToList(),
+            StartTime = existingBrake.BrakeStartTime?.Select(s => s.StartTime ?? DateTime.MinValue).ToList(),
+            EndTime = existingBrake.BrakeEndTime?.Select(e => e.EndTime ?? DateTime.MinValue).ToList(),
             OnlineTime = existingTimeInOut.OnlineTime?.Select(o => o.TimeIn).ToList(),
             OflineTime = existingTimeInOut.OflineTime?.Select(o => o.TimeOut).ToList()
         };
     }
 
 
-    private async Task<bool> HandleValidWorkSchedule(BrakeTime existingBrake, int id,bool status)
+    private async Task<bool> HandleValidWorkSchedule(BrakeTime existingBrake, int id, bool status)
     {
-        existingBrake.EndTime?.Add(new DateTimeWorkSchedule { EndTime = DateTime.Now });
+        existingBrake.BrakeEndTime?.Add(new DateTimeWorkSchedule { EndTime = DateTime.Now });
         await breakRepositoryCommand.Save();
         return await UpdateBusyStatus(id, false);
     }
@@ -146,8 +147,8 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
             var newBrakeTime = new BrakeTime
             {
                 Id = entity.Id,
-                StartTime = entity.StartTime?.Select(t => new DateTimeWorkSchedule { StartTime = t }).ToList(),
-                EndTime = entity.EndTime?.Select(t => new DateTimeWorkSchedule { EndTime = t }).ToList()
+                BrakeStartTime = entity.StartTime?.Select(t => new DateTimeWorkSchedule { StartTime = t }).ToList(),
+                BrakeEndTime = entity.EndTime?.Select(t => new DateTimeWorkSchedule { EndTime = t }).ToList()
             };
 
             await breakRepositoryCommand.CreateBreakAsync(newBrakeTime);

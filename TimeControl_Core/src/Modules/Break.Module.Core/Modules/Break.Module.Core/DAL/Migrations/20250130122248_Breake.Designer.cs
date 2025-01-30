@@ -9,11 +9,11 @@ using Modules.Break.Module.Core.DAL;
 
 #nullable disable
 
-namespace Break.Module.Core.DAL.Migrations
+namespace Break.Module.Core.Modules.Break.Module.Core.DAL.Migrations
 {
     [DbContext(typeof(DbInstace))]
-    [Migration("20250124080902_breakEntity")]
-    partial class breakEntity
+    [Migration("20250130122248_Breake")]
+    partial class Breake
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,15 +33,13 @@ namespace Break.Module.Core.DAL.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("busyCheckerId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("busyId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("busyCheckerId");
+                    b.HasIndex("busyId")
+                        .IsUnique();
 
                     b.ToTable("BrakeTimes");
                 });
@@ -54,23 +52,23 @@ namespace Break.Module.Core.DAL.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BrakeTimeId")
+                    b.Property<int?>("BrakeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("BrakeTimeId1")
+                    b.Property<int?>("BrakeTimeStartId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("EndTime")
+                    b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("StartTime")
+                    b.Property<DateTime?>("StartTime")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrakeTimeId");
+                    b.HasIndex("BrakeId");
 
-                    b.HasIndex("BrakeTimeId1");
+                    b.HasIndex("BrakeTimeStartId");
 
                     b.ToTable("DateTimeWorkSchedules");
                 });
@@ -94,28 +92,34 @@ namespace Break.Module.Core.DAL.Migrations
             modelBuilder.Entity("Modules.Break.Module.Core.Entity.BrakeTime", b =>
                 {
                     b.HasOne("Modules.Break.Module.Core.Entity.busyChecker", "busyChecker")
-                        .WithMany()
-                        .HasForeignKey("busyCheckerId");
+                        .WithOne()
+                        .HasForeignKey("Modules.Break.Module.Core.Entity.BrakeTime", "busyId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("busyChecker");
                 });
 
             modelBuilder.Entity("Modules.Break.Module.Core.Entity.DateTimeWorkSchedule", b =>
                 {
-                    b.HasOne("Modules.Break.Module.Core.Entity.BrakeTime", null)
-                        .WithMany("EndTime")
-                        .HasForeignKey("BrakeTimeId");
+                    b.HasOne("Modules.Break.Module.Core.Entity.BrakeTime", "BrakeTimeEnd")
+                        .WithMany("BrakeEndTime")
+                        .HasForeignKey("BrakeId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("Modules.Break.Module.Core.Entity.BrakeTime", null)
-                        .WithMany("StartTime")
-                        .HasForeignKey("BrakeTimeId1");
+                    b.HasOne("Modules.Break.Module.Core.Entity.BrakeTime", "BrakeTimeStart")
+                        .WithMany("BrakeStartTime")
+                        .HasForeignKey("BrakeTimeStartId");
+
+                    b.Navigation("BrakeTimeEnd");
+
+                    b.Navigation("BrakeTimeStart");
                 });
 
             modelBuilder.Entity("Modules.Break.Module.Core.Entity.BrakeTime", b =>
                 {
-                    b.Navigation("EndTime");
+                    b.Navigation("BrakeEndTime");
 
-                    b.Navigation("StartTime");
+                    b.Navigation("BrakeStartTime");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,8 +6,18 @@ namespace Modules.Break.Module.Core.Entity;
 
 public class DateTimeWorkSchedule
 {
-    public int Id { get; set; }
-    public DateTime StartTime { get; set; }
-    public DateTime EndTime { get; set; }
 
+
+    public int Id { get; set; }
+    public DateTime? StartTime { get; set; }
+    public DateTime? EndTime { get; set; }
+    
+
+    public int? BrakeId { get; set; }
+
+    public BrakeTime? BrakeTimeStart { get; set; }
+    public BrakeTime? BrakeTimeEnd { get; set; }
 }
+
+
+

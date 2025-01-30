@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Shared.Dto;
+using Shared.Services.ModuleCommunication;
 using TimeInTimeOut.Module.Core.Abstractions;
 using TimeInTimeOut.Module.Core.Domain.Entity;
 using TimeInTimeOut.Module.Core.Dto;
@@ -16,17 +17,29 @@ namespace TimeInTimeOut.Module.Api.Controllers
         =>this.icomingAndgoingRepository=icomingAndgoingRepository;
 
         [HttpGet]
-        public async Task<ResponseChecker<ComingAndgoing>> Get(int Id)
+        public async Task<ResponseChecker<ComingAndgoingResponseDto>> Get(int Id)
         {
-            return await icomingAndgoingRepository.GetById(Id);
+            var comingAndgoingResponseDto =await icomingAndgoingRepository.GetById(Id);
+          ResponseChecker<ComingAndgoingResponseDto> comingAndgoingResponseDto1= 
+          ObjectMapper.MapObject<ResponseChecker<ComingAndgoingResponseDto> >(comingAndgoingResponseDto);
+          return comingAndgoingResponseDto1;
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Post(ComingAndgoing entity)
+        public async Task<IActionResult> Post(ComingAndgoingDtoRequest entity)
         {
-             await icomingAndgoingRepository.Add(entity);
-             return Ok("dada");
+          
+          var comingAndgoing1 = new ComingAndgoing {
+            Id=entity.Id,
+          
+            OfflineTime = new List<DateTimeTimeInTimeOut> { new DateTimeTimeInTimeOut { TimeIn = entity.OflineTime } },
+            // OnlineTime=new List<DateTimeTimeInTimeOut> { new DateTimeTimeInTimeOut { TimeOut = entity.OflineTime } },
+
+            };
+
+             await icomingAndgoingRepository.Add(comingAndgoing1);
+             return Ok("insterted");
         }
     }
 }

@@ -8,18 +8,31 @@ namespace TimeInTimeOut.Module.Core.EntityConfiguration.DAL
     {
         public void Configure(EntityTypeBuilder<ComingAndgoing> builder)
         {
-            builder.HasKey(x => x.Id);
-           
+            builder.HasKey(c => c.Id);
 
-            builder.HasMany(x => x.OflineTime).
-            WithOne()
-            .OnDelete(DeleteBehavior.SetNull);
+            builder.HasMany(c => c.OnlineTime)
+                   .WithOne(t => t.OnlineComingAndgoing)
+                   .HasForeignKey(t => t.ComingAndgoingId)
+                   .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(x => x.OnlineTime).
-            WithOne()
-            .OnDelete(DeleteBehavior.SetNull);
+            builder.HasMany(c => c.OfflineTime)
+                   .WithOne(t => t.OfflineComingAndgoing)
+                   .HasForeignKey(t => t.ComingAndgoingId)
+                   .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
 
-           
+    public class ConfigurationDateTimeTimeInTimeOut : IEntityTypeConfiguration<DateTimeTimeInTimeOut>
+    {
+        public void Configure(EntityTypeBuilder<DateTimeTimeInTimeOut> builder)
+        {
+            builder.HasKey(t => t.Id);
+
+            builder.Property(t => t.TimeIn)
+                   .IsRequired(false);
+
+            builder.Property(t => t.TimeOut)
+                   .IsRequired(false); 
         }
     }
 }

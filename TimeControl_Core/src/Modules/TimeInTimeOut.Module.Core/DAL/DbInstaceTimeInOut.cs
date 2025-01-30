@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using TimeInTimeOut.Module.Core.Domain.Entity;
+using TimeInTimeOut.Module.Core.EntityConfiguration.DAL;
 
 namespace TimeInTimeOut.Module.Core.DAL
 {
@@ -17,7 +18,7 @@ namespace TimeInTimeOut.Module.Core.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(DbInstaceTimeInOut).Assembly);
             base.OnModelCreating(modelBuilder);
         }
 
