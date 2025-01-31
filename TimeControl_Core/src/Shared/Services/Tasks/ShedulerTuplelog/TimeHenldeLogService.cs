@@ -100,6 +100,7 @@ public sealed class TimeHenldeLogService : ITimeHenldeLogService
 
     private static bool IsStartTimeValid(TimeDtoReqvest entity, bool status, bool busy)
     { 
+        status=true;
        var res= entity.StartTime?.Any() == true && status && busy;
        return res;
     }
@@ -121,7 +122,7 @@ public sealed class TimeHenldeLogService : ITimeHenldeLogService
     private static bool ShouldUpdateWorkSchedule(TimeDtoReqvest entity, bool status, bool busy, DateTime now)
     {  
         // status=false;
-        busy=false;
+        // busy=false;
         bool res=HasOfflineTimeToday(entity, now);
         var eny=!status && entity.StartTime?.Any() == true;
         return !status && entity.StartTime?.Any() == true && !res && !busy;

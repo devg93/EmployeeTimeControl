@@ -6,7 +6,7 @@ using Modules.Break.Module.Core.DAL;
 using Modules.Break.Module.Core.Entity;
 
 
-namespace Modules.Break.Module.Core.Repository;
+namespace Modules.Break.Module.Core.Repository.DAL;
 
 public class breakRepositoryCommand : IbreakRepositoryCommand
 {

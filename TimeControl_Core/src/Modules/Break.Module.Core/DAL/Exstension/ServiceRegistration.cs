@@ -14,6 +14,8 @@ using Modules.Break.Module.Core.Iservices;
 using Modules.Break.Module.Core.Mediator;
 using Modules.Break.Module.Core.Repository;
 using Modules.Break.Module.Core.Repository.Busy;
+using Modules.Break.Module.Core.Repository.Busy.DAL;
+using Modules.Break.Module.Core.Repository.DAL;
 using Shared;
 using Shared.Services.ModuleCommunication.Contracts;
 

@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Break.Module.Core.Modules.Break.Module.Core.DAL.Migrations
+namespace Break.Module.Core.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class Breake : Migration
+    public partial class BreakUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

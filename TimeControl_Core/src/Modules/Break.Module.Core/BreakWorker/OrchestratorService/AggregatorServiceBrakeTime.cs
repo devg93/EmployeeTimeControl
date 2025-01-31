@@ -59,6 +59,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         var existingBrakeResponse = await FetchExistingBrakeTime(1); //entity.Id
         var existingBrake = existingBrakeResponse.Data;
         bool BusyStatus = await GetBusyStatus(1);
+        BusyStatus=false;
 
 
 #pragma warning disable CS8604
@@ -78,11 +79,11 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         try
         {
 
-            if (brakeTimeResult.StartTimeValidWorkSchedule && !brakeTimeResult.UserOfflineTimeDateDay)
+            if (brakeTimeResult.StartTimeValidWorkSchedule && !brakeTimeResult.UserOfflineTimeDateDay&&BusyStatus)
             {
                 return await HandleValidWorkSchedule(brakeTimeResult,existingBrake, entity.Id, IpStatus);
             }
-            else if (brakeTimeResult.UserOnlineTimeDateDay && !brakeTimeResult.UserOfflineTimeDateDay)
+            else if (brakeTimeResult.UserOnlineTimeDateDay && !brakeTimeResult.UserOfflineTimeDateDay&&!BusyStatus)
             {
                 return await HandleOnlineTimeValid(brakeTimeResult, entity, IpStatus);
             }
@@ -117,15 +118,14 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
                 OflineTime = new List<DateTime> { },
 
 
-
             };
         }
 
 
         return new TimeDtoReqvest
         {
-            // StartTime = existingBrake.BrakeStartTime?.Select(s => s.StartTime ?? DateTime.MinValue).ToList(),
-            // EndTime = existingBrake.BrakeEndTime?.Select(e => e.EndTime ?? DateTime.MinValue).ToList(),
+            StartTime = existingBrake.BrakeStartTime?.Select(s => s.StartTime ?? DateTime.MinValue).ToList(),
+            EndTime = existingBrake.BrakeEndTime?.Select(e => e.EndTime ?? DateTime.MinValue).ToList(),
             OnlineTime = existingTimeInOut.OnlineTime?.Select(o => o.TimeIn).ToList(),
             OflineTime = existingTimeInOut.OflineTime?.Select(o => o.TimeOut).ToList()
         };
@@ -151,8 +151,9 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
             var newBrakeTime = new BrakeTime
             {
                 Id = entity.Id,
-                BrakeEndTime = entity.StartTime?.Select(t => new DateTimeWorkSchedule { StartTime = t }).ToList(),
-                BrakeStartTime = entity.EndTime?.Select(t => new DateTimeWorkSchedule { EndTime = t }).ToList()
+                BrakeStartTime = entity.StartTime?.Select(t => new DateTimeWorkSchedule { StartTime = t }).ToList(),
+                BrakeEndTime = entity.EndTime?.Select(t => new DateTimeWorkSchedule { EndTime = t }).ToList()
+                
             };
 
             await breakRepositoryCommand.CreateBreakAsync(newBrakeTime);

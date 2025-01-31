@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
+
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Modules.Break.Module.Core.Astractions.Irepository.Ibusy;
@@ -9,7 +6,7 @@ using Modules.Break.Module.Core.DAL;
 using Modules.Break.Module.Core.Entity;
 
 
-namespace Modules.Break.Module.Core.Repository.Busy
+namespace Modules.Break.Module.Core.Repository.Busy.DAL
 {
     public class busyRepositoryQeury : IbusyRepositoryQeury
     {

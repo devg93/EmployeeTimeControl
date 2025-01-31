@@ -9,11 +9,11 @@ using Modules.Break.Module.Core.DAL;
 
 #nullable disable
 
-namespace Break.Module.Core.Modules.Break.Module.Core.DAL.Migrations
+namespace Break.Module.Core.DAL.Migrations
 {
     [DbContext(typeof(DbInstace))]
-    [Migration("20250130122248_Breake")]
-    partial class Breake
+    [Migration("20250131192459_BreakUser")]
+    partial class BreakUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -8,7 +8,7 @@ using Modules.Break.Module.Core.DAL;
 
 #nullable disable
 
-namespace Break.Module.Core.Modules.Break.Module.Core.DAL.Migrations
+namespace Break.Module.Core.DAL.Migrations
 {
     [DbContext(typeof(DbInstace))]
     partial class DbInstaceModelSnapshot : ModelSnapshot

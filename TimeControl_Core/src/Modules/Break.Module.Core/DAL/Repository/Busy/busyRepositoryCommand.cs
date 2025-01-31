@@ -5,7 +5,7 @@ using Modules.Break.Module.Core.DAL;
 using Modules.Break.Module.Core.Entity;
 
 
-namespace Modules.Break.Module.Core.Repository.Busy
+namespace Modules.Break.Module.Core.Repository.Busy.DAL
 {
     public class busyRepositoryCommand : IbusyRepositoryCommand
     {

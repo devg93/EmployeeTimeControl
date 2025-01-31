@@ -7,7 +7,7 @@ using Modules.Break.Module.Core.DAL;
 using Modules.Break.Module.Core.Entity;
 using Shared.Dto;
 
-namespace Modules.Break.Module.Core.Repository;
+namespace Modules.Break.Module.Core.Repository.DAL;
 
 public class breakRepositoryQeury : IbreakRepositoryQeury
 {
