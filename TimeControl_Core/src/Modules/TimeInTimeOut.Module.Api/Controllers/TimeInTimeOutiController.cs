@@ -20,8 +20,10 @@ namespace TimeInTimeOut.Module.Api.Controllers
         public async Task<ResponseChecker<ComingAndgoingResponseDto>> Get(int Id)
         {
             var comingAndgoingResponseDto =await icomingAndgoingRepository.GetById(Id);
+
           ResponseChecker<ComingAndgoingResponseDto> comingAndgoingResponseDto1= 
-          ObjectMapper.MapObject<ResponseChecker<ComingAndgoingResponseDto> >(comingAndgoingResponseDto);
+          RuntimeObjectMapper.MapObjectGeneric<ResponseChecker<ComingAndgoingResponseDto>, 
+          ComingAndgoingResponseDto>(comingAndgoingResponseDto);
           return comingAndgoingResponseDto1;
         }
 

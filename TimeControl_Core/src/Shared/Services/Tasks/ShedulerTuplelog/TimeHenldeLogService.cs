@@ -119,8 +119,13 @@ public sealed class TimeHenldeLogService : ITimeHenldeLogService
     => entity.OflineTime?.Any(day => day.Day == now.Day) ??false;
 
     private static bool ShouldUpdateWorkSchedule(TimeDtoReqvest entity, bool status, bool busy, DateTime now)
-    => !status && entity.StartTime?.Any() == true && !HasOfflineTimeToday(entity, now) && !busy;
-
+    {  
+        // status=false;
+        busy=false;
+        bool res=HasOfflineTimeToday(entity, now);
+        var eny=!status && entity.StartTime?.Any() == true;
+        return !status && entity.StartTime?.Any() == true && !res && !busy;
+    }
 
 
    

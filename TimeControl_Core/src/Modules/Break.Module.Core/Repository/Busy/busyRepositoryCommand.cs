@@ -12,11 +12,21 @@ namespace Modules.Break.Module.Core.Repository.Busy
          private readonly DbInstace _db;
       public  busyRepositoryCommand(DbInstace db)
         => _db = db;
-        public async Task<bool> CreateBusy(busyChecker entity)
+     
+
+        public async Task<bool> CreateBusy(int UserId, bool param)
         {
-            await _db.AddAsync(entity);
+             var entity = new busyChecker
+             {
+                Id = UserId,
+                busy = param
+            };
+
+             await _db.AddAsync(entity);
             return await _db.SaveChangesAsync() > 0;
         }
+            
+        
 
         public async Task<bool> Save()
         => await _db.SaveChangesAsync() > 0;

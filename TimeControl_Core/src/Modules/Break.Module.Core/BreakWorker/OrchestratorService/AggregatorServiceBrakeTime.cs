@@ -67,7 +67,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
         var UserInfo = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
 
-        ResponseResultBrakeTime brakeTimeResult = ObjectMapper.MapObject<ResponseResultBrakeTime>(UserInfo);
+        ResponseResultBrakeTime brakeTimeResult = RuntimeObjectMapper.MapObject<ResponseResultBrakeTime>(UserInfo);
 
         /*
                  var pointer = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
@@ -80,7 +80,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
             if (brakeTimeResult.StartTimeValidWorkSchedule && !brakeTimeResult.UserOfflineTimeDateDay)
             {
-                return await HandleValidWorkSchedule(existingBrake, entity.Id, IpStatus);
+                return await HandleValidWorkSchedule(brakeTimeResult,existingBrake, entity.Id, IpStatus);
             }
             else if (brakeTimeResult.UserOnlineTimeDateDay && !brakeTimeResult.UserOfflineTimeDateDay)
             {
@@ -124,38 +124,42 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
         return new TimeDtoReqvest
         {
-            StartTime = existingBrake.BrakeStartTime?.Select(s => s.StartTime ?? DateTime.MinValue).ToList(),
-            EndTime = existingBrake.BrakeEndTime?.Select(e => e.EndTime ?? DateTime.MinValue).ToList(),
+            // StartTime = existingBrake.BrakeStartTime?.Select(s => s.StartTime ?? DateTime.MinValue).ToList(),
+            // EndTime = existingBrake.BrakeEndTime?.Select(e => e.EndTime ?? DateTime.MinValue).ToList(),
             OnlineTime = existingTimeInOut.OnlineTime?.Select(o => o.TimeIn).ToList(),
             OflineTime = existingTimeInOut.OflineTime?.Select(o => o.TimeOut).ToList()
         };
     }
 
 
-    private async Task<bool> HandleValidWorkSchedule(BrakeTime existingBrake, int id, bool status)
+    private async Task<bool> HandleValidWorkSchedule(ResponseResultBrakeTime resultTime, BrakeTime existingBrake, int id, bool status)
     {
-        existingBrake.BrakeEndTime?.Add(new DateTimeWorkSchedule { EndTime = DateTime.Now });
-        await breakRepositoryCommand.Save();
-        return await UpdateBusyStatus(id, false);
+        if (resultTime.workSchedulPingLog)
+        {
+            existingBrake.BrakeEndTime?.Add(new DateTimeWorkSchedule { EndTime = DateTime.Now });
+            await breakRepositoryCommand.Save();
+            return await UpdateBusyStatus (id, false);
+        }
+        return false;
     }
 
 
     private async Task<bool> HandleOnlineTimeValid(ResponseResultBrakeTime resultTime, BrakeTimeDtoReqvest entity, bool status)
     {
-        if (resultTime.workSchedulPingLog)
+
         {
             var newBrakeTime = new BrakeTime
             {
                 Id = entity.Id,
-                BrakeStartTime = entity.StartTime?.Select(t => new DateTimeWorkSchedule { StartTime = t }).ToList(),
-                BrakeEndTime = entity.EndTime?.Select(t => new DateTimeWorkSchedule { EndTime = t }).ToList()
+                BrakeEndTime = entity.StartTime?.Select(t => new DateTimeWorkSchedule { StartTime = t }).ToList(),
+                BrakeStartTime = entity.EndTime?.Select(t => new DateTimeWorkSchedule { EndTime = t }).ToList()
             };
 
             await breakRepositoryCommand.CreateBreakAsync(newBrakeTime);
-            return await UpdateBusyStatus(entity.Id, true);
+            return await CreateBusyStatus(entity.Id, true);
         }
 
-        return true;
+        
     }
 
 
@@ -169,6 +173,13 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
     {
         var busyChecker = await busyRepositoryQeury.GetBusyByIdAsync(Userid);
         return true;
+    }
+
+
+    private async Task<bool> CreateBusyStatus(int Userid,bool status)
+    {
+        var busyChecker = await busyRepositoryCommand.CreateBusy(Userid,status);
+        return busyChecker;
     }
 
     //***************************************************************************************************************************//
