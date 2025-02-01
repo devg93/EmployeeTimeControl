@@ -15,6 +15,7 @@ public class BreakWorkerCommand : BackgroundService
 {
     private readonly ILogger<BreakWorkerCommand> _logger;
     private readonly IServiceScopeFactory _serviceScopeFactory;
+    // private readonly dynamic? param=1000;
 
     public BreakWorkerCommand(ILogger<BreakWorkerCommand> logger, IServiceScopeFactory serviceScopeFactory)
     => (_logger, _serviceScopeFactory) = (logger ?? throw new ArgumentNullException(nameof(logger))
@@ -39,7 +40,7 @@ public class BreakWorkerCommand : BackgroundService
                 _logger.LogError(ex, "Unhandled exception in WorkerCommand.");
             }
 
-            await Task.Delay(TimeSpan.FromSeconds(1000), stoppingToken);
+            await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
         }
 
         _logger.LogInformation("WorkerCommand stopped.");

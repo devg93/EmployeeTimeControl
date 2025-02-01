@@ -12,7 +12,7 @@ namespace Modules.Break.Module.Core.Repository.Busy.DAL
     {
         private readonly DbInstace _db;
       public  busyRepositoryQeury(DbInstace db)
-        => _db = db;
+      => _db = db;
 
         public async Task<bool> GetBusyByIdAsync(int id)
         {

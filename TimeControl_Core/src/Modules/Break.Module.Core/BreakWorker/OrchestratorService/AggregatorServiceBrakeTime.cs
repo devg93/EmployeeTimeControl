@@ -59,7 +59,8 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         var existingBrakeResponse = await FetchExistingBrakeTime(1); //entity.Id
         var existingBrake = existingBrakeResponse.Data;
         bool BusyStatus = await GetBusyStatus(1);
-        BusyStatus=false;
+        // BusyStatus=false;
+        IpStatus=true;
 
 
 #pragma warning disable CS8604
@@ -83,7 +84,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
             {
                 return await HandleValidWorkSchedule(brakeTimeResult,existingBrake, entity.Id, IpStatus);
             }
-            else if (brakeTimeResult.UserOnlineTimeDateDay && !brakeTimeResult.UserOfflineTimeDateDay&&!BusyStatus)
+            else if (brakeTimeResult.UserOnlineTimeDateDay && !brakeTimeResult.UserOfflineTimeDateDay&&!BusyStatus&&!IpStatus)
             {
                 return await HandleOnlineTimeValid(brakeTimeResult, entity, IpStatus);
             }
@@ -136,9 +137,10 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
     {
         if (resultTime.workSchedulPingLog)
         {
-            existingBrake.BrakeEndTime?.Add(new DateTimeWorkSchedule { EndTime = DateTime.Now });
-            await breakRepositoryCommand.Save();
-            return await UpdateBusyStatus (id, false);
+            // existingBrake.BrakeEndTime?.Add(new DateTimeWorkSchedule { EndTime = DateTime.Now });
+            // await breakRepositoryCommand.Save();
+            await breakRepositoryCommand.UbdateBreakAsync(1);
+            return await UpdateBusyStatus (1, false);
         }
         return false;
     }
@@ -152,7 +154,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
             {
                 Id = entity.Id,
                 BrakeStartTime = entity.StartTime?.Select(t => new DateTimeWorkSchedule { StartTime = t }).ToList(),
-                BrakeEndTime = entity.EndTime?.Select(t => new DateTimeWorkSchedule { EndTime = t }).ToList()
+                // BrakeEndTime = entity.EndTime?.Select(t => new DateTimeWorkSchedule { EndTime = t }).ToList()
                 
             };
 
@@ -173,7 +175,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
     private async Task<bool> GetBusyStatus(int Userid)
     {
         var busyChecker = await busyRepositoryQeury.GetBusyByIdAsync(Userid);
-        return true;
+        return busyChecker?true:false;
     }
 
 
