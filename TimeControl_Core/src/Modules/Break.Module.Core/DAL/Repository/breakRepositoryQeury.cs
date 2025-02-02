@@ -16,8 +16,7 @@ public class breakRepositoryQeury : IbreakRepositoryQeury
     => this.dbcontext = dbcontext;
     public async Task<List<BrakeTime>> GetAllBreaksAsync()
     => dbcontext.BrakeTimes != null ?
-    await dbcontext.BrakeTimes.Include(ws => ws.BrakeEndTime).
-    Include(ws => ws.BrakeStartTime).Include(bs => bs.busyChecker)
+    await dbcontext.BrakeTimes
     .ToListAsync() : new List<BrakeTime>();
 
     public async Task<ResponseChecker<BrakeTime>> GetBreakByIdAsinc(int Id)
@@ -32,9 +31,7 @@ public class breakRepositoryQeury : IbreakRepositoryQeury
         }
 
         var brakeTime = await dbcontext.BrakeTimes
-            .Include(ws => ws.BrakeEndTime)
-            .Include(ws => ws.BrakeStartTime)
-            .Include(bs => bs.busyChecker)
+            
             .FirstOrDefaultAsync(x => x.Id == Id);
 
         return new ResponseChecker<BrakeTime>

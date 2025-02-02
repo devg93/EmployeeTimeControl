@@ -18,6 +18,7 @@ public class DbInstace : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+       
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(DbInstace).Assembly);
             base.OnModelCreating(modelBuilder);
     }

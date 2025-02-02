@@ -24,8 +24,6 @@ using Shared.Services.ModuleCommunication;
 // in updating or creating brake time records. The class implements the following key responsibilities:
 // . Validates input data and retrieves necessary information from repositories.
 
-
-
 namespace Break.Module.Core.BreakWorker.OrchestratorService;
 
 public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
@@ -59,8 +57,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         var existingBrakeResponse = await FetchExistingBrakeTime(1); //entity.Id
         var existingBrake = existingBrakeResponse.Data;
         bool BusyStatus = await GetBusyStatus(1);
-        // BusyStatus=false;
-        IpStatus=true;
+
 
 
 #pragma warning disable CS8604
@@ -80,11 +77,11 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         try
         {
 
-            if (brakeTimeResult.StartTimeValidWorkSchedule && !brakeTimeResult.UserOfflineTimeDateDay&&BusyStatus)
+            if (brakeTimeResult.StartTimeValidWorkSchedule && !brakeTimeResult.UserOfflineTimeDateDay && BusyStatus)
             {
-                return await HandleValidWorkSchedule(brakeTimeResult,existingBrake, entity.Id, IpStatus);
+                return await HandleValidWorkSchedule(brakeTimeResult, existingBrake, entity.Id, IpStatus);
             }
-            else if (brakeTimeResult.UserOnlineTimeDateDay && !brakeTimeResult.UserOfflineTimeDateDay&&!BusyStatus&&!IpStatus)
+            else if (brakeTimeResult.UserOnlineTimeDateDay && !brakeTimeResult.UserOfflineTimeDateDay && !BusyStatus && !IpStatus)
             {
                 return await HandleOnlineTimeValid(brakeTimeResult, entity, IpStatus);
             }
@@ -113,10 +110,30 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         {
             return new TimeDtoReqvest
             {
-                StartTime = existingBrake.BrakeStartTime?.Select(s => s.StartTime ?? DateTime.MinValue).ToList(),
-                EndTime = existingBrake.BrakeEndTime?.Select(e => e.EndTime ?? DateTime.MinValue).ToList(),
+                // StartTime = existingBrake.BrakeStartTime?.Select(s => s.StartTime ?? DateTime.MinValue).ToList(),
+                // EndTime = existingBrake.BrakeEndTime?.Select(e => e.EndTime ?? DateTime.MinValue).ToList(),
+                // OnlineTime = new List<DateTime> { },
+                // OflineTime = new List<DateTime> { },
+
+                StartTime = existingBrake.BrakeStartTime,
+                EndTime = existingBrake.BrakeEndTime,
                 OnlineTime = new List<DateTime> { },
                 OflineTime = new List<DateTime> { },
+
+
+            };
+        }
+
+        if (existingBrake is null)
+        {
+            return new TimeDtoReqvest
+            {
+
+
+                StartTime = new List<DateTime> { },
+                EndTime = new List<DateTime> { },
+                OnlineTime = existingTimeInOut.OnlineTime?.Select(o => o.TimeIn).ToList(),
+                OflineTime = existingTimeInOut.OflineTime?.Select(o => o.TimeOut).ToList()
 
 
             };
@@ -125,8 +142,8 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
         return new TimeDtoReqvest
         {
-            StartTime = existingBrake.BrakeStartTime?.Select(s => s.StartTime ?? DateTime.MinValue).ToList(),
-            EndTime = existingBrake.BrakeEndTime?.Select(e => e.EndTime ?? DateTime.MinValue).ToList(),
+            StartTime = existingBrake.BrakeStartTime,
+            EndTime = existingBrake.BrakeEndTime,
             OnlineTime = existingTimeInOut.OnlineTime?.Select(o => o.TimeIn).ToList(),
             OflineTime = existingTimeInOut.OflineTime?.Select(o => o.TimeOut).ToList()
         };
@@ -137,10 +154,9 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
     {
         if (resultTime.workSchedulPingLog)
         {
-            // existingBrake.BrakeEndTime?.Add(new DateTimeWorkSchedule { EndTime = DateTime.Now });
-            // await breakRepositoryCommand.Save();
-            await breakRepositoryCommand.UbdateBreakAsync(1);
-            return await UpdateBusyStatus (1, false);
+
+            await breakRepositoryCommand.UbdateBreakAsync(1,2);
+            return await UpdateBusyStatus(1, false);
         }
         return false;
     }
@@ -149,20 +165,33 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
     private async Task<bool> HandleOnlineTimeValid(ResponseResultBrakeTime resultTime, BrakeTimeDtoReqvest entity, bool status)
     {
 
+        var newBrakeTime = new BrakeTime
         {
-            var newBrakeTime = new BrakeTime
-            {
-                Id = entity.Id,
-                BrakeStartTime = entity.StartTime?.Select(t => new DateTimeWorkSchedule { StartTime = t }).ToList(),
-                // BrakeEndTime = entity.EndTime?.Select(t => new DateTimeWorkSchedule { EndTime = t }).ToList()
-                
-            };
+            UserId = entity.UserId,
+            BrakeStartTime = entity.StartTime,
+            BrakeEndTime = entity.EndTime,
+
+        };
+        if (resultTime.StartTimeBreak)
+        {
+
 
             await breakRepositoryCommand.CreateBreakAsync(newBrakeTime);
-            return await CreateBusyStatus(entity.Id, true);
+            return await CreateBusyStatus(entity.UserId, true);//entity.Id
         }
+        await breakRepositoryCommand.UbdateBreakAsync(1,1);
+        return await UpdateBusyStatus(1, true);
 
-        
+        // bool busyChecker = await GetBusyCount(1);
+        // switch (busyChecker)
+        // {
+        //     case false:
+        //         return await CreateBusyStatus(entity.UserId, false);//entity.Id
+        //     case true:
+        //         return await UpdateBusyStatus(1, true);//entity.Id
+        // }
+
+
     }
 
 
@@ -175,15 +204,19 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
     private async Task<bool> GetBusyStatus(int Userid)
     {
         var busyChecker = await busyRepositoryQeury.GetBusyByIdAsync(Userid);
-        return busyChecker?true:false;
+        return busyChecker ? true : false;
     }
 
 
-    private async Task<bool> CreateBusyStatus(int Userid,bool status)
+    private async Task<bool> CreateBusyStatus(int Userid, bool status)
     {
-        var busyChecker = await busyRepositoryCommand.CreateBusy(Userid,status);
+        var busyChecker = await busyRepositoryCommand.CreateBusy(Userid, status);
         return busyChecker;
     }
-
+    private async Task<bool> GetBusyCount(int Userid)
+    {
+        var busyChecker = await busyRepositoryQeury.GetBusyCount(1);
+        return busyChecker;
+    }
     //***************************************************************************************************************************//
 }

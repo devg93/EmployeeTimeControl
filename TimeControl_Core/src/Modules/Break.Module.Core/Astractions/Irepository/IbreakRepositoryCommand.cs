@@ -9,7 +9,7 @@ namespace Modules.Break.Module.Core.Astractions.Irepository;
     {
     
         public Task<string> CreateBreakAsync(BrakeTime brakeTime);
-        public Task<string> UbdateBreakAsync(int Id);
+        public Task<string> UbdateBreakAsync(int Id,byte param);
         public Task<bool>Save();
 
     }

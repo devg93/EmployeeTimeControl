@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Break.Module.Core.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class BreakUser : Migration
+    public partial class Break : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,6 +35,11 @@ namespace Break.Module.Core.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    BrakeStartTime = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    BrakeEndTime = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     busyId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -57,23 +62,17 @@ namespace Break.Module.Core.DAL.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     StartTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     EndTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    BrakeId = table.Column<int>(type: "int", nullable: true),
-                    BrakeTimeStartId = table.Column<int>(type: "int", nullable: true)
+                    BrakeTimeMapId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DateTimeWorkSchedules", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DateTimeWorkSchedules_BrakeTimes_BrakeId",
-                        column: x => x.BrakeId,
+                        name: "FK_DateTimeWorkSchedules_BrakeTimes_BrakeTimeMapId",
+                        column: x => x.BrakeTimeMapId,
                         principalTable: "BrakeTimes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
-                    table.ForeignKey(
-                        name: "FK_DateTimeWorkSchedules_BrakeTimes_BrakeTimeStartId",
-                        column: x => x.BrakeTimeStartId,
-                        principalTable: "BrakeTimes",
-                        principalColumn: "Id");
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -84,14 +83,9 @@ namespace Break.Module.Core.DAL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_DateTimeWorkSchedules_BrakeId",
+                name: "IX_DateTimeWorkSchedules_BrakeTimeMapId",
                 table: "DateTimeWorkSchedules",
-                column: "BrakeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DateTimeWorkSchedules_BrakeTimeStartId",
-                table: "DateTimeWorkSchedules",
-                column: "BrakeTimeStartId");
+                column: "BrakeTimeMapId");
         }
 
         /// <inheritdoc />

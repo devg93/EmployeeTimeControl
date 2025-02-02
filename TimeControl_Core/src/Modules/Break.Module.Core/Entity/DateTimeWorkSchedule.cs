@@ -12,11 +12,9 @@ public class DateTimeWorkSchedule
     public DateTime? StartTime { get; set; }
     public DateTime? EndTime { get; set; }
     
-
-    public int? BrakeId { get; set; }
-
-    public BrakeTime? BrakeTimeStart { get; set; }
-    public BrakeTime? BrakeTimeEnd { get; set; }
+    public int BrakeTimeMapId { get; set; }
+    public BrakeTime? BrakeTimeMap { get; set; }
+   
 }
 
 

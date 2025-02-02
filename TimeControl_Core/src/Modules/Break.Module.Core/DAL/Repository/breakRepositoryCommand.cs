@@ -25,19 +25,25 @@ public class breakRepositoryCommand : IbreakRepositoryCommand
     public async Task<bool> Save()
     => await dbcontext.SaveChangesAsync() > 0;
 
-    public async Task<string> UbdateBreakAsync(int Id)
+    public async Task<string> UbdateBreakAsync(int Id, byte param)
     {
-        var brakeTime = dbcontext.DateTimeWorkSchedules != null 
-            ? await dbcontext.DateTimeWorkSchedules.FirstOrDefaultAsync(schedule => schedule.Id == Id) 
+        var brakeTime = dbcontext.BrakeTimes != null 
+            ? await dbcontext.BrakeTimes.FirstOrDefaultAsync(schedule => schedule.UserId == Id) 
             : null;
         if (brakeTime == null)
         {
             return "Break not found";
         }
-
-        if (brakeTime.StartTime != null)
+       switch (param)
         {
-            brakeTime.EndTime = DateTime.Now;
+            case 1:
+                brakeTime.BrakeStartTime?.Add(DateTime.Now);
+                break;
+            case 2:
+                brakeTime.BrakeEndTime?.Add(DateTime.Now);
+                break;
+            default:
+                return "Invalid parameter";
         }
 
         await dbcontext.SaveChangesAsync();

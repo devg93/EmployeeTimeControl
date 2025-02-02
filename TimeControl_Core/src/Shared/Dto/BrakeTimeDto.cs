@@ -5,8 +5,8 @@ namespace Shared.Dto
     public class BrakeTimeDto
     {
         public int Id { get; set; }
-        public ICollection<DateTimeWorkScheduleDto>? StartTime { get; set; }
-        public ICollection<DateTimeWorkScheduleDto>? EndTime { get; set; }
+        public ICollection<DateTime>? StartTime { get; set; }
+        public ICollection<DateTime>? EndTime { get; set; }
         public int? busyId { get; set; }
         public busyCheckerDto? busyChecker { get; set; }
 

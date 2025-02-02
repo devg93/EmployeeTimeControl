@@ -1,4 +1,5 @@
 
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Modules.Break.Module.Core.Astractions.Irepository.Ibusy;
@@ -19,6 +20,15 @@ namespace Modules.Break.Module.Core.Repository.Busy.DAL
             var res = _db.BusyCheckers != null ?
             await _db.BusyCheckers.FirstOrDefaultAsync(bs => bs.Id == id) : null;
             return res?.busy ?? false;
+        }
+
+        public async Task<bool> GetBusyCount(int id)
+        {
+            if (_db.BusyCheckers != null)
+            {
+                return await Task.FromResult(_db.BusyCheckers.Count(bs => bs.Id == id) > 0);
+            }
+            return false;
         }
     }
 }

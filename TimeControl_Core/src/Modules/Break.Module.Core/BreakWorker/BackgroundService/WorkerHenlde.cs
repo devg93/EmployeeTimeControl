@@ -29,10 +29,10 @@ public class WorkerHenlde : IWorkerHenlde
             {
                 // get user  -->>>>   from db
 
-                var PingResponseStatus = await pingSender.PingIp("192.168.1.204");
+                var PingResponseStatus = await pingSender.PingIp("192.168.100.3");
               
 
-                 await breakeTimeMediator.UpdateBreakTimeAsync(1, PingResponseStatus);
+                await breakeTimeMediator.UpdateBreakTimeAsync(1, PingResponseStatus);
             }
 
             catch (Exception ex)

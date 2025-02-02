@@ -12,8 +12,8 @@ using Modules.Break.Module.Core.DAL;
 namespace Break.Module.Core.DAL.Migrations
 {
     [DbContext(typeof(DbInstace))]
-    [Migration("20250131192459_BreakUser")]
-    partial class BreakUser
+    [Migration("20250202161812_Break")]
+    partial class Break
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,15 @@ namespace Break.Module.Core.DAL.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.PrimitiveCollection<string>("BrakeEndTime")
+                        .HasColumnType("longtext");
+
+                    b.PrimitiveCollection<string>("BrakeStartTime")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("busyId")
                         .HasColumnType("int");
@@ -52,10 +61,7 @@ namespace Break.Module.Core.DAL.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BrakeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("BrakeTimeStartId")
+                    b.Property<int>("BrakeTimeMapId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("EndTime")
@@ -66,9 +72,7 @@ namespace Break.Module.Core.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrakeId");
-
-                    b.HasIndex("BrakeTimeStartId");
+                    b.HasIndex("BrakeTimeMapId");
 
                     b.ToTable("DateTimeWorkSchedules");
                 });
@@ -101,25 +105,13 @@ namespace Break.Module.Core.DAL.Migrations
 
             modelBuilder.Entity("Modules.Break.Module.Core.Entity.DateTimeWorkSchedule", b =>
                 {
-                    b.HasOne("Modules.Break.Module.Core.Entity.BrakeTime", "BrakeTimeEnd")
-                        .WithMany("BrakeEndTime")
-                        .HasForeignKey("BrakeId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                    b.HasOne("Modules.Break.Module.Core.Entity.BrakeTime", "BrakeTimeMap")
+                        .WithMany()
+                        .HasForeignKey("BrakeTimeMapId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("Modules.Break.Module.Core.Entity.BrakeTime", "BrakeTimeStart")
-                        .WithMany("BrakeStartTime")
-                        .HasForeignKey("BrakeTimeStartId");
-
-                    b.Navigation("BrakeTimeEnd");
-
-                    b.Navigation("BrakeTimeStart");
-                });
-
-            modelBuilder.Entity("Modules.Break.Module.Core.Entity.BrakeTime", b =>
-                {
-                    b.Navigation("BrakeEndTime");
-
-                    b.Navigation("BrakeStartTime");
+                    b.Navigation("BrakeTimeMap");
                 });
 #pragma warning restore 612, 618
         }

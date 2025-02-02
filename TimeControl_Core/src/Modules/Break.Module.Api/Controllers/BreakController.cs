@@ -25,8 +25,8 @@ public class BreakController : ControllerBase
     {
         var brakeTime = new BrakeTime
         {
-            BrakeStartTime = 
-                 new List<DateTimeWorkSchedule> { new DateTimeWorkSchedule { StartTime = brakeTimeDto.StartTime } },
+            BrakeStartTime = new List<DateTime> { DateTime.Now }
+                 
                
             // BrakeEndTime = new List<DateTimeWorkSchedule> { new DateTimeWorkSchedule { EndTime = brakeTimeDto.EndTime } },
 

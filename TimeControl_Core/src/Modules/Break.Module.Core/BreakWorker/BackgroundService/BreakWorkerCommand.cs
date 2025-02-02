@@ -40,7 +40,7 @@ public class BreakWorkerCommand : BackgroundService
                 _logger.LogError(ex, "Unhandled exception in WorkerCommand.");
             }
 
-            await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
+            await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
         }
 
         _logger.LogInformation("WorkerCommand stopped.");

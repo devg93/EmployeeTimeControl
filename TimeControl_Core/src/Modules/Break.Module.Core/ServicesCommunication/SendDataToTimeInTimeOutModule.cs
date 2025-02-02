@@ -32,14 +32,8 @@ namespace Break.Module.Core.ServicesCommunication
                 Data = new BrakeTimeDto
                 {
                     Id = brakeTime.Data.Id,
-                    StartTime = brakeTime.Data.BrakeStartTime?.Select(tm => new DateTimeWorkScheduleDto
-                    {
-                        StartTime = tm.StartTime.GetValueOrDefault()
-                    }).ToList(),
-                    EndTime = brakeTime.Data.BrakeEndTime?.Select(tm => new DateTimeWorkScheduleDto
-                    {
-                        EndTime = tm.EndTime.GetValueOrDefault()
-                    }).ToList()
+                    StartTime = brakeTime.Data.BrakeStartTime?.ToList(),
+                    EndTime = brakeTime.Data.BrakeEndTime?.ToList(),
                 }
             };
         }
