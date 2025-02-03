@@ -77,8 +77,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
         return true;
     }
-
-    //***************************************Private Async Methods ***********************************************************//
+//***************************************Private Async Methods ***********************************************************//
 
     private async Task<ResponseChecker<BrakeTime>> FetchExistingBrakeTime(int id)
     => await IbreakRepositoryQeury.GetBreakByIdAsinc(id);

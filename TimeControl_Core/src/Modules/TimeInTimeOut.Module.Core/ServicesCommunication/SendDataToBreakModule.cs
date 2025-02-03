@@ -2,16 +2,15 @@
 using Shared.Dto;
 using Shared.Services.ModuleCommunication.Contracts;
 using TimeInTimeOut.Module.Core.Abstractions;
-using TimeInTimeOut.Module.Core.Domain.Entity;
-using TimeInTimeOut.Module.Core.Dto;
+
 
 namespace TimeInTimeOut.Module.Core.ServicesCommunication
 {
     public class SendDataToBreakModule : ISendServiceToBreakModule
     {
-        private readonly IcomingAndgoingRepository _icomingAndgoingRepository;
+        private readonly IcomingAndgoingRepositoryQeury _icomingAndgoingRepository;
 
-        public SendDataToBreakModule(IcomingAndgoingRepository icomingAndgoingRepository)
+        public SendDataToBreakModule(IcomingAndgoingRepositoryQeury icomingAndgoingRepository)
         {
             _icomingAndgoingRepository = icomingAndgoingRepository;
         }public async Task<ResponseChecker<ComingAndGoingDto>> GetByIdAsync(int id)
