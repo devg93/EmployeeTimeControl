@@ -10,6 +10,8 @@ using Modules.Break.Module.Core.Entity;
 using Shared.Dto;
 using Shared.Services.Tasks.ShedulerTuplelog.Enum;
 using Shared.Services.ModuleCommunication;
+using Break.Module.Core.Abstraction.IServiceProvider;
+using Break.Module.Core.DAL.GetNewServicesFactory;
 
 
 //************************************ Service Orchestration ******************************************//
@@ -23,14 +25,15 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService;
 public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 {
 
-    private readonly ServicesFacade Services;
+    private readonly IServicesFactory Services;
 
-   public AggregatorServiceBrakeTime (ServicesFacade brakeServiceAggregatorDiServices)
-    => Services = brakeServiceAggregatorDiServices;
+    public AggregatorServiceBrakeTime(IServicesFactory brakeServiceAggregatorDiServices)
+     => Services = brakeServiceAggregatorDiServices;
 
 
     public async Task<bool> AddOrUpdateBrakeTime(BrakeTimeDtoReqvest entity, bool IpStatus)
     {
+
 
         var existingTimeInOutResponse = await FetchServiceTimeInTimeOut(1);//entity.Id
         var existingTimeInOut = existingTimeInOutResponse.Data;
@@ -48,15 +51,9 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         var timeDto = PrepareTimeDto(existingBrake, existingTimeInOut);
 #pragma warning restore CS8604
 
-        var UserInfo = await Services.TimeHandleLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
+        var UserInfo = await Services.GetTimeHandleLogService().GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
 
         ResponseResultBrakeTime brakeTimeResult = RuntimeObjectMapper.MapObject<ResponseResultBrakeTime>(UserInfo);
-
-        /*
-                 var pointer = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
-                    GCHandle handle = GCHandle.FromIntPtr((IntPtr)pointer);
-                    handle.Free();
-        */
 
         try
         {
@@ -81,11 +78,11 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
     //***************************************Private Async Methods ***********************************************************//
 
     private async Task<ResponseChecker<BrakeTime>> FetchExistingBrakeTime(int id)
-    => await Services.BreakRepositoryQeury.GetBreakByIdAsinc(id);
+    => await Services.GetBreakRepositoryQeury().GetBreakByIdAsinc(id);
 
 
     private async Task<ResponseChecker<ComingAndGoingDto>> FetchServiceTimeInTimeOut(int id)
-    => await Services.SendServiceToTimeInTimeOutModule.GetByIdAsync(id);
+    => await Services.GetSendServiceToTimeInTimeOutModule().GetByIdAsync(id);
 
 
     private TimeDtoReqvest PrepareTimeDto(BrakeTime existingBrake, ComingAndGoingDto existingTimeInOut)
@@ -94,10 +91,6 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         {
             return new TimeDtoReqvest
             {
-                // StartTime = existingBrake.BrakeStartTime?.Select(s => s.StartTime ?? DateTime.MinValue).ToList(),
-                // EndTime = existingBrake.BrakeEndTime?.Select(e => e.EndTime ?? DateTime.MinValue).ToList(),
-                // OnlineTime = new List<DateTime> { },
-                // OflineTime = new List<DateTime> { },
 
                 StartTime = existingBrake.BrakeStartTime,
                 EndTime = existingBrake.BrakeEndTime,
@@ -139,7 +132,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         if (resultTime.workSchedulPingLog)
         {
 
-            await Services.BreakRepositoryCommand.UbdateBreakAsync(1,2);
+            await Services.GetBreakRepositoryCommand().UbdateBreakAsync(1, 2);
             return await UpdateBusyStatus(1, false);
         }
         return false;
@@ -160,46 +153,36 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         {
 
 
-            await Services.BreakRepositoryCommand.CreateBreakAsync(newBrakeTime);
+            await Services.GetBreakRepositoryCommand().CreateBreakAsync(newBrakeTime);
             return await CreateBusyStatus(entity.UserId, true);//entity.Id
         }
-        await Services.BreakRepositoryCommand.UbdateBreakAsync(1,1);
+        await Services.GetBreakRepositoryCommand().UbdateBreakAsync(1, 1);
         return await UpdateBusyStatus(1, true);
-
-        // bool busyChecker = await GetBusyCount(1);
-        // switch (busyChecker)
-        // {
-        //     case false:
-        //         return await CreateBusyStatus(entity.UserId, false);//entity.Id
-        //     case true:
-        //         return await UpdateBusyStatus(1, true);//entity.Id
-        // }
-
 
     }
 
 
     private async Task<bool> UpdateBusyStatus(int id, bool status)
     {
-        await Services.BusyRepositoryCommand.UpdateBusy(id, status);
-        return await Services.BusyRepositoryCommand.Save();
+        await Services.GetBusyRepositoryCommand().UpdateBusy(id, status);
+        return await Services.GetBusyRepositoryCommand().Save();
     }
 
     private async Task<bool> GetBusyStatus(int Userid)
     {
-        var busyChecker = await Services.BusyRepositoryQeury.GetBusyByIdAsync(Userid);
+        var busyChecker = await Services.GetBusyRepositoryQeury().GetBusyByIdAsync(Userid);
         return busyChecker ? true : false;
     }
 
 
     private async Task<bool> CreateBusyStatus(int Userid, bool status)
     {
-        var busyChecker = await Services.BusyRepositoryCommand.CreateBusy(Userid, status);
+        var busyChecker = await Services.GetBusyRepositoryCommand().CreateBusy(Userid, status);
         return busyChecker;
     }
     private async Task<bool> GetBusyCount(int Userid)
     {
-        var busyChecker = await Services.BusyRepositoryQeury.GetBusyCount(1);
+        var busyChecker = await Services.GetBusyRepositoryQeury().GetBusyCount(1);
         return busyChecker;
     }
     //***************************************************************************************************************************//

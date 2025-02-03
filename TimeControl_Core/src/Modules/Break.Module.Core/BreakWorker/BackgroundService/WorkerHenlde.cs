@@ -29,9 +29,9 @@ public class WorkerHenlde : IWorkerHenlde
             {
                 // get user  -->>>>   from db
 
-                var PingResponseStatus = await pingSender.PingIp("192.168.100.3");
+               // var PingResponseStatus = await pingSender.PingIp("192.168.100.3");
               
-
+                  var PingResponseStatus = await pingSender.PingIp("192.168.1.94");
                 await breakeTimeMediator.UpdateBreakTimeAsync(1, PingResponseStatus);
             }
 
