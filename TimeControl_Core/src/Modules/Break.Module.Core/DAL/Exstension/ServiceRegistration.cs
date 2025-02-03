@@ -47,7 +47,7 @@ public static class ServiceRegistration
         serviceDescriptors.AddScoped<IbreakRepositoryQeury, breakRepositoryQeury>();
         serviceDescriptors.AddScoped<IbusyRepositoryCommand, busyRepositoryCommand>();
         serviceDescriptors.AddScoped<IbusyRepositoryQeury, busyRepositoryQeury>();
-        // serviceDescriptors.AddScoped<IRepositoryContract, RepositoryContractImplementation>();
+        serviceDescriptors.AddScoped< ServicesFacade>();
 
         return serviceDescriptors;
     }

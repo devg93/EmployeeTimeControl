@@ -1,19 +1,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Modules.Break.Module.Core;
-using Modules.Break.Module.Core.Astractions.Irepository;
-using Modules.Break.Module.Core.Astractions.Irepository.Ibusy;
 using Modules.Break.Module.Core.Astractions.Iservices;
 using Modules.Break.Module.Core.Dto;
 using Modules.Break.Module.Core.Entity;
 using Shared.Dto;
-using Shared.Services.ModuleCommunication.Contracts;
-using Shared.Services.Tasks.PingCheker;
-using Shared.Services.Tasks.ShedulerTuplelog;
 using Shared.Services.Tasks.ShedulerTuplelog.Enum;
 using Shared.Services.ModuleCommunication;
 
@@ -28,21 +22,11 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService;
 
 public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 {
-    private readonly IbreakRepositoryCommand breakRepositoryCommand;
-    private readonly IbreakRepositoryQeury breakRepositoryQeury;
-    private readonly ITimeHenldeLogService timeHenldeLogService;
-    private readonly IbusyRepositoryCommand busyRepositoryCommand;
-    private readonly IbusyRepositoryQeury busyRepositoryQeury;
-    private readonly ISendServiceToBreakModule GetServiceToTimeInTimeOutModule;
 
-    public AggregatorServiceBrakeTime(IbreakRepositoryCommand ibreakRepositoryCommand,
-    ITimeHenldeLogService timeHenldeLogService, IbreakRepositoryQeury ibreakRepositoryQeury,
-    ISendServiceToBreakModule sendServiceToTimeInTimeOutModule,
-    IbusyRepositoryCommand ibusyRepositoryCommand, IbusyRepositoryQeury ibusyRepositoryQeury)
-    => (this.breakRepositoryCommand, this.timeHenldeLogService, this.breakRepositoryQeury, this.GetServiceToTimeInTimeOutModule,
-    this.busyRepositoryCommand, this.busyRepositoryQeury) =
-    (ibreakRepositoryCommand, timeHenldeLogService, ibreakRepositoryQeury,
-     sendServiceToTimeInTimeOutModule, ibusyRepositoryCommand, ibusyRepositoryQeury);
+    private readonly ServicesFacade Services;
+
+   public AggregatorServiceBrakeTime (ServicesFacade brakeServiceAggregatorDiServices)
+    => Services = brakeServiceAggregatorDiServices;
 
 
     public async Task<bool> AddOrUpdateBrakeTime(BrakeTimeDtoReqvest entity, bool IpStatus)
@@ -64,7 +48,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         var timeDto = PrepareTimeDto(existingBrake, existingTimeInOut);
 #pragma warning restore CS8604
 
-        var UserInfo = await timeHenldeLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
+        var UserInfo = await Services.TimeHandleLogService.GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
 
         ResponseResultBrakeTime brakeTimeResult = RuntimeObjectMapper.MapObject<ResponseResultBrakeTime>(UserInfo);
 
@@ -97,11 +81,11 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
     //***************************************Private Async Methods ***********************************************************//
 
     private async Task<ResponseChecker<BrakeTime>> FetchExistingBrakeTime(int id)
-    => await breakRepositoryQeury.GetBreakByIdAsinc(id);
+    => await Services.BreakRepositoryQeury.GetBreakByIdAsinc(id);
 
 
     private async Task<ResponseChecker<ComingAndGoingDto>> FetchServiceTimeInTimeOut(int id)
-    => await GetServiceToTimeInTimeOutModule.GetByIdAsync(id);
+    => await Services.SendServiceToTimeInTimeOutModule.GetByIdAsync(id);
 
 
     private TimeDtoReqvest PrepareTimeDto(BrakeTime existingBrake, ComingAndGoingDto existingTimeInOut)
@@ -155,7 +139,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         if (resultTime.workSchedulPingLog)
         {
 
-            await breakRepositoryCommand.UbdateBreakAsync(1,2);
+            await Services.BreakRepositoryCommand.UbdateBreakAsync(1,2);
             return await UpdateBusyStatus(1, false);
         }
         return false;
@@ -176,10 +160,10 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         {
 
 
-            await breakRepositoryCommand.CreateBreakAsync(newBrakeTime);
+            await Services.BreakRepositoryCommand.CreateBreakAsync(newBrakeTime);
             return await CreateBusyStatus(entity.UserId, true);//entity.Id
         }
-        await breakRepositoryCommand.UbdateBreakAsync(1,1);
+        await Services.BreakRepositoryCommand.UbdateBreakAsync(1,1);
         return await UpdateBusyStatus(1, true);
 
         // bool busyChecker = await GetBusyCount(1);
@@ -197,25 +181,25 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
     private async Task<bool> UpdateBusyStatus(int id, bool status)
     {
-        await busyRepositoryCommand.UpdateBusy(id, status);
-        return await busyRepositoryCommand.Save();
+        await Services.BusyRepositoryCommand.UpdateBusy(id, status);
+        return await Services.BusyRepositoryCommand.Save();
     }
 
     private async Task<bool> GetBusyStatus(int Userid)
     {
-        var busyChecker = await busyRepositoryQeury.GetBusyByIdAsync(Userid);
+        var busyChecker = await Services.BusyRepositoryQeury.GetBusyByIdAsync(Userid);
         return busyChecker ? true : false;
     }
 
 
     private async Task<bool> CreateBusyStatus(int Userid, bool status)
     {
-        var busyChecker = await busyRepositoryCommand.CreateBusy(Userid, status);
+        var busyChecker = await Services.BusyRepositoryCommand.CreateBusy(Userid, status);
         return busyChecker;
     }
     private async Task<bool> GetBusyCount(int Userid)
     {
-        var busyChecker = await busyRepositoryQeury.GetBusyCount(1);
+        var busyChecker = await Services.BusyRepositoryQeury.GetBusyCount(1);
         return busyChecker;
     }
     //***************************************************************************************************************************//
