@@ -5,30 +5,21 @@ using Modules.Break.Module.Core.Astractions.Irepository;
 using Modules.Break.Module.Core.Astractions.Irepository.Ibusy;
 using Shared.Services.ModuleCommunication.Contracts;
 using Shared.Services.Tasks.ShedulerTuplelog;
-
 namespace Break.Module.Core.DAL.GetNewServicesFactory
 {
   
     public class ServicesFactory : IServicesFactory
     {
         private readonly IServiceProvider _serviceProvider;
-
         public ServicesFactory(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
-
         public IbreakRepositoryCommand GetBreakRepositoryCommand()
         => _serviceProvider.GetRequiredService<IbreakRepositoryCommand>();
 
         public ITimeHenldeLogService GetTimeHandleLogService()
         => _serviceProvider.GetRequiredService<ITimeHenldeLogService>();
-
-        public IbreakRepositoryQeury GetBreakRepositoryQeury()
-        => _serviceProvider.GetRequiredService<IbreakRepositoryQeury>();
-
-        public ISendServiceToBreakModule GetSendServiceToTimeInTimeOutModule()
-        => _serviceProvider.GetRequiredService<ISendServiceToBreakModule>();
 
         public IbusyRepositoryCommand GetBusyRepositoryCommand()
         => _serviceProvider.GetRequiredService<IbusyRepositoryCommand>();

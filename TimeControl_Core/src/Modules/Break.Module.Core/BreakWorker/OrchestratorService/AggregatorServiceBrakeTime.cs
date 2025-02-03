@@ -11,8 +11,8 @@ using Shared.Dto;
 using Shared.Services.Tasks.ShedulerTuplelog.Enum;
 using Shared.Services.ModuleCommunication;
 using Break.Module.Core.Abstraction.IServiceProvider;
-using Break.Module.Core.DAL.GetNewServicesFactory;
-
+using Modules.Break.Module.Core.Astractions.Irepository;
+using Shared.Services.ModuleCommunication.Contracts;
 
 //************************************ Service Orchestration ******************************************//
 // The AggregatorServiceBrakeTime class is a central component for coordinating the management of brake time data. 
@@ -26,9 +26,16 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 {
 
     private readonly IServicesFactory Services;
+    private  readonly IbreakRepositoryQeury IbreakRepositoryQeury;
+    private readonly ISendServiceToBreakModule GetServiceToBreakModule;
 
-    public AggregatorServiceBrakeTime(IServicesFactory brakeServiceAggregatorDiServices)
-     => Services = brakeServiceAggregatorDiServices;
+    public AggregatorServiceBrakeTime(IServicesFactory brakeServiceAggregatorDiServices, 
+    IbreakRepositoryQeury ibreakRepositoryQeury,ISendServiceToBreakModule getServiceToBreakModule)
+    {
+        Services = brakeServiceAggregatorDiServices;
+        IbreakRepositoryQeury = ibreakRepositoryQeury;
+        GetServiceToBreakModule = getServiceToBreakModule;
+    }
 
 
     public async Task<bool> AddOrUpdateBrakeTime(BrakeTimeDtoReqvest entity, bool IpStatus)
@@ -37,10 +44,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
         var existingTimeInOutResponse = await FetchServiceTimeInTimeOut(1);//entity.Id
         var existingTimeInOut = existingTimeInOutResponse.Data;
-        // if (existingTimeInOutResponse.IsSuccess is false) return false;
-
-
-
+        if (existingTimeInOutResponse.IsSuccess is false) return false;
         var existingBrakeResponse = await FetchExistingBrakeTime(1); //entity.Id
         var existingBrake = existingBrakeResponse.Data;
         bool BusyStatus = await GetBusyStatus(1);
@@ -54,7 +58,6 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         var UserInfo = await Services.GetTimeHandleLogService().GetTimeResult(timeDto, IpStatus, BusyStatus, ServiceResponseType.BrakeTime);
 
         ResponseResultBrakeTime brakeTimeResult = RuntimeObjectMapper.MapObject<ResponseResultBrakeTime>(UserInfo);
-
         try
         {
 
@@ -78,13 +81,9 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
     //***************************************Private Async Methods ***********************************************************//
 
     private async Task<ResponseChecker<BrakeTime>> FetchExistingBrakeTime(int id)
-    => await Services.GetBreakRepositoryQeury().GetBreakByIdAsinc(id);
-
-
+    => await IbreakRepositoryQeury.GetBreakByIdAsinc(id);
     private async Task<ResponseChecker<ComingAndGoingDto>> FetchServiceTimeInTimeOut(int id)
-    => await Services.GetSendServiceToTimeInTimeOutModule().GetByIdAsync(id);
-
-
+    => await GetServiceToBreakModule.GetByIdAsync(id);
     private TimeDtoReqvest PrepareTimeDto(BrakeTime existingBrake, ComingAndGoingDto existingTimeInOut)
     {
         if (existingTimeInOut is null)
@@ -126,7 +125,6 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         };
     }
 
-
     private async Task<bool> HandleValidWorkSchedule(ResponseResultBrakeTime resultTime, BrakeTime existingBrake, int id, bool status)
     {
         if (resultTime.workSchedulPingLog)
@@ -137,7 +135,6 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         }
         return false;
     }
-
 
     private async Task<bool> HandleOnlineTimeValid(ResponseResultBrakeTime resultTime, BrakeTimeDtoReqvest entity, bool status)
     {
@@ -161,7 +158,6 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
     }
 
-
     private async Task<bool> UpdateBusyStatus(int id, bool status)
     {
         await Services.GetBusyRepositoryCommand().UpdateBusy(id, status);
@@ -173,7 +169,6 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         var busyChecker = await Services.GetBusyRepositoryQeury().GetBusyByIdAsync(Userid);
         return busyChecker ? true : false;
     }
-
 
     private async Task<bool> CreateBusyStatus(int Userid, bool status)
     {

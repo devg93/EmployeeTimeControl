@@ -10,11 +10,8 @@ namespace Break.Module.Core.Abstraction.IServiceProvider
     {
         IbreakRepositoryCommand GetBreakRepositoryCommand();
         ITimeHenldeLogService GetTimeHandleLogService();
-        IbreakRepositoryQeury GetBreakRepositoryQeury();
-        ISendServiceToBreakModule GetSendServiceToTimeInTimeOutModule();
         IbusyRepositoryCommand GetBusyRepositoryCommand();
         IbusyRepositoryQeury GetBusyRepositoryQeury();
-
 
     }
 
