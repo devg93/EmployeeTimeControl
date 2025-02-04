@@ -2,7 +2,7 @@
 
 using MediatR;
 
-namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService.Mediatr.Commands
+namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Commands
 {
     public class TimeInWriteCommand:IRequest<bool>
     {

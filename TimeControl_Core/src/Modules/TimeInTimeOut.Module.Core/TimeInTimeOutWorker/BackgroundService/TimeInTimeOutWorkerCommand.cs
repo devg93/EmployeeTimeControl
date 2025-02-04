@@ -25,7 +25,7 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.BackgroundService
                 using var scope = _serviceScopeFactory.CreateScope();
                 var workerHandler = scope.ServiceProvider.GetRequiredService<ITimeInTimeOutWorkerHendle>();
 
-               // await workerHandler.TimeInTimeOutWorkerAsync();
+                await workerHandler.TimeInTimeOutWorkerAsync();
             }
             catch (Exception ex)
             {

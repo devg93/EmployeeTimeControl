@@ -8,7 +8,7 @@ using TimeInTimeOut.Module.Core.Dto;
 
 namespace TimeInTimeOut.Module.Core.Repository
 {
-    public class ComingAndgoingRepository : IcomingAndgoingRepository
+    public class ComingAndgoingRepository : IcomingAndgoingRepositoryCommand, IcomingAndgoingRepositoryQeury
     {
         private readonly DbInstaceTimeInOut dbInstaceTimeInOut;
         public ComingAndgoingRepository(DbInstaceTimeInOut dbInstaceTimeInOut)
@@ -43,7 +43,7 @@ namespace TimeInTimeOut.Module.Core.Repository
         //***********************************************************************
 
 
-        public async Task<ResponseChecker<ComingAndgoing>> GetById(int id)
+        public async Task<ResponseChecker<ComingAndgoing>> GetById(int id, string Param)
         {
             if (dbInstaceTimeInOut.comingAndgoings is null)
             {
@@ -56,7 +56,7 @@ namespace TimeInTimeOut.Module.Core.Repository
 
             try
             {
-                if (dbInstaceTimeInOut.DateTimeTimeInTimeOuts == null)
+                if (dbInstaceTimeInOut.comingAndgoings == null)
                 {
                     return new ResponseChecker<ComingAndgoing>
                     {
@@ -66,40 +66,49 @@ namespace TimeInTimeOut.Module.Core.Repository
                 }
 
 
-                var onlineTimes = await dbInstaceTimeInOut.DateTimeTimeInTimeOuts
-                    .Where(o => o.ComingAndgoingId == id && o.TimeIn != null)
-                    .ToListAsync();
-
-
-                var offlineTimes = await dbInstaceTimeInOut.DateTimeTimeInTimeOuts
-                    .Where(o => o.ComingAndgoingId == id && o.TimeOut != null)
-                    .ToListAsync();
-
-
-                var comingAndgoing = await dbInstaceTimeInOut.comingAndgoings
-                    .FirstOrDefaultAsync(c => c.Id == id);
-
-                      
-
-                if (comingAndgoing == null)
+                switch (Param)
                 {
-                    return new ResponseChecker<ComingAndgoing>
-                    {
-                        IsSuccess = false,
-                        Message = $"Entity with ID {id} not found."
-                    };
+                    case "OnlineTime":
+                        var ResOnlineTime = await dbInstaceTimeInOut.comingAndgoings
+                             .Where(o => o.Id == id)
+                             .Select(o => o.OnlineTime)
+                             .FirstOrDefaultAsync();
+                        return new ResponseChecker<ComingAndgoing>
+                        {
+                            IsSuccess = true,
+                            Message = "Data retrieved successfully.",
+                            Data = new ComingAndgoing { OnlineTime = ResOnlineTime }
+                        };
+                    case "OfflineTime":
+                        var ResOfflineTime = await dbInstaceTimeInOut.comingAndgoings
+                             .Where(o => o.Id == id)
+                             .Select(o => o.OnlineTime)
+                             .FirstOrDefaultAsync();
+                        return new ResponseChecker<ComingAndgoing>
+                        {
+                            IsSuccess = true,
+                            Message = "Data retrieved successfully.",
+                            Data = new ComingAndgoing { OnlineTime = ResOfflineTime }
+                        };
+
+                    case "ResBreake":
+                        var ResBreake = await dbInstaceTimeInOut.comingAndgoings
+
+                             .FirstOrDefaultAsync();
+                        return new ResponseChecker<ComingAndgoing>
+                        {
+                            IsSuccess = true,
+                            Message = "Data retrieved successfully.",
+                            Data = ResBreake
+                        };
+                    default:
+                        return new ResponseChecker<ComingAndgoing>
+                        {
+                            IsSuccess = false,
+                            Message = "Invalid parameter."
+                        };
                 }
 
-
-                comingAndgoing.OnlineTime = onlineTimes;
-                comingAndgoing.OfflineTime = offlineTimes;
-
-                return new ResponseChecker<ComingAndgoing>
-                {
-                    IsSuccess = true,
-                    Message = "Data retrieved successfully.",
-                    Data = comingAndgoing
-                };
             }
             catch (Exception ex)
             {
@@ -111,10 +120,12 @@ namespace TimeInTimeOut.Module.Core.Repository
             }
         }
 
-        //***********************************************************************
-        public Task<ComingAndgoing> Update(ComingAndgoing entity)
+        public Task<bool> Update(ComingAndgoing entity)
         {
             throw new NotImplementedException();
         }
+
+        //***********************************************************************
+
     }
 }

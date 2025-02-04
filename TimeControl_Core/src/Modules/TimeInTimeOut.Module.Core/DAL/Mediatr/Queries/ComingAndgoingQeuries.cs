@@ -3,10 +3,11 @@
 using MediatR;
 using TimeInTimeOut.Module.Core.Dto;
 
-namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService.Mediatr.Queries
+namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Queries
 {
     public class ComingAndgoingQeuries: IRequest<ComingAndgoingResponseDto>
     {
+        public int Id { get; set;}
         
     }
     

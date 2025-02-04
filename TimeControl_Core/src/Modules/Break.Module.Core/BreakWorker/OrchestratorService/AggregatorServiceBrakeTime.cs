@@ -107,8 +107,8 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 
                 StartTime = new List<DateTime> { },
                 EndTime = new List<DateTime> { },
-                OnlineTime = existingTimeInOut.OnlineTime?.Select(o => o.TimeIn).ToList(),
-                OflineTime = existingTimeInOut.OflineTime?.Select(o => o.TimeOut).ToList()
+                // OnlineTime = existingTimeInOut.OnlineTime?.Select(o => o.TimeIn).ToList(),
+                // OflineTime = existingTimeInOut.OflineTime?.Select(o => o.TimeOut).ToList()
 
 
             };
@@ -119,8 +119,8 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         {
             StartTime = existingBrake.BrakeStartTime,
             EndTime = existingBrake.BrakeEndTime,
-            OnlineTime = existingTimeInOut.OnlineTime?.Select(o => o.TimeIn).ToList(),
-            OflineTime = existingTimeInOut.OflineTime?.Select(o => o.TimeOut).ToList()
+            // OnlineTime = existingTimeInOut.OnlineTime?.Select(o => o.TimeIn).ToList(),
+            // OflineTime = existingTimeInOut.OflineTime?.Select(o => o.TimeOut).ToList()
         };
     }
 

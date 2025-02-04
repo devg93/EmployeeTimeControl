@@ -32,7 +32,7 @@ public class BreakWorkerCommand : BackgroundService
                 using var scope = _serviceScopeFactory.CreateScope();
                 var workerHandler = scope.ServiceProvider.GetRequiredService<IWorkerHenlde>();
 
-             await workerHandler.AsyncMethodBreake();
+          //   await workerHandler.AsyncMethodBreake();
 
             }
             catch (Exception ex)

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeInTimeOut.Module.Core.DAL;
 
@@ -10,9 +11,11 @@ using TimeInTimeOut.Module.Core.DAL;
 namespace TimeInTimeOut.Module.Core.DAL.Migrations
 {
     [DbContext(typeof(DbInstaceTimeInOut))]
-    partial class DbInstaceTimeInOutModelSnapshot : ModelSnapshot
+    [Migration("20250204091522_IcomingAndgoingUser")]
+    partial class IcomingAndgoingUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

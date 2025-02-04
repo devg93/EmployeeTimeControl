@@ -18,10 +18,14 @@ builder.Services.AddSwaggerGen();
 
 
 
+
+
+
 builder.Services.AddControllers().AddApplicationPart(typeof(Modules.Break.Module.Api.Controllers.BreakController).Assembly);
 // builder.Services.AddControllers().AddApplicationPart(typeof(Modules.TimeInTimeOut.Module.Api.Controllers.TimeInTimeOutiController).Assembly);
 
-builder.Services.AddBreakWorkerServices();
+
+// builder.Services.AddBreakWorkerServices();
 // builder.Services.AddDbContext(builder.Configuration);
 builder.Services.RegisterModuleBreak(builder.Configuration);
 builder.Services.RegisterTimeInTimeOutModule();
