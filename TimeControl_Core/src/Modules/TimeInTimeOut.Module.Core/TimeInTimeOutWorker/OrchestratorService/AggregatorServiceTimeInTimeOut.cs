@@ -1,5 +1,4 @@
 
-
 using MediatR;
 using Shared.Dto;
 using Shared.Records;
@@ -31,28 +30,27 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
             entity.UserId = 1;
 
 
-            var ExitTimeInTimeOut = await GetDataFromBreak(entity.UserId);
-            
-            var ExitBreake = await GetDataFromTimeInTimeOut(entity.UserId);
+            var exitTimeInTimeOutTask = GetDataFromBreak(entity.UserId);
+            var exitBreakTask = GetDataFromTimeInTimeOut(entity.UserId);
+
+            var ExitTimeInTimeOut = await exitTimeInTimeOutTask;
+            var ExitBreak = await exitBreakTask;
 
 
-            var ResponseDto = PrepareTimeDto(ExitBreake, ExitTimeInTimeOut);
+            var ResponseDto = PrepareTimeDto(ExitBreak, ExitTimeInTimeOut);
 
             var UserInfo = await timeHenldeLogService.GetTimeResult(ResponseDto, IpStatus, true, ServiceResponseType.ComingAndgoing);
             ResponseResultTimeInTimeOut brakeTimeResult = RuntimeObjectMapper.MapObject<ResponseResultTimeInTimeOut>(UserInfo);
 
-
-            switch (GetResultProces(brakeTimeResult))
+            if (GetResultProces(brakeTimeResult))
             {
-                case true:
-
-                await HendleWriteDataTimeIn(new TimeInWriteCommand { Id = entity.UserId, OnlineTime = new DateTime()});
-                    return true;
-                case false:
-                    await HendleWriteDataTimeOut(new TimeOutWriCommands { Id = entity.UserId, OflineTime = new DateTime() });
-                    return true;
-
+                return await WriteDataTimeIn(new TimeInWriteCommand { Id = entity.UserId, OnlineTime = DateTime.Now });
             }
+            else
+            {
+                return await WriteDataTimeOut(new TimeOutWriCommands { Id = entity.UserId, OflineTime = DateTime.Now });
+            }
+
 
         }
 
@@ -76,18 +74,13 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
             return true;
         }
 
-        private async Task<bool> HendleWriteDataTimeOut(TimeOutWriCommands timeOutWriCommands)
-        {
-            await _mediator.Send(timeOutWriCommands);
-            return true;
-        }
+        private async Task<bool> WriteDataTimeOut(TimeOutWriCommands timeOutWriCommands)
+        => await _mediator.Send(timeOutWriCommands);
 
 
-        private async Task<bool> HendleWriteDataTimeIn(TimeInWriteCommand timeInWriteCommand)
-        {
-             await _mediator.Send(timeInWriteCommand);
-            return true;
-        }
+
+        private async Task<bool> WriteDataTimeIn(TimeInWriteCommand timeInWriteCommand)
+        => await _mediator.Send(timeInWriteCommand);
 
         private async Task<ComingAndgoingResponseDto> GetDataFromBreak(int UserId)
         => await _mediator.Send(new ComingAndgoingQeuries { Id = UserId });
@@ -95,7 +88,7 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
 
 
         private async Task<ResponseChecker<BrakeTimeDto>> GetDataFromTimeInTimeOut(int UserId)
-        =>await GetdServiceToTimeInTimeOutModule.GetByIdAsync(UserId);
+        => await GetdServiceToTimeInTimeOutModule.GetByIdAsync(UserId);
 
 
     }

@@ -12,7 +12,7 @@ using Modules.Break.Module.Core.DAL;
 namespace Break.Module.Core.DAL.Migrations
 {
     [DbContext(typeof(DbInstace))]
-    [Migration("20250202161812_Break")]
+    [Migration("20250205190622_Break")]
     partial class Break
     {
         /// <inheritdoc />

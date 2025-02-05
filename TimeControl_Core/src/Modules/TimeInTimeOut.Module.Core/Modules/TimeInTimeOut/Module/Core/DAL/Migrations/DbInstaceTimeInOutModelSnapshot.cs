@@ -2,20 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeInTimeOut.Module.Core.DAL;
 
 #nullable disable
 
-namespace TimeInTimeOut.Module.Core.DAL.Migrations
+namespace TimeInTimeOut.Module.Core.Modules.TimeInTimeOut.Module.Core.DAL.Migrations
 {
     [DbContext(typeof(DbInstaceTimeInOut))]
-    [Migration("20250204091522_IcomingAndgoingUser")]
-    partial class IcomingAndgoingUser
+    partial class DbInstaceTimeInOutModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,18 +29,18 @@ namespace TimeInTimeOut.Module.Core.DAL.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("OfflineTime")
-                        .HasColumnType("JSON");
+                    b.PrimitiveCollection<string>("OfflineTime")
+                        .HasColumnType("longtext");
 
-                    b.Property<string>("OnlineTime")
-                        .HasColumnType("JSON");
+                    b.PrimitiveCollection<string>("OnlineTime")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ComingAndgoings", (string)null);
+                    b.ToTable("comingAndgoings");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace TimeInTimeOut.Module.Core.DAL.Migrations
+namespace TimeInTimeOut.Module.Core.Modules.TimeInTimeOut.Module.Core.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class IcomingAndgoingUser : Migration
+    public partial class TimeInTimeOutUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,20 +15,20 @@ namespace TimeInTimeOut.Module.Core.DAL.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ComingAndgoings",
+                name: "comingAndgoings",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    OnlineTime = table.Column<string>(type: "JSON", nullable: true)
+                    OnlineTime = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    OfflineTime = table.Column<string>(type: "JSON", nullable: true)
+                    OfflineTime = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ComingAndgoings", x => x.Id);
+                    table.PrimaryKey("PK_comingAndgoings", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
         }
@@ -37,7 +37,7 @@ namespace TimeInTimeOut.Module.Core.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ComingAndgoings");
+                name: "comingAndgoings");
         }
     }
 }
