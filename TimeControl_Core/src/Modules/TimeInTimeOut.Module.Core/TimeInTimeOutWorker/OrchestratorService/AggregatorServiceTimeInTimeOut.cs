@@ -2,8 +2,13 @@
 
 using MediatR;
 using Shared.Dto;
+using Shared.Records;
+using Shared.Services.ModuleCommunication;
 using Shared.Services.ModuleCommunication.Contracts;
+using Shared.Services.Tasks.ShedulerTuplelog;
+using Shared.Services.Tasks.ShedulerTuplelog.Enum;
 using TimeInTimeOut.Module.Core.Dto;
+using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Commands;
 using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Queries;
 
 namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
@@ -12,87 +17,43 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
     {
         private readonly IMediator _mediator;
         private readonly ISendServiceToTimeInTimeOutModule GetdServiceToTimeInTimeOutModule;
+        private readonly ITimeHenldeLogService timeHenldeLogService;
         public AggregatorServiceTimeInTimeOut(IMediator mediator,
-        ISendServiceToTimeInTimeOutModule sendServiceToTimeInTimeOutModule)
-        => (_mediator, this.GetdServiceToTimeInTimeOutModule) = (mediator, sendServiceToTimeInTimeOutModule);
+        ISendServiceToTimeInTimeOutModule sendServiceToTimeInTimeOutModule, ITimeHenldeLogService timeHenldeLogService)
+        => (_mediator, this.GetdServiceToTimeInTimeOutModule, this.timeHenldeLogService) =
+        (mediator, sendServiceToTimeInTimeOutModule, timeHenldeLogService);
 
 
-        public async Task<bool> UpdateTimeInTimeOut(ComingAndgoingResponseDto entity, bool Status)
+        public async Task<bool> UpdateTimeInTimeOut(ComingAndgoingResponseDto entity, bool IpStatus)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             entity.UserId = 1;
 
-            var ExitTimeInTimeOut = await _mediator.Send(new ComingAndgoingQeuries { Id = entity.UserId });
-            var ExitBreake = await GetdServiceToTimeInTimeOutModule.GetByIdAsync(entity.UserId);
+
+            var ExitTimeInTimeOut = await GetDataFromBreak(entity.UserId);
+            
+            var ExitBreake = await GetDataFromTimeInTimeOut(entity.UserId);
+
 
             var ResponseDto = PrepareTimeDto(ExitBreake, ExitTimeInTimeOut);
 
-            // try
-            // {
-            //     if (entity.UserId.HasValue)
-            //     {
+            var UserInfo = await timeHenldeLogService.GetTimeResult(ResponseDto, IpStatus, true, ServiceResponseType.ComingAndgoing);
+            ResponseResultTimeInTimeOut brakeTimeResult = RuntimeObjectMapper.MapObject<ResponseResultTimeInTimeOut>(UserInfo);
 
 
-            //         var existingLog = await _pingLogRepository.GetByIdAsync(entity.UserId.Value);
-            //         var WorkSchedules = await _workScheduleRepository.GetBreakTimeById(entity.UserId.Value);
-            //         var tupleHendleLogService = TupleHendleLogService.Instance;
+            switch (GetResultProces(brakeTimeResult))
+            {
+                case true:
 
-            //         var ReqvestTuple = new TupleReqvest
-            //         {
-            //             EndTime = WorkSchedules?.EndTime,
-            //             StartTime = WorkSchedules?.StartTime,
-            //             OnlineTime = existingLog?.OnlineTime,
-            //             OflineTime = existingLog?.OflineTime
-            //         };
-            //         if (existingLog != null)
-            //         {
-            //             existingLog.OnlineTime ??= new List<DateTime>();
-            //             existingLog.OflineTime ??= new List<DateTime>();
+                await HendleWriteDataTimeIn(new TimeInWriteCommand { Id = entity.UserId, OnlineTime = new DateTime()});
+                    return true;
+                case false:
+                    await HendleWriteDataTimeOut(new TimeOutWriCommands { Id = entity.UserId, OflineTime = new DateTime() });
+                    return true;
 
-            //             if (!existingLog.OnlineTime.Any(ot => ot.Date == DateTime.Today) && Status)
-            //             {
-            //                 existingLog.OnlineTime.Add(DateTime.Now);
-            //                 return await _pingLogRepository.Save();
-            //             }
+            }
 
-            //             ResponseResultPingLog pingLogResult = (ResponseResultPingLog)
-            //             await tupleHendleLogService.TimeResult(ReqvestTuple, Status, true, ResponseType.PingLog);
-
-            //             if (pingLogResult != null && pingLogResult.LastTimeIn)
-            //             {
-
-            //                 existingLog.OflineTime.Add(DateTime.Now);
-            //                 return await _pingLogRepository.Save();
-
-            //             }
-            //         }
-            //         else
-            //         {
-            //             if (Status)
-            //             {
-            //                 var pingLog = new PingLog
-            //                 {
-            //                     UserId = entity.UserId,
-            //                     OnlineTime = entity.OnlineTime,
-            //                     OflineTime = entity.OflineTime
-            //                 };
-
-            //                 await _pingLogRepository.Create(pingLog);
-            //                 return true;
-            //             }
-
-            //             return false;
-            //         }
-            //     }
-            // }
-            // catch (Exception ex)
-            // {
-            //     _logger.LogError(ex, "Database error occurred while saving changes in addTimeInService.");
-            //     throw new InvalidOperationException("An error occurred while saving changes in addTimeInService.", ex);
-            // }
-
-            return false;
         }
 
 
@@ -109,10 +70,34 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
                 // OflineTime = existingTimeInOut.OflineTime?.Select(o => o.TimeOut).ToList()
             };
         }
+
+        private bool GetResultProces(ResponseResultTimeInTimeOut responseResultTimeInTimeOut)
+        {
+            return true;
+        }
+
+        private async Task<bool> HendleWriteDataTimeOut(TimeOutWriCommands timeOutWriCommands)
+        {
+            await _mediator.Send(timeOutWriCommands);
+            return true;
+        }
+
+
+        private async Task<bool> HendleWriteDataTimeIn(TimeInWriteCommand timeInWriteCommand)
+        {
+             await _mediator.Send(timeInWriteCommand);
+            return true;
+        }
+
+        private async Task<ComingAndgoingResponseDto> GetDataFromBreak(int UserId)
+        => await _mediator.Send(new ComingAndgoingQeuries { Id = UserId });
+
+
+
+        private async Task<ResponseChecker<BrakeTimeDto>> GetDataFromTimeInTimeOut(int UserId)
+        =>await GetdServiceToTimeInTimeOutModule.GetByIdAsync(UserId);
+
+
     }
-
-
-
-
 
 }
