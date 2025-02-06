@@ -1,9 +1,11 @@
 
+
 using MediatR;
 using Shared.Dto;
 using Shared.Records;
-using Shared.Services.ModuleCommunication;
+
 using Shared.Services.ModuleCommunication.Contracts;
+using Shared.Services.RunTime;
 using Shared.Services.Tasks.ShedulerTuplelog;
 using Shared.Services.Tasks.ShedulerTuplelog.Enum;
 using TimeInTimeOut.Module.Core.Dto;
@@ -22,33 +24,60 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
         => (_mediator, this.GetdServiceToTimeInTimeOutModule, this.timeHenldeLogService) =
         (mediator, sendServiceToTimeInTimeOutModule, timeHenldeLogService);
 
-
         public async Task<bool> UpdateTimeInTimeOut(ComingAndgoingResponseDto entity, bool IpStatus)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             entity.UserId = 1;
 
+            //   Stopwatch stopwatch = Stopwatch.StartNew();
 
             var exitTimeInTimeOutTask = GetDataFromBreak(entity.UserId);
             var exitBreakTask = GetDataFromTimeInTimeOut(entity.UserId);
+            await Task.WhenAll(exitTimeInTimeOutTask, exitBreakTask);
+            var ResponseDto = PrepareTimeDto(exitBreakTask.Result, exitTimeInTimeOutTask.Result);
 
-            var ExitTimeInTimeOut = await exitTimeInTimeOutTask;
-            var ExitBreak = await exitBreakTask;
+            /*SpetTest
+                        var exitTimeInTimeOutTask = Task.Run(() => GetDataFromBreak(entity.UserId));
+                        var exitBreakTask = Task.Run(() => GetDataFromTimeInTimeOut(entity.UserId));
+
+                        var exitTimeInTimeOutTask = await GetDataFromBreak(entity.UserId);
+                        var exitBreakTask = await GetDataFromTimeInTimeOut(entity.UserId);
+
+                        var ResponseDto = PrepareTimeDto(exitBreakTask, exitTimeInTimeOutTask);
+            */
+
+            // stopwatch.Stop();
+            // Console.WriteLine($"Task.WhenAll Execution Time: {stopwatch.ElapsedMilliseconds} ms");
 
 
-            var ResponseDto = PrepareTimeDto(ExitBreak, ExitTimeInTimeOut);
+
+
 
             var UserInfo = await timeHenldeLogService.GetTimeResult(ResponseDto, IpStatus, true, ServiceResponseType.ComingAndgoing);
             ResponseResultTimeInTimeOut brakeTimeResult = RuntimeObjectMapper.MapObject<ResponseResultTimeInTimeOut>(UserInfo);
 
-            if (GetResultProces(brakeTimeResult))
+
+            switch (GetResultProces(brakeTimeResult))
             {
-                return await WriteDataTimeIn(new TimeInWriteCommand { Id = entity.UserId, OnlineTime = DateTime.Now });
-            }
-            else
-            {
-                return await WriteDataTimeOut(new TimeOutWriCommands { Id = entity.UserId, OflineTime = DateTime.Now });
+                case "WriteDataTimeIn":
+                    await WriteDataTimeIn(new TimeInWriteCommand { Id = entity.UserId, OnlineTime = DateTime.Now });
+                    return true;
+
+                case "WriteDataTimeOut":
+                    await WriteDataTimeOut(new TimeOutWriCommands { Id = entity.UserId, OflineTime = DateTime.Now });
+                    return true;
+                case "UpdateListDataTimeIn":
+                    await WriteDataTimeIn(new TimeInWriteCommand { Id = entity.UserId, OnlineTime = DateTime.Now });
+                    return true;
+
+                case "UpdateListDataTimeOut":
+                    await WriteDataTimeOut(new TimeOutWriCommands { Id = entity.UserId, OflineTime = DateTime.Now });
+                    return true;
+
+
+                default:
+                    return false;
             }
 
 
@@ -64,15 +93,50 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
             {
                 StartTime = existingBrake?.Data?.StartTime,
                 EndTime = existingBrake?.Data?.EndTime,
-                // OnlineTime = existingTimeInOut.OnlineTime?.Select(o => o.TimeIn).ToList(),
-                // OflineTime = existingTimeInOut.OflineTime?.Select(o => o.TimeOut).ToList()
+                OnlineTime = existingTimeInOut.OnlineTime,
+                OflineTime = existingTimeInOut.OflineTime
             };
         }
-
-        private bool GetResultProces(ResponseResultTimeInTimeOut responseResultTimeInTimeOut)
+        private string GetResultProces(ResponseResultTimeInTimeOut responseResultTimeInTimeOut)
         {
-            return true;
+            if (!responseResultTimeInTimeOut.LastTimeIn)
+                return "WriteDataTimeOut";
+            else if (responseResultTimeInTimeOut.HasOfflineRecordForToday)
+                return "UpdateListDataTimeOut";
+
+
+            if (!responseResultTimeInTimeOut.HasOnlineRecordForToday)
+                return "WriteDataTimeIn";
+            else if (responseResultTimeInTimeOut.HasOnlineRecordForToday)
+                return "UpdateListDataTimeIn";
+
+
+            // if (responseResultTimeInTimeOut.HasSufficientTimePassed)
+            //     return "WriteDataTimeOut";
+
+
+            return "error";
         }
+
+
+        /*SpedTest
+                private async Task<ComingAndgoingResponseDto> GetDataFromBreak(int userId)
+                {
+                    Console.WriteLine($"GetDataFromBreak Start - Thread ID: {Thread.CurrentThread.ManagedThreadId}");
+
+                    var res = await _mediator.Send(new ComingAndgoingQeuries { Id = userId });
+                    Console.WriteLine($"GetDataFromBreak End - Thread ID: {Thread.CurrentThread.ManagedThreadId}");
+                    return res;
+                }
+
+                private async Task<ResponseChecker<BrakeTimeDto>> GetDataFromTimeInTimeOut(int userId)
+                {
+                    Console.WriteLine($"GetDataFromTimeInTimeOut Start - Thread ID: {Thread.CurrentThread.ManagedThreadId}");
+                    var res = await GetdServiceToTimeInTimeOutModule.GetByIdAsync(userId);
+                    Console.WriteLine($"GetDataFromTimeInTimeOut End - Thread ID: {Thread.CurrentThread.ManagedThreadId}");
+                    return res;
+                }
+        */
 
         private async Task<bool> WriteDataTimeOut(TimeOutWriCommands timeOutWriCommands)
         => await _mediator.Send(timeOutWriCommands);

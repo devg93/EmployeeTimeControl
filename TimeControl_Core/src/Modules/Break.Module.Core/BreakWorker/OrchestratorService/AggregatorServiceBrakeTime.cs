@@ -13,6 +13,7 @@ using Shared.Services.ModuleCommunication;
 using Break.Module.Core.Abstraction.IServiceProvider;
 using Modules.Break.Module.Core.Astractions.Irepository;
 using Shared.Services.ModuleCommunication.Contracts;
+using Shared.Services.RunTime;
 
 //************************************ Service Orchestration ******************************************//
 // The AggregatorServiceBrakeTime class is a central component for coordinating the management of brake time data. 

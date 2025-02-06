@@ -2,7 +2,7 @@
 using System.Reflection;
 using Shared.Dto;
 
-namespace Shared.Services.ModuleCommunication;
+namespace Shared.Services.RunTime;
 public class RuntimeObjectMapper
 {
     public static T MapObject<T>(object resultTime) where T : new()
