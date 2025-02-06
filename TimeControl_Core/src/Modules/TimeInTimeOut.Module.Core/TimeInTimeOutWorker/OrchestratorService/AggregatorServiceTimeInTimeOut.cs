@@ -50,12 +50,8 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
             // Console.WriteLine($"Task.WhenAll Execution Time: {stopwatch.ElapsedMilliseconds} ms");
 
 
-
-
-
             var UserInfo = await timeHenldeLogService.GetTimeResult(ResponseDto, IpStatus, true, ServiceResponseType.ComingAndgoing);
             ResponseResultTimeInTimeOut brakeTimeResult = RuntimeObjectMapper.MapObject<ResponseResultTimeInTimeOut>(UserInfo);
-
 
             switch (GetResultProces(brakeTimeResult))
             {
@@ -108,7 +104,7 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
 
             if (!responseResultTimeInTimeOut.HasOnlineRecordForToday)
                 return "WriteDataTimeIn";
-            else if (responseResultTimeInTimeOut.HasOnlineRecordForToday)
+            else if (responseResultTimeInTimeOut.HasOnlineRecordForToday&&!responseResultTimeInTimeOut.HasSufficientTimePassed)
                 return "UpdateListDataTimeIn";
 
             return "error";

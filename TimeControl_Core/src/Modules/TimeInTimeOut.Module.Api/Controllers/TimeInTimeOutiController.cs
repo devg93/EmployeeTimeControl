@@ -44,7 +44,7 @@ namespace TimeInTimeOut.Module.Api.Controllers
 
             };
 
-             await icomingAndgoingRepository.Add(comingAndgoing1);
+             await icomingAndgoingRepository.CreateTime(comingAndgoing1);
              return Ok("insterted");
         }
     }
