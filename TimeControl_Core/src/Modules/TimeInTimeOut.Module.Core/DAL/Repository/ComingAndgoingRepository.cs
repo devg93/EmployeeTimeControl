@@ -14,7 +14,7 @@ namespace TimeInTimeOut.Module.Core.Repository
         public ComingAndgoingRepository(DbInstaceTimeInOut dbInstaceTimeInOut)
         => this.dbInstaceTimeInOut = dbInstaceTimeInOut;
 
-        public async Task<bool> Add(ComingAndgoing entity)
+        public async Task<bool> CreateTime(ComingAndgoing entity)
         {
 
             if (dbInstaceTimeInOut is null || dbInstaceTimeInOut.comingAndgoings is null)
@@ -119,10 +119,43 @@ namespace TimeInTimeOut.Module.Core.Repository
                 };
             }
         }
-
-        public Task<bool> Update(ComingAndgoing entity)
+        public async Task<bool> UpdateTimeAsync(int userId, char param)
         {
-            throw new NotImplementedException();
+           
+            if (dbInstaceTimeInOut.comingAndgoings == null)
+            {
+                return false;
+            }
+            
+            var entity = await dbInstaceTimeInOut.comingAndgoings
+                .FirstOrDefaultAsync(us => us.Id == userId);
+
+      
+            if (entity == null)
+            {
+                return false;
+            }
+
+          
+            switch (param)
+            {
+                case 'O':
+                    entity.OnlineTime ??= new List<DateTime>(); 
+                    entity.OnlineTime.Add(DateTime.Now);
+                    break;
+
+                case 'F':
+                    entity.OfflineTime ??= new List<DateTime>(); 
+                    entity.OfflineTime.Add(DateTime.Now);
+                    break;
+
+                default:
+                    return false; 
+            }
+
+            dbInstaceTimeInOut.comingAndgoings.Update(entity);
+            await dbInstaceTimeInOut.SaveChangesAsync();
+            return true;
         }
 
         //***********************************************************************

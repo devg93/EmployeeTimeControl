@@ -17,7 +17,7 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Commands
             OfflineTime = new List<DateTime> {request.OflineTime },
 
             };
-            return await comingAndgoingRepositoryCommand.Add(timeIn);
+            return await comingAndgoingRepositoryCommand.CreateTime(timeIn);
         }
     }
 }

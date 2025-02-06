@@ -5,8 +5,8 @@ namespace TimeInTimeOut.Module.Core.Abstractions
 {
     public interface IcomingAndgoingRepositoryCommand
     {
-        public Task<bool> Add(ComingAndgoing entity);
-        public Task<bool> Update(ComingAndgoing entity);
+        public Task<bool> CreateTime(ComingAndgoing entity);
+        public Task<bool> UpdateTimeAsync(int  UserId,char param);
         public Task<bool> Delete(int id);
     }
 }

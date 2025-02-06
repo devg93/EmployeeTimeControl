@@ -19,7 +19,7 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Commands
                
 
             };
-            return await comingAndgoingRepositoryCommand.Add(timeIn);
+            return await comingAndgoingRepositoryCommand.CreateTime(timeIn);
         }
     }
 }

@@ -1,13 +1,12 @@
 
-
 using MediatR;
 using Shared.Dto;
 using Shared.Records;
-
 using Shared.Services.ModuleCommunication.Contracts;
 using Shared.Services.RunTime;
 using Shared.Services.Tasks.ShedulerTuplelog;
 using Shared.Services.Tasks.ShedulerTuplelog.Enum;
+using TimeInTimeOut.Module.Core.DAL.Mediatr.Commands;
 using TimeInTimeOut.Module.Core.Dto;
 using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Commands;
 using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Queries;
@@ -64,15 +63,17 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
                     await WriteDataTimeIn(new TimeInWriteCommand { Id = entity.UserId, OnlineTime = DateTime.Now });
                     return true;
 
+                case "UpdateListDataTimeIn":
+                      await WriteDataTimeInUpdate(new TimeUpdateCommand { UserId = entity.UserId, Param = 'O' });
+                    return true;
+
                 case "WriteDataTimeOut":
                     await WriteDataTimeOut(new TimeOutWriCommands { Id = entity.UserId, OflineTime = DateTime.Now });
                     return true;
-                case "UpdateListDataTimeIn":
-                    await WriteDataTimeIn(new TimeInWriteCommand { Id = entity.UserId, OnlineTime = DateTime.Now });
-                    return true;
+
 
                 case "UpdateListDataTimeOut":
-                    await WriteDataTimeOut(new TimeOutWriCommands { Id = entity.UserId, OflineTime = DateTime.Now });
+                    await WriteDataTimeOutUpdate(new TimeUpdateCommand { UserId = entity.UserId, Param = 'F' });
                     return true;
 
 
@@ -99,7 +100,7 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
         }
         private string GetResultProces(ResponseResultTimeInTimeOut responseResultTimeInTimeOut)
         {
-            if (!responseResultTimeInTimeOut.LastTimeIn)
+            if (responseResultTimeInTimeOut.LastTimeIn)
                 return "WriteDataTimeOut";
             else if (responseResultTimeInTimeOut.HasOfflineRecordForToday)
                 return "UpdateListDataTimeOut";
@@ -109,11 +110,6 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
                 return "WriteDataTimeIn";
             else if (responseResultTimeInTimeOut.HasOnlineRecordForToday)
                 return "UpdateListDataTimeIn";
-
-
-            // if (responseResultTimeInTimeOut.HasSufficientTimePassed)
-            //     return "WriteDataTimeOut";
-
 
             return "error";
         }
@@ -140,17 +136,14 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
 
         private async Task<bool> WriteDataTimeOut(TimeOutWriCommands timeOutWriCommands)
         => await _mediator.Send(timeOutWriCommands);
-
-
-
         private async Task<bool> WriteDataTimeIn(TimeInWriteCommand timeInWriteCommand)
         => await _mediator.Send(timeInWriteCommand);
-
+        private async Task<bool> WriteDataTimeInUpdate(TimeUpdateCommand timeInUpdateCommand)
+        => await _mediator.Send(timeInUpdateCommand);
+        private async Task<bool> WriteDataTimeOutUpdate(TimeUpdateCommand timeInUpdateCommand)
+        => await _mediator.Send(timeInUpdateCommand);
         private async Task<ComingAndgoingResponseDto> GetDataFromBreak(int UserId)
         => await _mediator.Send(new ComingAndgoingQeuries { Id = UserId });
-
-
-
         private async Task<ResponseChecker<BrakeTimeDto>> GetDataFromTimeInTimeOut(int UserId)
         => await GetdServiceToTimeInTimeOutModule.GetByIdAsync(UserId);
 
