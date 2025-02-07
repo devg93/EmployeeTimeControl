@@ -17,7 +17,6 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Commands
             {
                 OnlineTime = new List<DateTime> { request.OnlineTime },
                
-
             };
             return await comingAndgoingRepositoryCommand.CreateTime(timeIn);
         }
