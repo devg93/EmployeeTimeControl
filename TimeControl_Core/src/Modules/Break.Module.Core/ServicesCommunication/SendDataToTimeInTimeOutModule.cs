@@ -1,13 +1,3 @@
-
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Threading.Tasks;
-using Modules.Break.Module.Core.Astractions.Irepository;
-using Shared.Dto;
-using Shared.Services.ModuleCommunication.Contracts;
-
 namespace Break.Module.Core.ServicesCommunication
 {
     public class SendDataToTimeInTimeOutModule : ISendServiceToTimeInTimeOutModule

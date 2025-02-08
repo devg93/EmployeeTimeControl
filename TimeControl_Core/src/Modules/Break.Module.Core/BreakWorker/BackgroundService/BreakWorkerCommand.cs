@@ -1,16 +1,7 @@
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Break.Module.Core.BreakWorker.BackgroundService;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-namespace Modules.Break.Module.Core.BreakWorker.Command;
-
 //******************************** Service WorkerCommand **************************************//
 // The WorkerCommand class is a background service that continuously executes tasks in a loop
+namespace Modules.Break.Module.Core.BreakWorker.Command;
 public class BreakWorkerCommand : BackgroundService
 {
     private readonly ILogger<BreakWorkerCommand> _logger;

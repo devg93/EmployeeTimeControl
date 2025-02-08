@@ -1,9 +1,4 @@
 
-using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Modules.Break.Module.Core.Entity;
-
 namespace Modules.Break.Module.Core.DAL;
 
 public class DbInstace : DbContext

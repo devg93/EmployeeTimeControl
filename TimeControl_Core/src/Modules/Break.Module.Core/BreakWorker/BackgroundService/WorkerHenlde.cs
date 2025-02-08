@@ -1,11 +1,3 @@
-using System;
-using System.Threading.Tasks;
-using Break.Module.Core.BreakWorker.BackgroundService;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Modules.Break.Module.Core.Iservices;
-using Shared.Services.Tasks.PingCheker;
-
 
 //************************************ Service WorkerHenlde ******************************************//
 // The WorkerHenlde class coordinates operations for managing break times and handling IP-related tasks.

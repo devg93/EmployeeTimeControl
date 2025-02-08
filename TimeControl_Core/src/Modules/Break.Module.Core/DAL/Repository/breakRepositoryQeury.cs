@@ -1,12 +1,4 @@
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Modules.Break.Module.Core.Astractions.Irepository;
-using Modules.Break.Module.Core.DAL;
-using Modules.Break.Module.Core.Entity;
-using Shared.Dto;
-
 namespace Modules.Break.Module.Core.Repository.DAL;
 
 public class breakRepositoryQeury : IbreakRepositoryQeury

@@ -1,12 +1,6 @@
 
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Modules.Break.Module.Core.Entity;
-
+//************Add Entity BrakeTime Configuration Witch IEntityTypeConfiguration <T>********//
 namespace Modules.Break.Module.Core.EntityConfiguration.DAL;
-
-
-//************************************Add Entity BrakeTime Configuration ********************************************//
 public sealed class BrakeConfiguration : IEntityTypeConfiguration<BrakeTime>
 {
     public void Configure(EntityTypeBuilder<BrakeTime> builder)
@@ -19,9 +13,6 @@ public sealed class BrakeConfiguration : IEntityTypeConfiguration<BrakeTime>
             .WithOne()
             .HasForeignKey<BrakeTime>(ws => ws.busyId)
             .OnDelete(DeleteBehavior.Cascade);
-
-
-
 
     }
 }
