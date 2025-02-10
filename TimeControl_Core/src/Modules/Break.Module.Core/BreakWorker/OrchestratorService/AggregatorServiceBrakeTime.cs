@@ -99,7 +99,6 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
             };
         }
 
-
         return new TimeDtoReqvest
         {
             StartTime = existingBrake.BrakeStartTime,

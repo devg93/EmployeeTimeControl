@@ -1,6 +1,4 @@
 
-using MediatR;
-
 namespace TimeInTimeOut.Module.Core.DAL.Mediatr.Commands
 {
     public class TimeUpdateCommand:IRequest<bool>

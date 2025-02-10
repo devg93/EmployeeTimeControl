@@ -1,8 +1,5 @@
 
 
-using TimeInTimeOut.Module.Core.Dto;
-using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService;
-
 namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.BackgroundService
 {
     public class TimeInTimeOutMediator : ITimeInTimeOutMediator

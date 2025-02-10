@@ -1,7 +1,5 @@
 
 
-using MediatR;
-
 namespace TimeInTimeOut.Module.Core.Dto
 {
     public class ComingAndgoingDtoRequest: IRequest<bool>

@@ -1,8 +1,6 @@
 
 
-using Microsoft.Extensions.Logging;
-using Shared.Services.Tasks.PingCheker;
-using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.BackgroundService;
+
 
 namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.BackgroundService
 {

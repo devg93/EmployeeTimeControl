@@ -1,6 +1,5 @@
 
-using MediatR;
-using TimeInTimeOut.Module.Core.Abstractions;
+
 namespace TimeInTimeOut.Module.Core.DAL.Mediatr.Commands
 {
     public class TimeInUpdateCommandHenlder : IRequestHandler<TimeUpdateCommand, bool>

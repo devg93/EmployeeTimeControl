@@ -1,16 +1,4 @@
 
-using MediatR;
-using Shared.Dto;
-using Shared.Records;
-using Shared.Services.ModuleCommunication.Contracts;
-using Shared.Services.RunTime;
-using Shared.Services.Tasks.ShedulerTuplelog;
-using Shared.Services.Tasks.ShedulerTuplelog.Enum;
-using TimeInTimeOut.Module.Core.DAL.Mediatr.Commands;
-using TimeInTimeOut.Module.Core.Dto;
-using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Commands;
-using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Queries;
-
 namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
 {
     public class AggregatorServiceTimeInTimeOut : IAggregatorServiceTimeInTimeOut
@@ -79,8 +67,6 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
 
 
         }
-
-
 
 
 

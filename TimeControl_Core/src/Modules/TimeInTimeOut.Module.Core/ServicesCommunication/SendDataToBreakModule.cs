@@ -1,9 +1,4 @@
 
-using Shared.Dto;
-using Shared.Services.ModuleCommunication.Contracts;
-using TimeInTimeOut.Module.Core.Abstractions;
-
-
 namespace TimeInTimeOut.Module.Core.ServicesCommunication
 {
     public class SendDataToBreakModule : ISendServiceToBreakModule

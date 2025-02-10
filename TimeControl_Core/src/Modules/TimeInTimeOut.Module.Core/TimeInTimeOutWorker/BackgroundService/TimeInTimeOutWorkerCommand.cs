@@ -1,8 +1,4 @@
 
-
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
 namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.BackgroundService
 {
     public class TimeInTimeOutWorkerCommand : Microsoft.Extensions.Hosting.BackgroundService

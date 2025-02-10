@@ -1,10 +1,4 @@
 
-
-using MediatR;
-using Shared.Dto;
-using TimeInTimeOut.Module.Core.Abstractions;
-using TimeInTimeOut.Module.Core.Dto;
-
 namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Queries
 {
     public class ComingAndgoingQeuriesHeders : IRequestHandler<ComingAndgoingQeuries, ComingAndgoingResponseDto>

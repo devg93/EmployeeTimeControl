@@ -1,9 +1,4 @@
 
-
-using MediatR;
-using TimeInTimeOut.Module.Core.Abstractions;
-using TimeInTimeOut.Module.Core.Domain.Entity;
-
 namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Commands
 {
     public class CommandHenlder : IRequestHandler<TimeInWriteCommand, bool>

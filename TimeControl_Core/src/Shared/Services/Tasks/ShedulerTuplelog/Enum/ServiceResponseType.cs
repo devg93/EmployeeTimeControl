@@ -5,5 +5,4 @@ namespace Shared.Services.Tasks.ShedulerTuplelog.Enum;
         ComingAndgoing,
         BrakeTime
 
-
     }
