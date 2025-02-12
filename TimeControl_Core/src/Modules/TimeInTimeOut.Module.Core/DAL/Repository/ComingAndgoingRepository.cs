@@ -1,10 +1,4 @@
-using System.Net.WebSockets;
-using Microsoft.EntityFrameworkCore;
-using Shared.Dto;
-using TimeInTimeOut.Module.Core.Abstractions;
-using TimeInTimeOut.Module.Core.DAL;
-using TimeInTimeOut.Module.Core.Domain.Entity;
-using TimeInTimeOut.Module.Core.Dto;
+
 
 namespace TimeInTimeOut.Module.Core.Repository
 {
@@ -38,11 +32,7 @@ namespace TimeInTimeOut.Module.Core.Repository
         Include(ws => ws.OnlineTime).
         Include(ws => ws.OfflineTime).ToListAsync() : new List<ComingAndgoing>();
 
-
-
         //***********************************************************************
-
-
         public async Task<ResponseChecker<ComingAndgoing>> GetById(int id, string Param)
         {
             if (dbInstaceTimeInOut.comingAndgoings is null)

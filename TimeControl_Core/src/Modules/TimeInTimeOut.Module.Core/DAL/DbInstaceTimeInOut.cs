@@ -1,6 +1,4 @@
 
-using Microsoft.EntityFrameworkCore.Design;
-
 namespace TimeInTimeOut.Module.Core.DAL
 {
     public class DbInstaceTimeInOut : DbContext
