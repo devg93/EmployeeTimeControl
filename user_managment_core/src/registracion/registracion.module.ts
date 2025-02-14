@@ -7,20 +7,33 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+const typeOrmModule = TypeOrmModule.forRoot({
+  type: 'mysql',
+  replication: {
+    master: {
+      host: process.env.MASTER_DB_HOST,  
+      port: +process.env.DB_PORT || 3306,
+      username: process.env.MASTER_DB_USERNAME || 'root',
+      password: process.env.MASTER_DB_PASSWORD || 'password',
+      database: process.env.MASTER_DB_NAME || 'userdatabase',
+    },
+    slaves: [
+      {
+        host: process.env.REPLICA_DB_HOST,  
+        port: +process.env.DB_PORT || 3306,
+        username: process.env.REPLICA_DB_USERNAME || 'replica_user',
+        password: process.env.REPLICA_DB_PASSWORD || 'strongpassword',
+        database: process.env.REPLICA_DB_NAME || 'userdatabase',
+      },
+    ],
+  },
+  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+  synchronize: false, 
+  logging: ['query', 'error'], 
+});
+
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DB_HOST || 'localhost',
-      port: Number(process.env.DB_PORT) || 3306,
-      username: process.env.DB_USER || 'root',
-      password: process.env.DB_PASSWORD || 'password',
-      database: process.env.DB_NAME || 'userdatabase',
-      autoLoadEntities: true, 
-      synchronize: true,
-    }),
-    TypeOrmModule.forFeature([User]),
-  ],
+  imports: [typeOrmModule],
   controllers: [RegistracionController],
   providers: [RegistracionService],
   exports: [TypeOrmModule, TypeOrmModule.forFeature([User])], 

@@ -14,12 +14,8 @@ export class JwtAuthGuard extends AuthGuard('jwt') implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
 
-
-
     const canActivate = await super.canActivate(context);
-    // console.log("✅ Super canActivate result:", canActivate);
-    // console.log("✅ User from request in canActivate():", request.user); 
-
+ 
     if (!canActivate || !request.user) {
         throw new UnauthorizedException('User not authorized or token is invalid');
     }
