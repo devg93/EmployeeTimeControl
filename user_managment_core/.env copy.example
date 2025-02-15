@@ -3,3 +3,9 @@ DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=password
 DB_NAME=userdatabase
+
+REPLICA_DB_HOST=localhost
+DB_PORT=3306
+REPLICA_DB_USERNAME=userReplica
+REPLICA_DB_PASSWORD=password
+REPLICA_DB_NAME=userdatabaseReplica

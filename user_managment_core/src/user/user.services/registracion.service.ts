@@ -1,27 +1,56 @@
 import { Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { CreateRegistracionDto } from '../dto/create-registracion.dto';
 import { UpdateRegistracionDto } from '../dto/update-registracion.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { JwtService } from '@nestjs/jwt';
+import { User } from '../entities/registracion.entity';
+import { FindOperators, Repository } from 'typeorm';
+import { userModule } from '../user.module';
 
 
 @Injectable()
 export class RegistracionService {
-  create(createRegistracionDto: CreateRegistracionDto) {
-    return 'This action adds a new registracion';
+  constructor(
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private jwtService: JwtService,
+  ) { }
+
+  async register(body: CreateRegistracionDto) {
+    const { userName, email, password, iPadrres, deviceName } = body;
+
+    const user = await this.userRepository.findOne({ where: { email } });
+    if(user) return "user arledy exsit"
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = this.userRepository.create({
+      userName,
+      email,
+      passWord: hashedPassword,
+      iPadrres: iPadrres ?? '0.0.0.0',
+      deviceName: deviceName ?? 'Unknown Device',
+    });
+
+    return this.userRepository.save(newUser);
   }
 
-  findAll() {
-    return `This action returns all registracion`;
+  async findAll(): Promise<User[]> {
+    return await this.userRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} registracion`;
+  async findOneUser(id: number) {
+    return await this.userRepository.findOne({ where: { id } });
+
   }
 
-  update(id: number, updateRegistracionDto: UpdateRegistracionDto) {
-    return `This action updates a #${id} registracion`;
+  async updateUser(id: number, updateRegistracionDto: UpdateRegistracionDto) {
+    const user = await this.findOneUser(id);
+    if (user == null) return "user not found"
+
+    return await this.userRepository.update(id, updateRegistracionDto) ?? "user not updated"
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} registracion`;
+  async remove(id: number) {
+    return await this.userRepository.delete(id);
   }
 }
