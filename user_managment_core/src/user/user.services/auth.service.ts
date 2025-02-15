@@ -3,9 +3,9 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
-import { User } from 'src/registracion/entities/registracion.entity';
-import { CreateRegistracionDto } from 'src/registracion/dto/create-registracion.dto';
-import { getProfileDto } from 'src/registracion/dto/getProfileDto';
+import { User } from 'src/user/entities/registracion.entity';
+import { CreateRegistracionDto } from 'src/user/dto/create-registracion.dto';
+import { getProfileDto } from 'src/user/dto/getProfileDto';
 import { promises } from 'dns';
 
 

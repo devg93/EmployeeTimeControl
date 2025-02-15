@@ -1,6 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { User } from 'src/registracion/entities/registracion.entity';
+import { User } from 'src/user/entities/registracion.entity';
 import { EntityManager } from 'typeorm';
 
 @Injectable()

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateRegistracionDto } from './dto/create-registracion.dto';
-import { UpdateRegistracionDto } from './dto/update-registracion.dto';
+import { CreateRegistracionDto } from '../dto/create-registracion.dto';
+import { UpdateRegistracionDto } from '../dto/update-registracion.dto';
+
 
 @Injectable()
 export class RegistracionService {

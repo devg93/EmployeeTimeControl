@@ -22,17 +22,7 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
             var exitTimeInTimeOutTask = GetDataFromBreak(entity.UserId);
             var exitBreakTask = GetDataFromTimeInTimeOut(entity.UserId);
             await Task.WhenAll(exitTimeInTimeOutTask, exitBreakTask);
-            var ResponseDto = PrepareTimeDto(exitBreakTask.Result, exitTimeInTimeOutTask.Result);
-
-            /*SpetTest
-                        var exitTimeInTimeOutTask = Task.Run(() => GetDataFromBreak(entity.UserId));
-                        var exitBreakTask = Task.Run(() => GetDataFromTimeInTimeOut(entity.UserId));
-
-                        var exitTimeInTimeOutTask = await GetDataFromBreak(entity.UserId);
-                        var exitBreakTask = await GetDataFromTimeInTimeOut(entity.UserId);
-
-                        var ResponseDto = PrepareTimeDto(exitBreakTask, exitTimeInTimeOutTask);
-            */
+            var ResponseDto = PrepareTimeDto(exitBreakTask.Result, exitTimeInTimeOutTask.Result);  
 
             // stopwatch.Stop();
             // Console.WriteLine($"Task.WhenAll Execution Time: {stopwatch.ElapsedMilliseconds} ms");
@@ -97,24 +87,6 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService
         }
 
 
-        /*SpedTest
-                private async Task<ComingAndgoingResponseDto> GetDataFromBreak(int userId)
-                {
-                    Console.WriteLine($"GetDataFromBreak Start - Thread ID: {Thread.CurrentThread.ManagedThreadId}");
-
-                    var res = await _mediator.Send(new ComingAndgoingQeuries { Id = userId });
-                    Console.WriteLine($"GetDataFromBreak End - Thread ID: {Thread.CurrentThread.ManagedThreadId}");
-                    return res;
-                }
-
-                private async Task<ResponseChecker<BrakeTimeDto>> GetDataFromTimeInTimeOut(int userId)
-                {
-                    Console.WriteLine($"GetDataFromTimeInTimeOut Start - Thread ID: {Thread.CurrentThread.ManagedThreadId}");
-                    var res = await GetdServiceToTimeInTimeOutModule.GetByIdAsync(userId);
-                    Console.WriteLine($"GetDataFromTimeInTimeOut End - Thread ID: {Thread.CurrentThread.ManagedThreadId}");
-                    return res;
-                }
-        */
 
         private async Task<bool> WriteDataTimeOut(TimeOutWriCommands timeOutWriCommands)
         => await _mediator.Send(timeOutWriCommands);
