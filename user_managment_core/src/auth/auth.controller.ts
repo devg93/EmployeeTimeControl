@@ -1,15 +1,12 @@
 import { Controller, Post, Body, Request, UseGuards, UnauthorizedException } from '@nestjs/common';
 
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-
+import { CreateAuthDto } from 'src/user/dto/create-auth.dto';
 import { CreateRegistracionDto } from 'src/user/dto/create-registracion.dto';
+import { GetUser } from 'src/user/libs/decorators/getUser';
+import { JwtAuthGuard } from 'src/user/libs/jwt-auth.guard';
+import { AuthService } from 'src/user/user.services/auth.service';
 
-
-import { getProfileDto } from 'src/user/dto/getProfileDto';
-import { AuthService } from '../user.services/auth.service';
-import { CreateAuthDto } from '../dto/create-auth.dto';
-import { JwtAuthGuard } from '../libs/jwt-auth.guard';
-import { GetUser } from '../libs/decorators/getUser';
 
 
 @ApiTags('Auth')

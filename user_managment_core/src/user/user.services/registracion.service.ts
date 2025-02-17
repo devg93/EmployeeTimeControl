@@ -15,7 +15,7 @@ export class RegistracionService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private jwtService: JwtService,
   ) { }
-
+//*********************************************************** */
   async register(body: CreateRegistracionDto) {
     const { userName, email, password, iPadrres, deviceName } = body;
 
@@ -33,24 +33,25 @@ export class RegistracionService {
 
     return this.userRepository.save(newUser);
   }
-
+//*********************************************************** */
   async findAll(): Promise<User[]> {
     return await this.userRepository.find();
   }
-
+//*********************************************************** */
   async findOneUser(id: number) {
     return await this.userRepository.findOne({ where: { id } });
 
   }
-
+//*********************************************************** */
   async updateUser(id: number, updateRegistracionDto: UpdateRegistracionDto) {
     const user = await this.findOneUser(id);
     if (user == null) return "user not found"
 
     return await this.userRepository.update(id, updateRegistracionDto) ?? "user not updated"
   }
-
+//*********************************************************** */
   async remove(id: number) {
     return await this.userRepository.delete(id);
   }
+  
 }

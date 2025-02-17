@@ -39,22 +39,6 @@ export class AuthService {
 
 //*************************************************************************
 
-  async register(body: CreateRegistracionDto) {
-    const { userName, email, password, iPadrres, deviceName } = body; 
-  
-    
-    const hashedPassword = await bcrypt.hash(password, 10);
-  
-    const newUser = this.userRepository.create({
-      userName,
-      email,
-      passWord: hashedPassword,
-      iPadrres: iPadrres ?? '0.0.0.0', 
-      deviceName: deviceName ?? 'Unknown Device',
-    });
-  
-    return this.userRepository.save(newUser);
-  }
   
   async getProfileById(body: getProfileDto): Promise<any> {
 
