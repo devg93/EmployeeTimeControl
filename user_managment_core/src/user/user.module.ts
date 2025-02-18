@@ -10,6 +10,7 @@ import { PassportModule } from '@nestjs/passport';
 import { RegistracionController } from './user.controllers/registracion.controller';
 import { AuthController } from './user.controllers/auth.controller';
 import { RegistracionService } from './user.services/registracion.service';
+import { UserEventsSubscriber } from './user.services/cdc.service.mongoDb';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { RegistracionService } from './user.services/registracion.service';
     }),
   ], 
   controllers: [AuthController,RegistracionController],
-  providers: [AuthService, JwtStrategy,RegistracionService],
+  providers: [AuthService, JwtStrategy,RegistracionService,UserEventsSubscriber],
   exports: [AuthService, JwtModule, PassportModule],
 })
 export class userModule {}

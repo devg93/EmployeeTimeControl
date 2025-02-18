@@ -49,11 +49,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { userModule } from './user/user.module';
 import { User } from './user/entities/registracion.entity';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 dotenv.config();
 
 @Module({
   imports: [
+    EventEmitterModule.forRoot(),
     userModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({

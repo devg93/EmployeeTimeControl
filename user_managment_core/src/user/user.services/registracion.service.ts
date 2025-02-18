@@ -7,17 +7,20 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '../entities/registracion.entity';
 import { FindOperators, Repository } from 'typeorm';
 import { userModule } from '../user.module';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 
 @Injectable()
 export class RegistracionService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private jwtService: JwtService,
+    private jwtService: JwtService,private eventEmitter: EventEmitter2
   ) { }
 //*********************************************************** */
   async register(body: CreateRegistracionDto) {
     const { userName, email, password, iPadrres, deviceName } = body;
+
+  
 
     const user = await this.userRepository.findOne({ where: { email } });
     if(user) return "user arledy exsit"
@@ -29,6 +32,10 @@ export class RegistracionService {
       passWord: hashedPassword,
       iPadrres: iPadrres ?? '0.0.0.0',
       deviceName: deviceName ?? 'Unknown Device',
+    });
+    this.eventEmitter.emit('user.created', {
+      body
+      
     });
 
     return this.userRepository.save(newUser);
