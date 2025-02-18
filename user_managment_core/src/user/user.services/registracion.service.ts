@@ -14,16 +14,18 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 export class RegistracionService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private jwtService: JwtService,private eventEmitter: EventEmitter2
+    private jwtService: JwtService, private eventEmitter: EventEmitter2
   ) { }
-//*********************************************************** */
+  //*********************************************************** */
   async register(body: CreateRegistracionDto) {
     const { userName, email, password, iPadrres, deviceName } = body;
 
-  
 
     const user = await this.userRepository.findOne({ where: { email } });
-    if(user) return "user arledy exsit"
+    // if(user) return "user arledy exsit"
+
+
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = this.userRepository.create({
@@ -33,32 +35,38 @@ export class RegistracionService {
       iPadrres: iPadrres ?? '0.0.0.0',
       deviceName: deviceName ?? 'Unknown Device',
     });
-    this.eventEmitter.emit('user.created', {
-      body
-      
-    });
+    const userIsSaved = await this.userRepository.save(newUser);
+    if (userIsSaved) {
+      this.eventEmitter.emit('user.created', {
+        body
 
-    return this.userRepository.save(newUser);
+      });
+      console.log(userIsSaved);
+     return  "user is created"
+    }
+
+    return "user not created"
   }
-//*********************************************************** */
+
+  //*********************************************************** */
   async findAll(): Promise<User[]> {
     return await this.userRepository.find();
   }
-//*********************************************************** */
+  //*********************************************************** */
   async findOneUser(id: number) {
     return await this.userRepository.findOne({ where: { id } });
 
   }
-//*********************************************************** */
+  //*********************************************************** */
   async updateUser(id: number, updateRegistracionDto: UpdateRegistracionDto) {
     const user = await this.findOneUser(id);
     if (user == null) return "user not found"
 
     return await this.userRepository.update(id, updateRegistracionDto) ?? "user not updated"
   }
-//*********************************************************** */
+  //*********************************************************** */
   async remove(id: number) {
     return await this.userRepository.delete(id);
   }
-  
+
 }
