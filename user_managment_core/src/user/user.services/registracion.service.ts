@@ -24,8 +24,6 @@ export class RegistracionService {
     const user = await this.userRepository.findOne({ where: { email } });
     // if(user) return "user arledy exsit"
 
-
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = this.userRepository.create({
@@ -41,7 +39,7 @@ export class RegistracionService {
         body
 
       });
-      console.log(userIsSaved);
+      //console.log(userIsSaved);
      return  "user is created"
     }
 

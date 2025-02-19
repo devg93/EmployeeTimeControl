@@ -22,21 +22,22 @@ export class UserEventsSubscriber implements OnModuleInit {
   @OnEvent('user.created')
   async handleUserCreatedEvent(payload: any) {
   
-    // try {
-    //   const db = this.mongoClient.db('users');
-    //   const collection = db.collection('userLogs');
-    //   await collection.insertOne({ ...payload });
-    //   console.log('User created event stored in MongoDB:', payload);
-    // } catch (error) {
-    //   console.error('Error storing event in MongoDB:', error);
-    // }
+    const{userName,iPadrres,email}=payload;
+    try {
+      const db = this.mongoClient.db('users');
+      const collection = db.collection('userLogs');
+      await collection.insertOne(payload );
+      console.log('User created event stored in MongoDB:', payload);
+    } catch (error) {
+      console.error('Error storing event in MongoDB:', error);
+    }
 
   
-    try {
-      await this.redisClient.lpush('user:created:events', JSON.stringify(payload));
-      console.log('User created event stored in Redis:', payload);
-    } catch (error) {
-      console.error('Error storing event in Redis:', error);
-    }
+    // try {
+    //   await this.redisClient.lpush('user:created:events', JSON.stringify(payload));
+    //   console.log('User created event stored in Redis:', payload);
+    // } catch (error) {
+    //   console.error('Error storing event in Redis:', error);
+    // }
   }
 }
