@@ -50,6 +50,8 @@ import { DataSource } from 'typeorm';
 import { userModule } from './user/user.module';
 import { User } from './user/entities/registracion.entity';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { RedisModule } from './rediscache/rediscache.module';
+
 
 dotenv.config();
 
@@ -70,8 +72,10 @@ dotenv.config();
       synchronize: true, 
       // autoLoadEntities: true, 
         },
-      )    
+      ),
+      RedisModule    
   ],
   exports: [],
+  providers: [RedisModule],
 })
 export class AppModule {}

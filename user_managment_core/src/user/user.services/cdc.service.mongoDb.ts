@@ -6,7 +6,7 @@ import Redis from 'ioredis';
 @Injectable()
 export class UserEventsSubscriber implements OnModuleInit {
   private mongoClient: MongoClient;
-  private redisClient: Redis;
+ 
 
   onModuleInit() {
    
@@ -16,7 +16,7 @@ export class UserEventsSubscriber implements OnModuleInit {
     //   .catch(err => console.error('MongoDB connection error:', err));
     
  
-    this.redisClient = new Redis('redis://localhost:6379');
+ 
   }
 
   @OnEvent('user.created')
