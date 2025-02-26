@@ -10,7 +10,7 @@ import { promises } from 'dns';
 
 
 @Injectable()
-export class AuthService {
+export class AuthRepository {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private jwtService: JwtService,

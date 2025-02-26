@@ -5,7 +5,7 @@ import { CreateAuthDto } from 'src/user/dto/create-auth.dto';
 import { CreateRegistracionDto } from 'src/user/dto/create-registracion.dto';
 import { GetUser } from 'src/user/libs/decorators/getUser';
 import { JwtAuthGuard } from 'src/user/libs/jwt-auth.guard';
-import { AuthService } from 'src/user/user.services/auth.service';
+import { AuthService } from 'src/user/user.repository.services/authRepository.service';
 
 
 

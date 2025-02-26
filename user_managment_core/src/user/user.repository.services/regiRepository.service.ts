@@ -10,8 +10,9 @@ import { userModule } from '../user.module';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
 
+
 @Injectable()
-export class RegistracionService {
+export class RegistracionRepository {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private jwtService: JwtService, private eventEmitter: EventEmitter2
@@ -20,7 +21,7 @@ export class RegistracionService {
   async register(body: CreateRegistracionDto) {
     const { userName, email, password, iPadrres, deviceName } = body;
 
-
+  
     const user = await this.userRepository.findOne({ where: { email } });
     // if(user) return "user arledy exsit"
 

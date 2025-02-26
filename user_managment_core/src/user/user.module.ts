@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthService } from './user.services/auth.service';
+import { AuthRepository } from './user.repository.services/authRepository.service';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './libs/JwtStrategy';
 
@@ -9,8 +9,11 @@ import { PassportModule } from '@nestjs/passport';
 
 import { RegistracionController } from './user.controllers/registracion.controller';
 import { AuthController } from './user.controllers/auth.controller';
-import { RegistracionService } from './user.services/registracion.service';
-import { UserEventsSubscriber } from './user.services/cdc.service.mongoDb';
+import { RegistracionRepository } from './user.repository.services/regiRepository.service';
+import { UserEventsSubscriber } from './services/cdc.service.mongoDb';
+import { RedisService } from './services/redis.service';
+
+
 
 @Module({
   imports: [
@@ -25,7 +28,7 @@ import { UserEventsSubscriber } from './user.services/cdc.service.mongoDb';
     }),
   ], 
   controllers: [AuthController,RegistracionController],
-  providers: [AuthService, JwtStrategy,RegistracionService,UserEventsSubscriber],
-  exports: [AuthService, JwtModule, PassportModule],
+  providers: [AuthRepository, JwtStrategy,RegistracionRepository,UserEventsSubscriber,RedisService],
+  exports: [AuthRepository, JwtModule, PassportModule],
 })
 export class userModule {}

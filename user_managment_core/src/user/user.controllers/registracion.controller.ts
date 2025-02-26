@@ -2,36 +2,44 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 
 import { CreateRegistracionDto } from '../dto/create-registracion.dto';
 import { UpdateRegistracionDto } from '../dto/update-registracion.dto';
-import { RegistracionService } from '../user.services/registracion.service';
+import { RegistracionRepository } from '../user.repository.services/regiRepository.service';
 import { ApiOperation } from '@nestjs/swagger';
+import { RedisService } from '../services/redis.service';
+
 
 
 @Controller('registracion')
 export class RegistracionController {
-  constructor(private readonly registracionService: RegistracionService) {}
+  constructor(private readonly registracionService: RegistracionRepository,private readonly redisService:RedisService) {}
 
   @Post('register')
   @ApiOperation({ summary: 'Register a new user' })
   async register(@Body() body: CreateRegistracionDto) {
-    return this.registracionService.register(body);
+    
+    await this.redisService.registerUser(body); //redis 
+  
+    return   await this.registracionService.register(body);
+
   }
   @Get()
-  findAll() {
-    return this.registracionService.findAll();
+  async findAll() {  
+    return await this.registracionService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.registracionService.findOneUser(+id);
+  async findOne(@Param('id') id: string) {
+     await this.redisService.findUser(id) //redis 
+    return await this.registracionService.findOneUser(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRegistracionDto: UpdateRegistracionDto) {
-    return this.registracionService.updateUser(+id, updateRegistracionDto);
+  async update(@Param('id') id: string, @Body() updateRegistracionDto: UpdateRegistracionDto) {
+    await this.redisService.updateUser(id,updateRegistracionDto);
+    return await this.registracionService.updateUser(+id, updateRegistracionDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.registracionService.remove(+id);
+async  remove(@Param('id') id: string) {
+    return await this.registracionService.remove(+id);
   }
 }
