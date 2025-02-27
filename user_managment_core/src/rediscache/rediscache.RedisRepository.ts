@@ -139,14 +139,14 @@ export class RedisRepository {
     }
   }
 
-
   
-  async findAllEntities(pattern: string): Promise<{ key: string; value: string | null }[]> {
+
+  async findAllEntities(): Promise<{ key: string; value: string | null }[]> {
     let cursor = '0';
     let keys: string[] = [];
-    
+
     do {
-      const [nextCursor, foundKeys] = await this.redisClient.scan(cursor, 'MATCH', pattern, 'COUNT', 100);
+      const [nextCursor, foundKeys] = await this.redisClient.scan(cursor, 'COUNT', 100);
       cursor = nextCursor;
       keys.push(...foundKeys);
     } while (cursor !== '0');
@@ -155,18 +155,12 @@ export class RedisRepository {
       return [];
     }
 
- 
     const values = await this.redisClient.mget(...keys);
 
- 
     return keys.map((key, index) => ({
       key,
       value: values[index],
     }));
-  }
-
-  onModuleDestroy() {
-    this.redisClient.quit();
-  }
+}
 
 }

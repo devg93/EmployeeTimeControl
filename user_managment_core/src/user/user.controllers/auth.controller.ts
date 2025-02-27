@@ -2,11 +2,11 @@ import { Controller, Post, Body, Request, UseGuards, UnauthorizedException } fro
 
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
-import { AuthRepository } from '../user.repository.services/authRepository.service';
+import { AuthRepository } from '../user.repository/authRepository.service';
 import { CreateAuthDto } from '../dto/create-auth.dto';
 import { JwtAuthGuard } from '../libs/jwt-auth.guard';
 import { GetUser } from '../libs/decorators/getUser';
-import { RedisService } from '../services/redis.service';
+import { RedisService } from '../user.services/redis.service';
 
 
 
@@ -29,17 +29,19 @@ export class AuthController {
 
 
 
-  @Post('profile')
+  @Post('getProfileByemail')
   @UseGuards(JwtAuthGuard)
-  async getProfile(@Body() body: any, @GetUser() user: any): Promise<any> {
+  async getProfileByemail(@Body() body: any, @GetUser() user: any): Promise<any> {
     
 
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
-    const res = await this.authService.getProfileById(user.email);
+    // const resRedis = await this.redisService.findUser(user.email);
+//  console.log(resRedis)
+    return await this.authService.getProfileByEmail(user.email);
 
-    return res;
+    // return resRedis;
 
   }
 

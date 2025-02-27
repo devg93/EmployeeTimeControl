@@ -8,11 +8,12 @@ import { User } from '../entities/registracion.entity';
 import { FindOperators, Repository } from 'typeorm';
 import { userModule } from '../user.module';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { Userrepositoryinterface } from './contracts/user.repository.Interface';
 
 
 
 @Injectable()
-export class RegistracionRepository {
+export class UserRepository implements Partial<Userrepositoryinterface> {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private jwtService: JwtService, private eventEmitter: EventEmitter2
@@ -40,7 +41,7 @@ export class RegistracionRepository {
         body
 
       });
-      //console.log(userIsSaved);
+      //console.log(userIsSaved); // debugging
      return  "user is created"
     }
 

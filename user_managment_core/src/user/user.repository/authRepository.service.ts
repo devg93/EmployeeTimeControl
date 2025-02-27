@@ -1,20 +1,19 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { User } from 'src/user/entities/registracion.entity';
-import { CreateRegistracionDto } from 'src/user/dto/create-registracion.dto';
-import { getProfileDto } from 'src/user/dto/getProfileDto';
-import { promises } from 'dns';
+import { Userrepositoryinterface } from './contracts/user.repository.Interface';
 
 
 @Injectable()
-export class AuthRepository {
+export class AuthRepository   implements Partial<Userrepositoryinterface>{
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private jwtService: JwtService,
-  ) { }
+  )
+   { }
 
   
   async validateUser(email: string, password: string): Promise<any> {
@@ -40,15 +39,9 @@ export class AuthRepository {
 //*************************************************************************
 
   
-  async getProfileById(body: getProfileDto): Promise<any> {
-
-    const { email } = body;
-
-
-    const user = await this.userRepository.findOne({ where: { email } });
-
-
-
+  async getProfileById(id: string): Promise<any> {
+    
+    const user = await this.userRepository.findOne({ where: { id: Number(id) } });
     if (!user) {
         throw new NotFoundException('User not found');
     }
@@ -58,6 +51,18 @@ export class AuthRepository {
 
   
 //*************************************************************************
+
+
+  
+async getProfileByEmail(useremail: string): Promise<any> {
+    
+  const user = await this.userRepository.findOne({ where: {  email:useremail } });
+  if (!user) {
+      throw new NotFoundException('User not found');
+  }
+
+  return user;
+}
 
 
 }

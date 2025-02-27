@@ -5,22 +5,25 @@ import { EntityManager } from 'typeorm';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') implements CanActivate {
-  constructor(
-    private readonly entityManager: EntityManager
-  ) {
+  constructor(private readonly entityManager: EntityManager) {
     super();
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-
+    
+    // console.log('🔹 Incoming Request Headers:', request.headers);
+    // console.log('🔹 Incoming Request Authorization:', request.headers.authorization);
+    // console.log('🔹 Decoded User:', request.user);
+    
     const canActivate = await super.canActivate(context);
- 
+
     if (!canActivate || !request.user) {
         throw new UnauthorizedException('User not authorized or token is invalid');
     }
 
     return true;
 }
+
 
 }

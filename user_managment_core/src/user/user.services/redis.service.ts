@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { RedisRepository } from 'src/rediscache/rediscache.RedisRepository';
 import { CreateRegistracionDto } from '../dto/create-registracion.dto';
 
@@ -17,6 +18,7 @@ export class RedisService {
 
     async registerUser(userEntity: CreateRegistracionDto): Promise<any> {
         const res = await this.findUser(userEntity.email);
+         const hashedPassword = await bcrypt.hash(userEntity.password, 10);
         if (res) return "user arledy registred"
         return await this.redisService.registerUserRedis(userEntity);
     }
