@@ -42,7 +42,7 @@ export class RedisService {
 
 
     async redisfindAll() {
-        await this.redisService.findAllEntities()
+     return   await this.redisService.findAllEntities()
 
     }
 

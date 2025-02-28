@@ -10,58 +10,89 @@ export class UserService implements UserInterface {
     constructor(@Inject('Userrepositoryinterface') private readonly userrepositoryinterface: Userrepositoryinterface,
         private readonly redisService: RedisService) { }
 
+        
+ //****************************************************************************
     async updateUser(id: string, updateRegistracionDto: any): Promise<any> {
-        await this.userrepositoryinterface.updateUser(id, updateRegistracionDto);
-        await this.redisService.redisupdateUser(id, updateRegistracionDto);
-        throw new Error('Method not implemented.');
-    }
 
+        const res = await this.userrepositoryinterface.updateUser(id, updateRegistracionDto);
+        if (res) {
+            await this.redisService.redisupdateUser(id, updateRegistracionDto);
+        }
+        return res;
+
+    }
+ //****************************************************************************
     async remove(id: string): Promise<any> {
-        await this.userrepositoryinterface.remove(id);
-        await this.redisService.redisdelete(id);
-    }
+        const res = await this.userrepositoryinterface.remove(id);
+        if (res) await this.redisService.redisdelete(id);
 
+    }
+ //****************************************************************************
     async delete(email: string): Promise<any> {
-        await this.userrepositoryinterface.delete(email);
-        await this.redisService.redisdelete(email);
+        const res = await this.userrepositoryinterface.delete(email);
+        if (res) await this.redisService.redisdelete(email);
     }
-
+ //****************************************************************************
     async register(body: any): Promise<any> {
-        await this.userrepositoryinterface.register(body);
-        await this.redisService.redisregisterUser(body);
-        throw new Error('Method not implemented.');
+        const res = await this.userrepositoryinterface.register(body);
+        if (res) return await this.redisService.redisregisterUser(body);
+     
     }
 
-
+ //****************************************************************************
     async getProfileById(id: string): Promise<any> {
-        await this.userrepositoryinterface.getProfileById(id);
-        await this.redisService.redisfindUser(id);
-        throw new Error('Method not implemented.');
+
+        const res = await this.redisService.redisfindUser(id);
+        if (!res) { 
+
+            const resSql = await this.userrepositoryinterface.getProfileById(id);
+
+            if (resSql) await this.redisService.redisregisterUser(resSql);
+
+            return resSql;
+        }
+        return res;
+       
     }
+ //****************************************************************************
+
     async getProfileByEmail(useremail: string): Promise<any> {
-        await this.userrepositoryinterface.getProfileByEmail(useremail);
-        await this.redisService.redisfindUser(useremail);
-        throw new Error('Method not implemented.');
+        const res = await this.redisService.redisfindUser(useremail);
+        if (!res)
+             {
+                const resSql = await this.userrepositoryinterface.getProfileByEmail(useremail);
+                if (resSql) await this.redisService.redisregisterUser(resSql);
+                return resSql;
+            }
+        return res;
+
     }
+
+ //****************************************************************************
     async login(email: string, password: string): Promise<any> {
-        await this.redisService.redislogin(email, password);
-        await this.userrepositoryinterface.login(email, password);
-
-        throw new Error('Method not implemented.');
+        const res = await this.redisService.redislogin(email, password);
+        if (!res) return await this.userrepositoryinterface.login(email, password);
+        return res;
     }
+
+ //****************************************************************************
+
     async validateUser(email: string, password: string): Promise<any> {
-        await this.redisService.redislogin(email, password);
-        await this.userrepositoryinterface.validateUser(email, password);
-        throw new Error('Method not implemented.');
+        const res = await this.redisService.redislogin(email, password);
+        if (!res) return await this.userrepositoryinterface.validateUser(email, password);
+        return res;
     }
+
+    //****************************************************************************
+
     async findAll(): Promise<any> {
-        await this.redisService.redisfindAll();
-        await this.userrepositoryinterface.findAll();
+        const res = await this.redisService.redisfindAll();
+        if (!res) return await this.userrepositoryinterface.findAll();
+        return res;
 
-        throw new Error('Method not implemented.');
     }
 
-
+ //****************************************************************************
 
 
 }
