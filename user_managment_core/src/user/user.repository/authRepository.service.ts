@@ -41,7 +41,7 @@ export class AuthRepository   implements Partial<Userrepositoryinterface>{
   
   async getProfileById(id: string): Promise<any> {
     
-    const user = await this.userRepository.findOne({ where: { id: Number(id) } });
+    const user = await this.userRepository.findOne({ where: { id: id } });
     if (!user) {
         throw new NotFoundException('User not found');
     }

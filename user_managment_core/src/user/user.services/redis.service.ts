@@ -9,39 +9,39 @@ export class RedisService {
     constructor(@Inject() private readonly redisService: RedisRepository) { }
 
 
-    async findUser(email: string): Promise<any> {
+    async redisfindUser(email: string): Promise<any> {
 
         return await this.redisService.findOneRedis(email);
 
     }
 
 
-    async registerUser(userEntity: CreateRegistracionDto): Promise<any> {
-        const res = await this.findUser(userEntity.email);
+    async redisregisterUser(userEntity: CreateRegistracionDto): Promise<any> {
+        const res = await this.redisfindUser(userEntity.email);
          const hashedPassword = await bcrypt.hash(userEntity.password, 10);
         if (res) return "user arledy registred"
         return await this.redisService.registerUserRedis(userEntity);
     }
   
-    async updateUser(email:string,userEntity: CreateRegistracionDto): Promise<any> {
+    async redisupdateUser(email:string,userEntity: CreateRegistracionDto): Promise<any> {
         // const res = await this.findUser(userEntity.email);
         // if (res) return "user arledy registred"
         return await this.redisService.updateUser(email,userEntity);
     }
 
 
-    async login(email: string, password: string) {
+    async redislogin(email: string, password: string) {
         return await this.redisService.loginRedis(email, password);
     }
 
 
-    async delete(email: string) {
+    async redisdelete(email: string) {
         return await this.redisService.deleteUser(email);
     }
 
 
 
-    async findAll(email: string) {
+    async redisfindAll() {
         await this.redisService.findAllEntities()
 
     }

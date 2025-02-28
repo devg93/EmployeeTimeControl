@@ -53,19 +53,19 @@ export class UserRepository implements Partial<Userrepositoryinterface> {
     return await this.userRepository.find();
   }
   //*********************************************************** */
-  async findOneUser(id: number) {
+  async findOneUser(id: string) {
     return await this.userRepository.findOne({ where: { id } });
 
   }
   //*********************************************************** */
-  async updateUser(id: number, updateRegistracionDto: UpdateRegistracionDto) {
+  async updateUser(id: string, updateRegistracionDto: UpdateRegistracionDto) {
     const user = await this.findOneUser(id);
     if (user == null) return "user not found"
 
     return await this.userRepository.update(id, updateRegistracionDto) ?? "user not updated"
   }
   //*********************************************************** */
-  async remove(id: number) {
+  async remove(id: string) {
     return await this.userRepository.delete(id);
   }
 

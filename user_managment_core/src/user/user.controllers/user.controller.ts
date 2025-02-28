@@ -11,39 +11,52 @@ import { UserInterface } from '../user.repository/contracts/user.repository.Inte
 
 @Controller('registracion')
 export class RegistracionController {
-  constructor(@Inject("UserInterface")private readonly registracionService: UserInterface,
+  constructor(@Inject("UserInterface")private readonly UserService: UserInterface,
   private readonly redisService:RedisService) {}
 
   @Post('register')
   @ApiOperation({ summary: 'Register a new user' })
   async register(@Body() body: CreateRegistracionDto) {
     
-    await this.redisService.registerUser(body); //redis 
+    await this.redisService.redisregisterUser(body); //redis 
   
-    return   await this.registracionService.register(body);
+    return   await this.UserService.register(body);
 
   }
-  @Get()
+
+
+  @Get('findAll')
   async findAll() {  
-    return await this.registracionService.findAll();
+    // const resRedis=await this.redisService.findAll(); //redis
+    return await this.UserService.findAll();
   }
+
 
   @Get('findOne/:id')
   async findOne(@Param('id') id: string) {
-     await this.redisService.findUser(id) //redis 
-    return await this.registracionService.getProfileById(id);
+
+     const resRedis=await this.redisService.redisfindUser(id) //redis 
+     if(resRedis){
+       return resRedis
+     }
+
+    return await this.UserService.getProfileById(id);
   }
 
-  @Patch(':id')
+
+  @Patch('update/:id')
   async update(@Param('id') id: string, @Body() updateRegistracionDto: UpdateRegistracionDto) {
-    await this.redisService.updateUser(id,updateRegistracionDto);
-    return await this.registracionService.updateUser(+id, updateRegistracionDto);
+
+    await this.redisService.redisupdateUser(id,updateRegistracionDto);
+
+    return await this.UserService.updateUser(id, updateRegistracionDto);
   }
+  
 
   @Delete('delete/:id')
   async remove(@Param('id') id: string) {
     console.log("Received ID:", id);  //  Debugging
-    await this.redisService.delete(id);
+    await this.redisService.redisdelete(id);
     // return await this.registracionService.remove(+id);
   }
   
