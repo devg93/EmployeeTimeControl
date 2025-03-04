@@ -57,7 +57,7 @@ dotenv.config();
 
 @Module({
   imports: [
-    EventEmitterModule.forRoot(),
+   
     userModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({

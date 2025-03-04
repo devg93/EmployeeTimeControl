@@ -1,43 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
-import { RedisRepository } from 'src/rediscache/rediscache.RedisRepository';
-import { UserInterface, Userrepositoryinterface } from '../user.repository/contracts/user.repository.Interface';
-import { RedisService } from './redis.service';
+
+import { IredisServiceInterface } from 'src/rediscache/contracrs';
+import { Userrepositoryinterface } from '../user.repository/contracts/user.repository.Interface';
+
 
 @Injectable()
-export class UserService implements UserInterface {
+export class UserReadService implements Partial<UserReadService>  {
 
     constructor(@Inject('Userrepositoryinterface') private readonly userrepositoryinterface: Userrepositoryinterface,
-        private readonly redisService: RedisService) { }
-
-        
- //****************************************************************************
-    async updateUser(id: string, updateRegistracionDto: any): Promise<any> {
-
-        const res = await this.userrepositoryinterface.updateUser(id, updateRegistracionDto);
-        if (res) {
-            await this.redisService.redisupdateUser(id, updateRegistracionDto);
-        }
-        return res;
-
-    }
- //****************************************************************************
-    async remove(id: string): Promise<any> {
-        const res = await this.userrepositoryinterface.remove(id);
-        if (res) await this.redisService.redisdelete(id);
-
-    }
- //****************************************************************************
-    async delete(email: string): Promise<any> {
-        const res = await this.userrepositoryinterface.delete(email);
-        if (res) await this.redisService.redisdelete(email);
-    }
- //****************************************************************************
-    async register(body: any): Promise<any> {
-        const res = await this.userrepositoryinterface.register(body);
-        if (res) return await this.redisService.redisregisterUser(body);
-     
-    }
+    @Inject('IredisServiceInterface')  private readonly redisService: IredisServiceInterface) { }
 
  //****************************************************************************
     async getProfileById(id: string): Promise<any> {
