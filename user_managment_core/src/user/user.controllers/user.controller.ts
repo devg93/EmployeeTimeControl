@@ -8,6 +8,7 @@ import { IuserInterface } from '../user.repository/contracts/user.repository.Int
 
 
 
+
 @Controller('registracion')
 export class RegistracionController {
   constructor(@Inject("IuserInterface") private readonly UserWriteService: IuserInterface) { }

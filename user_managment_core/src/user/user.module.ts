@@ -74,6 +74,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 
   ],
  
+exports:[UserWriteService]
 
 })
 export class userModule { }

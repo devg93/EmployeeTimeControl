@@ -4,10 +4,10 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { IuserInterface, Userrepositoryinterface } from '../user.repository/contracts/user.repository.Interface';
 
 @Injectable()
-export class UserWriteService implements Partial<UserWriteService> {
+export class UserWriteService implements Partial<IuserInterface> {
 
     constructor(@Inject('Userrepositoryinterface') private readonly userrepositoryinterface: Userrepositoryinterface,
-    @Inject('IuserInterface') private readonly redisService: IuserInterface,
+    @Inject('IredisServiceInterface') private readonly redisService: IredisServiceInterface,
     private eventEmitter: EventEmitter2) { }
 
         
