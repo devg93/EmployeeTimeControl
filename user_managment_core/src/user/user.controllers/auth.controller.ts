@@ -4,15 +4,17 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { CreateAuthDto } from '../dto/create-auth.dto';
 import { JwtAuthGuard } from '../libs/jwt-auth.guard';
 import { GetUser } from '../libs/decorators/getUser';
+import { IuserInterface } from '../user.repository/contracts/user.repository.Interface';
 
-import { UserInterface } from '../user.repository/contracts/user.repository.Interface';
+
+
 
 
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(@Inject('UserInterface') private readonly userServices: UserInterface) { }
+  constructor(@Inject('IuserInterface') private readonly userServices: IuserInterface) { }
 
 
   @Post('login')

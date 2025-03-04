@@ -10,15 +10,21 @@ import { PassportModule } from '@nestjs/passport';
 import { RegistracionController } from './user.controllers/user.controller';
 import { AuthController } from './user.controllers/auth.controller';
 import { UserRepository } from './user.repository/userRepository.service';
-import { UserEventsSubscriber } from './user.services/cdc.service.mongoDb';
-import { RedisService } from './user.services/redis.service';
+
+
 import { RedisModule } from 'src/rediscache/rediscache.module';
-import { UserService } from './user.services/user.service ';
+import { UserWriteService } from './user.services/user.write.service ';
+import { UserReadService } from './user.services/user.read.service';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+
 
 
 
 @Module({
+
+  //*******************Imports Modules************************ */
   imports: [RedisModule,
+    EventEmitterModule.forRoot(),
 
     TypeOrmModule.forFeature([User]),
 
@@ -29,7 +35,13 @@ import { UserService } from './user.services/user.service ';
       signOptions: { expiresIn: '1h' },
     }),
   ],
+
+
+  //*******************Controller service objects************************ */
   controllers: [AuthController, RegistracionController],
+
+
+//*******************Provaiders service objects************************ */
   providers: [
 
     {
@@ -38,23 +50,30 @@ import { UserService } from './user.services/user.service ';
 
     }, AuthRepository,
 
+    //******************* */
     {
       provide: 'Userrepositoryinterface',
       useClass: UserRepository
     }, UserRepository,
-    
+     //******************* */
     {
-      provide: 'UserInterface',
-      useClass: UserService
-    }, UserService,
+      provide: 'IuserInterface',
+      useClass: UserWriteService
+    }, UserWriteService,
+  //******************* */
+    {
+      provide: 'IuserInterface',
+      useClass: UserReadService
+    }, UserReadService,
+ //******************* */
 
-    UserEventsSubscriber,
+   JwtStrategy,
+   RedisModule
 
-  JwtStrategy
-
-  , RedisService
+  , 
 
   ],
-  exports: [AuthRepository, JwtModule, PassportModule],
+ 
+
 })
 export class userModule { }
