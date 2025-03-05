@@ -69,4 +69,9 @@ export class UserRepository implements Partial<Userrepositoryinterface> {
     return await this.userRepository.delete(id);
   }
 
+ async deleteByemail(email: string): Promise<any> {
+    return await this.userRepository.delete({ email });
+  }
+
+ 
 }
