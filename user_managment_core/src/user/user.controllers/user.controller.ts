@@ -31,7 +31,7 @@ export class RegistracionController {
 
 
   @Delete('delete/:email')
-  async remove(@Param('id') email: string) {
+  async remove(@Param('email') email: string) {
     return await this.UserWriteService.deleteByemail(email);
   }
   
