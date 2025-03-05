@@ -57,12 +57,12 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     }, UserRepository,
      //******************* */
     {
-      provide: 'IuserInterface',
+      provide: 'IuserWriteInterface',
       useClass: UserWriteService
     }, UserWriteService,
   //******************* */
     {
-      provide: 'IuserInterface',
+      provide: 'IuserReadInterface',
       useClass: UserReadService
     }, UserReadService,
  //******************* */
@@ -73,8 +73,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
   , 
 
   ],
- 
-exports:[UserWriteService]
+
 
 })
 export class userModule { }
