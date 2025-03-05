@@ -3,14 +3,17 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Inject } from '@nest
 import { CreateRegistracionDto } from '../dto/create-registracion.dto';
 import { UpdateRegistracionDto } from '../dto/update-registracion.dto';
 import { ApiOperation } from '@nestjs/swagger';
-import { IuserInterface } from '../user.repository/contracts/user.repository.Interface';
+import { IuserReadInterface, IuserWriteInterface } from '../user.repository/contracts/user.repository.Interface';
+
 
 
 
 
 @Controller('registracion')
 export class RegistracionController {
-  constructor(@Inject("IuserInterface") private readonly UserWriteService: IuserInterface) { }
+  constructor(@Inject("IuserWriteInterface") private readonly UserWriteService: IuserWriteInterface) { }
+
+
 
   @Post('register')
   @ApiOperation({ summary: 'Register a new user' })
@@ -18,19 +21,6 @@ export class RegistracionController {
 
     return await this.UserWriteService.register(body);
 
-  }
-
-
-  @Get('findAll')
-  async findAll() {
-
-    return await this.UserWriteService.findAll();
-  }
-
-
-  @Get('findOne/:id')
-  async findOne(@Param('id') id: string) {
-    return await this.UserWriteService.getProfileById(id);
   }
 
 
@@ -44,5 +34,5 @@ export class RegistracionController {
   async remove(@Param('id') email: string) {
     return await this.UserWriteService.deleteByemail(email);
   }
-
+  
 }

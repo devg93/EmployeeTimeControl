@@ -18,5 +18,18 @@ export interface Userrepositoryinterface  {
 
 //*****************exstends UserServiceMethods******************* */
 
+export interface IuserWriteInterface extends Userrepositoryinterface {
+    
+    // registerService(body: any): Promise<any>;
+    // updateUserService(id: string, updateRegistracionDto: any): Promise<any>;
+    // deleteByemailService(email: string): Promise<any>;
+}
 
-export interface IuserInterface extends Userrepositoryinterface{}
+export interface IuserReadInterface extends Userrepositoryinterface {
+    // getProfileByIdService(id: string): Promise<any>;
+    // getProfileByEmailService(useremail: string): Promise<any>;
+    // loginService(email: string, password: string): Promise<any>;
+    // validateUserService(email: string, password: string): Promise<any>
+    // findAllService(): Promise<any>;
+   
+}
