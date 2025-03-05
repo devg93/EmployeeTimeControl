@@ -100,12 +100,12 @@ export class RedisRepository {
 
 
 
-  async updateUser(email: string, updatedData: Partial<CreateRegistracionDto>): Promise<void> {
+  async updateUser(email: string, updatedData: Partial<CreateRegistracionDto>): Promise<string> {
     try {
       const existingUser = await this.findOneRedis(email);
-      // if (!existingUser) {
-      //     throw new NotFoundException('User not found');
-      // }
+      if (!existingUser) {
+        return 'User not found';
+      }
 
 
       await this.redisClient.hset(`user:${email}`, {
@@ -139,7 +139,7 @@ export class RedisRepository {
     }
   }
 
-  
+
 
   async findAllEntities(): Promise<{ key: string; value: string | null }[]> {
     let cursor = '0';
@@ -161,6 +161,6 @@ export class RedisRepository {
       key,
       value: values[index],
     }));
-}
+  }
 
 }

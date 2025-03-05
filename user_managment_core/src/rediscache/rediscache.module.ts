@@ -25,18 +25,18 @@ import { WriteService } from './write.redis.service';
 
       //******************* */
         {
-          provide: 'IredisServiceInterface',
+          provide: 'IredisReadService',
           useClass: ReadService
         }, ReadService,
      //*******************
        //******************* */
          {
-           provide: 'IredisServiceInterface',
+           provide: 'IredisWriteService',
            useClass: WriteService
          }, WriteService,
       //*******************
   ],
-  exports: ['REDIS_CLIENT', RedisRepository,'IredisServiceInterface', WriteService, ReadService],
+  exports: ['REDIS_CLIENT', RedisRepository,'IredisWriteService','IredisReadService', WriteService, ReadService],
 
 })
 export class RedisModule {}

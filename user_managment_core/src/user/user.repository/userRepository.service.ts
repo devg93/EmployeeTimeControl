@@ -5,8 +5,7 @@ import { UpdateRegistracionDto } from '../dto/update-registracion.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../entities/registracion.entity';
-import { FindOperators, Repository } from 'typeorm';
-import { userModule } from '../user.module';
+import {  Repository } from 'typeorm';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Userrepositoryinterface } from './contracts/user.repository.Interface';
 
@@ -24,7 +23,7 @@ export class UserRepository implements Partial<Userrepositoryinterface> {
 
   
     const user = await this.userRepository.findOne({ where: { email } });
-    // if(user) return "user arledy exsit"
+     if(user) return "user arledy exsit"
 
     const hashedPassword = await bcrypt.hash(password, 10);
 

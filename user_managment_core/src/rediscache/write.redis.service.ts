@@ -2,11 +2,11 @@ import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { RedisRepository } from 'src/rediscache/rediscache.RedisRepository';
 import { CreateRegistracionDto } from '../user/dto/create-registracion.dto';
-import { IredisServiceInterface } from './contracrs';
+import { IredisWriteService } from './contracrs';
 import { OnEvent } from '@nestjs/event-emitter';
 
 @Injectable()
-export class WriteService implements Partial<IredisServiceInterface> {
+export class WriteService implements IredisWriteService {
 
     constructor(@Inject() private readonly redisService: RedisRepository) { }
 

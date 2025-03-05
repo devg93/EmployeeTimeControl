@@ -8,7 +8,7 @@ import { Userrepositoryinterface } from './contracts/user.repository.Interface';
 
 
 @Injectable()
-export class AuthRepository   implements Partial<Userrepositoryinterface>{
+export class AuthRepository implements Partial<Userrepositoryinterface>{
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private jwtService: JwtService,

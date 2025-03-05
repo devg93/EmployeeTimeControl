@@ -3,7 +3,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Inject } from '@nest
 import { CreateRegistracionDto } from '../dto/create-registracion.dto';
 import { UpdateRegistracionDto } from '../dto/update-registracion.dto';
 import { ApiOperation } from '@nestjs/swagger';
-import { IuserReadInterface, IuserWriteInterface } from '../user.repository/contracts/user.repository.Interface';
+import {  IuserWriteInterface } from '../user.repository/contracts/user.repository.Interface';
 
 
 
