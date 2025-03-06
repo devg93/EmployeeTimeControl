@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthRepository } from './user.repository/authRepository.service';
+import {  UserQeuryRepository } from './user.repository/QeuryRepository';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './libs/JwtStrategy';
 
@@ -9,7 +9,7 @@ import { PassportModule } from '@nestjs/passport';
 
 import { RegistracionController } from './user.controllers/user.controller';
 import { AuthController } from './user.controllers/auth.controller';
-import { UserRepository } from './user.repository/userRepository.service';
+import { UserCommandRepository } from './user.repository/CommandRepository';
 
 
 import { RedisModule } from 'src/rediscache/rediscache.module';
@@ -23,9 +23,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 @Module({
 
   //*******************Imports Modules************************ */
-  imports: [RedisModule,
-    EventEmitterModule.forRoot(),
-
+  imports: [forwardRef(() => RedisModule),
+  
     TypeOrmModule.forFeature([User]),
 
     PassportModule.register({ defaultStrategy: 'jwt' }),
@@ -45,33 +44,27 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
   providers: [
 
     {
-      provide: 'Userrepositoryinterface',
-      useClass: AuthRepository
+      provide: 'IuserQeuryRepository',
+      useClass: UserQeuryRepository
 
-    }, AuthRepository,
+    },
 
     //******************* */
     {
-      provide: 'Userrepositoryinterface',
-      useClass: UserRepository
-    }, UserRepository,
+      provide: 'IuserCommandRepository',
+      useClass: UserCommandRepository
+    },
      //******************* */
     {
-      provide: 'IuserWriteInterface',
+      provide: 'IuserWriteService',
       useClass: UserWriteService
-    }, UserWriteService,
+    },
   //******************* */
     {
-      provide: 'IuserReadInterface',
+      provide: 'IuserReadService',
       useClass: UserReadService
-    }, UserReadService,
- //******************* */
-
-   JwtStrategy,
-   RedisModule
-
-  , 
-
+    },
+  
   ],
 
 

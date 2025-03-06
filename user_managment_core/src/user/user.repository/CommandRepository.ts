@@ -3,49 +3,25 @@ import * as bcrypt from 'bcrypt';
 import { CreateRegistracionDto } from '../dto/create-registracion.dto';
 import { UpdateRegistracionDto } from '../dto/update-registracion.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { JwtService } from '@nestjs/jwt';
 import { User } from '../entities/registracion.entity';
-import {  Repository } from 'typeorm';
-import { EventEmitter2 } from '@nestjs/event-emitter';
-import { Userrepositoryinterface } from './contracts/user.repository.Interface';
+import { Repository } from 'typeorm';
+import { IuserCommandRepository } from '../libs/contracts/user.repository.Interface';
 
 
 
 @Injectable()
-export class UserRepository implements Partial<Userrepositoryinterface> {
+export class UserCommandRepository implements IuserCommandRepository {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private jwtService: JwtService, private eventEmitter: EventEmitter2
   ) { }
   //*********************************************************** */
   async register(body: CreateRegistracionDto) {
-    const { userName, email, password, iPadrres, deviceName } = body;
 
-  
-    const user = await this.userRepository.findOne({ where: { email } });
-     if(user) return "user arledy exsit"
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser = this.userRepository.create({
-      userName,
-      email,
-      passWord: hashedPassword,
-      iPadrres: iPadrres ?? '0.0.0.0',
-      deviceName: deviceName ?? 'Unknown Device',
-    });
+    const newUser = this.userRepository.create(body);
     const userIsSaved = await this.userRepository.save(newUser);
-    if (userIsSaved) {
-      this.eventEmitter.emit('user.created', {
-        body
-
-      });
-      //console.log(userIsSaved); // debugging
-     return  "user is created"
-    }
-
-    return "user not created"
+    if (userIsSaved) return "user is created"
   }
+
 
   //*********************************************************** */
   async findAll(): Promise<User[]> {
@@ -68,9 +44,9 @@ export class UserRepository implements Partial<Userrepositoryinterface> {
     return await this.userRepository.delete(id);
   }
 
- async deleteByemail(email: string): Promise<any> {
+  async deleteByemail(email: string): Promise<any> {
     return await this.userRepository.delete({ email });
   }
 
- 
+
 }

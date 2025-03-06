@@ -4,23 +4,26 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { CreateAuthDto } from '../dto/create-auth.dto';
 import { JwtAuthGuard } from '../libs/jwt-auth.guard';
 import { GetUser } from '../libs/decorators/getUser';
-import { IuserReadInterface, IuserWriteInterface } from '../user.repository/contracts/user.repository.Interface';
-import { Body, Controller, Get, Inject, Param, Post, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { IuserReadService } from '../libs/contracts/user.repository.Interface';
+import { Body, Controller, Get, Inject, Injectable, Param, Post, Scope, UnauthorizedException, UseGuards } from '@nestjs/common';
 
+@Injectable({ scope: Scope.DEFAULT }) 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
- constructor(@Inject("IuserReadInterface") private readonly UseReadService: IuserReadInterface) { }
+ constructor(@Inject("IuserReadService") private readonly UseReadService: IuserReadService) { }
 
 
   @Post('login')
   @ApiOperation({ summary: 'Login and receive a JWT token' })
   async login(@Body() body: CreateAuthDto) {
-    const user = await this.UseReadService.validateUser(body.email, body.password);
-    if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
-    return await this.UseReadService.login(body.email, body.password);
+
+    const user = await this.UseReadService.loginService(body);
+    return user;
+    // if (!user) {
+    //   throw new UnauthorizedException('Invalid credentials');
+    // }
+    // return await this.UseReadService.login(body.email, body.password);
   }
 
 
@@ -31,20 +34,20 @@ export class AuthController {
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
-    return await this.UseReadService.getProfileByEmail(user.email);
+    return await this.UseReadService.getProfileByEmailService(user.email);
 
   }
 
     @Get('findAll')
-    async findAll() {
+    async findAll(body:any) {
   
-      return await this.UseReadService.findAll();
+      return await this.UseReadService.findAllService(body);
     }
   
   
     @Get('findOne/:id')
     async findOne(@Param('id') id: string) {
-      return await this.UseReadService.getProfileById(id);
+      return await this.UseReadService.getProfileByIdService(id);
     }
 
 

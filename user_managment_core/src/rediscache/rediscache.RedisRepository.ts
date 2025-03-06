@@ -1,7 +1,7 @@
 import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import Redis from 'ioredis';
 import { CreateRegistracionDto } from 'src/user/dto/create-registracion.dto';
-
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class RedisRepository {
@@ -16,16 +16,14 @@ export class RedisRepository {
         throw new Error('Email, password, and username are required');
       }
 
-
       await this.redisClient.hset(`user:${email}`, {
         userName,
         email,
-        password,
+        password: await bcrypt.hash(userDto.password, 10),
         iPadrres: iPadrres || '',
         deviceName: deviceName || '',
       });
 
-      console.log(`User registered with key user:${email}`);
     } catch (error) {
       console.error('Error storing user in Redis:', error);
     }

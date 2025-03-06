@@ -41,12 +41,13 @@ dotenv.config();
 @Module({
   imports: [
     userModule,
+    EventEmitterModule.forRoot(),
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres', 
       host: process.env.DB_HOST,  
       port: +process.env.DB_PORT || 5432, 
-      username: process.env.DB_USER || 'postgres', 
+      username: process.env.DB_USER || 'root', 
       password: process.env.DB_PASSWORD || 'Dami_2022', 
       database: process.env.DB_NAME || 'userdatabase',
       entities: [User], 
@@ -56,6 +57,5 @@ dotenv.config();
     RedisModule,
   ],
   exports: [],
-  providers: [RedisModule],
 })
 export class AppModule {}
