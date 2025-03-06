@@ -1,79 +1,49 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthRepository } from './user.repository/authRepository.service';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './libs/JwtStrategy';
-
-import { User } from 'src/user/entities/registracion.entity';
 import { PassportModule } from '@nestjs/passport';
 
+import { User } from 'src/user/entities/registracion.entity';
+import { RedisModule } from 'src/rediscache/rediscache.module';
 import { RegistracionController } from './user.controllers/user.controller';
 import { AuthController } from './user.controllers/auth.controller';
-import { UserRepository } from './user.repository/userRepository.service';
-
-
-import { RedisModule } from 'src/rediscache/rediscache.module';
+import { UserCommandRepository } from './user.repository/CommandRepository';
+import { UserQeuryRepository } from './user.repository/QeuryRepository';
 import { UserWriteService } from './user.services/user.write.service ';
 import { UserReadService } from './user.services/user.read.service';
-import { EventEmitterModule } from '@nestjs/event-emitter';
-
-
+import { JwtStrategy } from './libs/JwtStrategy';
 
 
 @Module({
-
-  //*******************Imports Modules************************ */
-  imports: [RedisModule,
-    EventEmitterModule.forRoot(),
-
+  imports: [
+    forwardRef(() => RedisModule),
     TypeOrmModule.forFeature([User]),
-
     PassportModule.register({ defaultStrategy: 'jwt' }),
-
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'default_secret_key',
       signOptions: { expiresIn: '1h' },
     }),
   ],
-
-
-  //*******************Controller service objects************************ */
   controllers: [AuthController, RegistracionController],
-
-
-//*******************Provaiders service objects************************ */
   providers: [
-
     {
-      provide: 'Userrepositoryinterface',
-      useClass: AuthRepository
-
-    }, AuthRepository,
-
-    //******************* */
+      provide: 'IuserQeuryRepository',
+      useClass: UserQeuryRepository,
+    },
     {
-      provide: 'Userrepositoryinterface',
-      useClass: UserRepository
-    }, UserRepository,
-     //******************* */
+      provide: 'IuserCommandRepository',
+      useClass: UserCommandRepository,
+    },
     {
-      provide: 'IuserWriteInterface',
-      useClass: UserWriteService
-    }, UserWriteService,
-  //******************* */
+      provide: 'IuserWriteService',
+      useClass: UserWriteService,
+    },
     {
-      provide: 'IuserReadInterface',
-      useClass: UserReadService
-    }, UserReadService,
- //******************* */
-
-   JwtStrategy,
-   RedisModule
-
-  , 
-
+      provide: 'IuserReadService',
+      useClass: UserReadService,
+    },
+    JwtStrategy, 
   ],
-
-
+   //exports: [JwtStrategy, PassportModule],
 })
-export class userModule { }
+export class userModule {}

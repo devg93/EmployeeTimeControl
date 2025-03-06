@@ -6,9 +6,9 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ReadService } from './read.redis.service';
 import { WriteService } from './write.redis.service';
 
-// @Global()
+
 @Module({
-  imports: [ EventEmitterModule.forRoot(),],
+
   providers: [
     {
       
@@ -27,16 +27,16 @@ import { WriteService } from './write.redis.service';
         {
           provide: 'IredisReadService',
           useClass: ReadService
-        }, ReadService,
+        },
      //*******************
-       //******************* */
+     
          {
            provide: 'IredisWriteService',
            useClass: WriteService
-         }, WriteService,
+         }
       //*******************
   ],
-  exports: ['REDIS_CLIENT', RedisRepository,'IredisWriteService','IredisReadService', WriteService, ReadService],
+  exports: ['IredisWriteService','IredisReadService'],
 
 })
 export class RedisModule {}

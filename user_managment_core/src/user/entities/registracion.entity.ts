@@ -5,11 +5,11 @@ export class User {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @Column()
+  @Column({ type: "varchar", length: 55, nullable: false }) 
   userName: string;
 
   @Column()
-  passWord: string;
+  password: string;
 
   @Column()
   email: string

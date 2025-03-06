@@ -41,6 +41,7 @@ dotenv.config();
 @Module({
   imports: [
     userModule,
+    EventEmitterModule.forRoot(),
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres', 
@@ -56,6 +57,5 @@ dotenv.config();
     RedisModule,
   ],
   exports: [],
-  providers: [RedisModule],
 })
 export class AppModule {}
