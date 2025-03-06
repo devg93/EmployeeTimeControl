@@ -20,10 +20,7 @@ export class AuthController {
 
     const user = await this.UseReadService.loginService(body);
     return user;
-    // if (!user) {
-    //   throw new UnauthorizedException('Invalid credentials');
-    // }
-    // return await this.UseReadService.login(body.email, body.password);
+ 
   }
 
 
@@ -34,6 +31,7 @@ export class AuthController {
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
+    console.log('getProfileByemail',body)
     return await this.UseReadService.getProfileByEmailService(user.email);
 
   }
@@ -54,7 +52,6 @@ export class AuthController {
 
 
 }
-
 
 
 

@@ -29,46 +29,54 @@ export class UserReadService implements IuserReadService {
     }
 
     async getProfileByEmailService(useremail: string): Promise<any> {
+
+        console.log('getProfileByEmailService',useremail)
         const res = await this.redisReadService.redisfindUser(useremail);
-        if (!res) {
-            const resSql = await this.userrepositoryinterface.getProfileByEmail(useremail);
-            if (resSql) await this.redisWriteService.redisregisterUser(resSql);
-            return resSql;
-        }
+    //   console.log(res)
+        // if (!res) {
+        //     const resSql = await this.userrepositoryinterface.getProfileByEmail(useremail);
+        //     if (resSql) await this.redisWriteService.redisregisterUser(resSql);
+        //     return resSql;
+        // }
         return res;
     }
 
-    async loginService(body:any): Promise<any> {
+ 
+
+    async loginService(body: any): Promise<any> {
+        const user = await this.redisReadService.redisfindUser(body.email);
+    console.log(user)
+        if (!user) {
+            throw new UnauthorizedException('User not found.');
+        }
+    
        
-            const  user =await this.redisReadService.redisfindUser(body.email);
-             // const { email, password } = body;
-             console.log(user)
-
-            // if (!user) {
-            //   throw new UnauthorizedException('User not found.');
-            // }
-            // let passwordValid = await bcrypt.compare(body.password, user.password);
-      
-            // if (!passwordValid) throw new UnauthorizedException('Wrong password.');
-            // const payload = {
-            //   email: user.email,
-            //   id: user._id,
-            //   phone_number: user.phone_number,
-            //   defaultRFD: user.default_rfd,
-            // };
-      
-            // return {
-            //   token: this.jwtService.sign(payload),
-            // };
-
-          } 
+        // const passwordValid = await bcrypt.compare(body.password, user.password);
+        
+        // if (!passwordValid) {
+        //     throw new UnauthorizedException('Wrong password.');
+        // }
+    
+       
+        const payload = {
+            userName: body.userName, 
+                email: body.email,
+                password: body.password,
+                iPadrres: body.iPadrres,
+                deviceName: body.deviceName,
+        };
+    
+        return {
+            token: this.jwtService.sign(payload),
+        };
+    }
     
 
     async validateUserService(email: string, password: string): Promise<any> {
 
         // const user = await this.redisReadService.redislogin(email, password);
 
-        // return await this.userrepositoryinterface.validateUser(user.email, user.password);
+        // return await this.userrepositoryinterface.(user.email, user.password);
     }
 
     async findAllService(body:any): Promise<any> {
@@ -85,17 +93,6 @@ export class UserReadService implements IuserReadService {
         if (!res) return await this.userrepositoryinterface.findAll();
         return res;
     }
-
-
-
- 
-
-
-
-
-
-
-  
 
 
 

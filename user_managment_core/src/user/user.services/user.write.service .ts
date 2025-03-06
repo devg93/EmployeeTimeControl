@@ -14,34 +14,26 @@ export class UserWriteService implements IuserWriteService {
 
    async registerService(body: any): Promise<any> {
 
-      const resUserForRedis= await this.redisReadService.redisfindUser(body.email);
-   
-      console.log(resUserForRedis)
-     if(resUserForRedis){
+      const resUserForRedis = await this.redisReadService.redisfindUser(body.email);
+
+      // console.log(resUserForRedis)
+      if (resUserForRedis) {
          return "user is already exist"
-     }
-   
-  
-   //   const resUser= await this.useReadService.getProfileByEmailService(body.email);
-   //     if(!resUser){
-   //        return "user is already exist"}
-        
-      const { password } = body;
-     
-      const hashedPassword = await bcrypt.hash(password, 10);
-      body.password = hashedPassword;
-    
+      }
 
-   //    // console.log(hashedPassword)
-   //   //  console.log(body)
 
-      const res = await this.userrepositoryinterface.register(body);
-      if (res) {
-         console.log('Emitting user.created.event');
-       
-         await this.eventEmitter.emit('user.created.event', body );
-     }
-   //    return res; 
+      //   const resUser= await this.useReadService.getProfileByEmailService(body.email);
+      //     if(!resUser){
+      //        return "user is already exist"}
+
+ 
+         const res = await this.userrepositoryinterface.register(body);
+         if (res) {
+            console.log('Emitting user.created.event');
+
+            await this.eventEmitter.emit('user.created.event', body );
+        }
+         return res; 
    }
 
    async updateUserService(id: string, updateRegistracionDto: any): Promise<any> {

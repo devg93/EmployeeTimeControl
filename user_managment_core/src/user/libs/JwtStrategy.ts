@@ -13,16 +13,14 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 
 
     }
-
+  
     async validate(payload: any) {
-     
-        if (!payload || !payload.sub) {
+    
+        if (!payload || !payload.email) {
             throw new UnauthorizedException("Invalid token payload.");
         }
 
-        const user = { id: payload.sub, email: payload.username };
-
- 
-        return user;
+        return { email: payload.email }; 
     }
+    
 }

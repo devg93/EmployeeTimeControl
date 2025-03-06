@@ -17,7 +17,18 @@ export class UserCommandRepository implements IuserCommandRepository {
   //*********************************************************** */
   async register(body: CreateRegistracionDto) {
 
-    const newUser = this.userRepository.create(body);
+  //  const newUser = this.userRepository.create(body);
+
+    const newUser = this.userRepository.create({
+      userName: body.userName, 
+      email: body.email,
+      password:await bcrypt.hash(body.password, 10) ,
+      iPadrres: body.iPadrres,
+      deviceName: body.deviceName,
+  });
+  
+
+  
     const userIsSaved = await this.userRepository.save(newUser);
     if (userIsSaved) return "user is created"
   }

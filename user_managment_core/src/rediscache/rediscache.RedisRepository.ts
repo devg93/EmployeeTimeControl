@@ -15,11 +15,12 @@ export class RedisRepository {
       if (!email || !password || !userName) {
         throw new Error('Email, password, and username are required');
       }
-
+      let hashpassword = await bcrypt.hash(userDto.password, 10);
+      console.log(hashpassword)
       await this.redisClient.hset(`user:${email}`, {
         userName,
         email,
-        password: await bcrypt.hash(userDto.password, 10),
+        password: hashpassword,
         iPadrres: iPadrres || '',
         deviceName: deviceName || '',
       });
@@ -49,7 +50,7 @@ export class RedisRepository {
         throw new UnauthorizedException('Invalid credentials');
       }
 
-      console.log(`User ${email} logged in successfully`);
+    //  console.log(`User ${email} logged in successfully`);
 
 
       return {
@@ -66,33 +67,31 @@ export class RedisRepository {
   }
 
 
-
-
   async findOneRedis(email: string): Promise<CreateRegistracionDto | null> {
     try {
 
-      const userData = await this.redisClient.hgetall(`user:${email}`);
+      console.log('findOneRedis',email)
+        const userData = await this.redisClient.hgetall(`user:${email}`);
 
-      if (!userData.email) {
-        console.log(`User with email ${email} not found`);
-        return null;
-      }
+     
+        if (!userData || Object.keys(userData).length === 0) {
+            console.log(`User with email ${email} not found in Redis`);
+            return null;
+        }
 
-      console.log(`User found:`, userData);
-
-
-      return {
-        userName: userData.userName,
-        email: userData.email,
-        password: userData.password,
-        iPadrres: userData.iPadrres || null,
-        deviceName: userData.deviceName || null,
-      };
+        return {
+            userName: userData.userName,
+            email: userData.email,
+            password: await bcrypt.hash(userData.password, 10),
+            iPadrres: userData.iPadrres || null,
+            deviceName: userData.deviceName || null,
+        };
     } catch (error) {
-      console.error('Error fetching user from Redis:', error);
-      return null;
+        console.error('Error fetching user from Redis:', error);
+        return null;
     }
-  }
+}
+
 
 
 
