@@ -1,10 +1,10 @@
 import { Module, Global } from '@nestjs/common';
 
 import Redis from 'ioredis';
-import { RedisRepository } from './rediscache.RedisRepository';
-import { EventEmitterModule } from '@nestjs/event-emitter';
-import { ReadService } from './read.redis.service';
-import { WriteService } from './write.redis.service';
+import { RedisRepository } from './repository/rediscache.RedisRepository';
+
+import { ReadService } from './services/read.redis.service';
+import { WriteService } from './services/write.redis.service';
 
 
 @Module({

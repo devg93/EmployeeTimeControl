@@ -5,7 +5,7 @@ import { UpdateRegistracionDto } from '../dto/update-registracion.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/registracion.entity';
 import { Repository } from 'typeorm';
-import { IuserCommandRepository } from '../libs/contracts/user.repository.Interface';
+import { IuserCommandRepository } from '../contracts/user.repository.Interface';
 
 
 

@@ -2,7 +2,7 @@ import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
 import { IredisReadService, IredisWriteService } from 'src/rediscache/contracrs';
-import { IuserReadService, IuserQeuryRepository } from '../libs/contracts/user.repository.Interface';
+import { IuserReadService, IuserQeuryRepository } from '../contracts/user.repository.Interface';
 import { JwtService } from '@nestjs/jwt';
 
 
@@ -30,22 +30,21 @@ export class UserReadService implements IuserReadService {
 
     async getProfileByEmailService(useremail: string): Promise<any> {
 
-        console.log('getProfileByEmailService',useremail)
         const res = await this.redisReadService.redisfindUser(useremail);
-    //   console.log(res)
-        // if (!res) {
-        //     const resSql = await this.userrepositoryinterface.getProfileByEmail(useremail);
-        //     if (resSql) await this.redisWriteService.redisregisterUser(resSql);
-        //     return resSql;
-        // }
+        
+        if (!res) {
+            const resSql = await this.userrepositoryinterface.getProfileByEmail(useremail);
+            if (resSql) await this.redisWriteService.redisregisterUser(resSql);
+            return resSql;
+        }
         return res;
+  
     }
 
  
 
     async loginService(body: any): Promise<any> {
         const user = await this.redisReadService.redisfindUser(body.email);
-    console.log(user)
         if (!user) {
             throw new UnauthorizedException('User not found.');
         }
@@ -80,15 +79,7 @@ export class UserReadService implements IuserReadService {
     }
 
     async findAllService(body:any): Promise<any> {
-        // const resUser = await this.redisReadService.redislogin(body.email, body.password);
-        // if (!resUser) {
-        //     const user = await this.userrepositoryinterface.getProfileByEmail(body.email);
-        //     const Restoken = await this.userrepositoryinterface.login(user);
-
-        //     return Restoken;
-        // }
-        // const Restoken = await this.userrepositoryinterface.login(resUser);
-        // return Restoken;
+     
         const res = await this.redisReadService.redisfindAll();
         if (!res) return await this.userrepositoryinterface.findAll();
         return res;
