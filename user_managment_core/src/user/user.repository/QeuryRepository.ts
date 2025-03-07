@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { User } from 'src/user/entities/registracion.entity';
-import { IuserQeuryRepository } from '../libs/contracts/user.repository.Interface';
+import { IuserQeuryRepository } from '../contracts/user.repository.Interface';
 
 
 @Injectable()

@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { RedisRepository } from 'src/rediscache/rediscache.RedisRepository';
-import { CreateRegistracionDto } from '../user/dto/create-registracion.dto';
-import { IredisReadService } from './contracrs';
+import { RedisRepository } from 'src/rediscache/repository/rediscache.RedisRepository';
+import { IredisReadService } from '../contracrs';
+
 
 @Injectable()
 export class ReadService implements IredisReadService {

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IredisReadService, IredisWriteService } from 'src/rediscache/contracrs';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { IuserWriteService, IuserCommandRepository, IuserReadService } from '../libs/contracts/user.repository.Interface';
+import { IuserWriteService, IuserCommandRepository, IuserReadService } from '../contracts/user.repository.Interface';
 import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UserWriteService implements IuserWriteService {

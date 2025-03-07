@@ -1,8 +1,8 @@
 import { Inject, Injectable, Scope } from '@nestjs/common';
 
-import { RedisRepository } from 'src/rediscache/rediscache.RedisRepository';
-import { CreateRegistracionDto } from '../user/dto/create-registracion.dto';
-import { IredisWriteService } from './contracrs';
+import { RedisRepository } from 'src/rediscache/repository/rediscache.RedisRepository';
+import { CreateRegistracionDto } from '../../user/dto/create-registracion.dto';
+import { IredisWriteService } from '../contracrs';
 import { OnEvent } from '@nestjs/event-emitter';
 
 
