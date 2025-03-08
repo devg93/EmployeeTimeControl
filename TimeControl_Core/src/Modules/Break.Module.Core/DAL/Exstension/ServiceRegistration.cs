@@ -30,6 +30,10 @@ public static class ServiceRegistration
         serviceDescriptors.AddScoped<IServicesFactory, ServicesFactory>();
         serviceDescriptors.AddScoped<IServicesFacade,ServicesFacade>();
         serviceDescriptors.AddScoped<IAggregatorServiceBrakeTime, AggregatorServiceBrakeTime>();
+        serviceDescriptors.AddScoped<IBrakeTimeDataManager, BrakeTimeDataManager>();
+        serviceDescriptors.AddScoped<IBrakeTimeProcessor, BrakeTimeProcessor>();
+        
+
 
 
         return serviceDescriptors;
