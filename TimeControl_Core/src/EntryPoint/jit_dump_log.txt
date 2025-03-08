@@ -1,0 +1,73 @@
+Building...
+Registered class: Break.Module.Core.ServicesCommunication.SendDataToTimeInTimeOutModule
+Registered class: Shared.Services.ModuleCommunication.Contracts.ISendServiceToBreakModule
+Registered class: Shared.Services.ModuleCommunication.Contracts.ISendServiceToTimeInTimeOutModule
+Registered class: TimeInTimeOut.Module.Core.ServicesCommunication.SendDataToBreakModule
+info: Modules.Break.Module.Core.BreakWorker.Command.BreakWorkerCommand[0]
+      WorkerCommand started.
+info: TimeInTimeOut.Module.Core.TimeInTimeOutWorker.BackgroundService.TimeInTimeOutWorkerCommand[0]
+      TimeInTimeOutWorkerCommand started.
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5005
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /home/neo/Desktop/EmployeeTimeControl/TimeControl_Core/src/EntryPoint
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Shared.Services.Tasks.PingCheker.PingSender[0]
+      Pinged 192.168.1.204, Status: Success, Roundtrip Time: 0 ms
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
