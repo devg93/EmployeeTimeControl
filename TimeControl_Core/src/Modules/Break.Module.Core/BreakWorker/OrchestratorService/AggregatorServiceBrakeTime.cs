@@ -10,10 +10,8 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService;
 public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
 {
 
-   
     private readonly IBrakeTimeDataManager _brakeTimeDataManager;
     private readonly IBrakeTimeProcessor _brakeTimeProcessor;
-
     private readonly IBrakeTimeEvaluator _brakeTimeEvaluator;
 
 

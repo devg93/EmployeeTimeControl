@@ -19,7 +19,7 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService
 
         public async Task<BrakeTimeEvaluationResult> EvaluateBrakeTime(int userId, bool ipStatus)
         {
-            // 🟢 ოპტიმიზაცია `Task.WhenAll()`-ით
+
             var fetchTimeTask = _brakeTimeDataManager.FetchServiceTimeInTimeOut(userId);
             var fetchBrakeTask = _brakeTimeDataManager.FetchExistingBrakeTime(userId);
             var getBusyTask = _brakeTimeDataManager.GetBusyStatus(userId);
@@ -30,12 +30,10 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService
             var existingBrakeResponse = await fetchBrakeTask;
             bool busyStatus = await getBusyTask;
 
-            var existingBrake = existingBrakeResponse.Data; // 🟢 ვამატებთ, რომ დავაბრუნოთ
+            var existingBrake = existingBrakeResponse.Data;
 
-            if (!existingTimeInOutResponse.IsSuccess)
-                return new BrakeTimeEvaluationResult(
-                    new ResponseResultBrakeTime { EmptyResultMessage = "No valid data for user" },
-                    existingBrake
+            if (!existingTimeInOutResponse.IsSuccess) return new BrakeTimeEvaluationResult(
+                 new ResponseResultBrakeTime { EmptyResultMessage = "No valid data for user" }, existingBrake
                 );
 
             var existingTimeInOut = existingTimeInOutResponse.Data;
@@ -70,15 +68,5 @@ public interface IBrakeTimeEvaluator
 
 
 
-public record BrakeTimeEvaluationResult
-{
-    public ResponseResultBrakeTime BrakeTimeResult { get; init; }
-    public BrakeTime? ExistingBrake { get; init; }
 
-    public BrakeTimeEvaluationResult(ResponseResultBrakeTime brakeTimeResult, BrakeTime existingBrake)
-    {
-        BrakeTimeResult = brakeTimeResult;
-        ExistingBrake = existingBrake;
-    }
-}
 

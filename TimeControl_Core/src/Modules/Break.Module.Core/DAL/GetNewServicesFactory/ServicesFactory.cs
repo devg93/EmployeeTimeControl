@@ -19,6 +19,11 @@ namespace Break.Module.Core.DAL.GetNewServicesFactory
 
         public IbusyRepositoryQeury GetBusyRepositoryQeury()
         => _serviceProvider.GetRequiredService<IbusyRepositoryQeury>();
+
+        public IbreakRepositoryCommand GetibreakRepositoryCommand()
+        => _serviceProvider.GetRequiredService<IbreakRepositoryCommand>();
+        public IbreakRepositoryQeury GetibreakRepositoryQeury()
+        => _serviceProvider.GetRequiredService<IbreakRepositoryQeury>();
     }
     
     /* generic pattern

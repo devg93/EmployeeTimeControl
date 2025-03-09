@@ -41,7 +41,6 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService
         }
 
 
-
         public async Task<bool> HandleValidWorkSchedule(ResponseResultBrakeTime resultTime, BrakeTime existingBrake, int id, bool status)
         {
             if (resultTime.workSchedulPingLog)
