@@ -41,10 +41,41 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService
 
        public async Task<bool> UpdateBusyStatus(int id, bool status)
     {
+        
         await _servicesFactory.GetBusyRepositoryCommand().UpdateBusy(id, status);
         return await _servicesFactory.GetBusyRepositoryCommand().Save();
     }
-}
+
+        public Task<bool> CreateBreakeTimeData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> GetBreakeTimeData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> CreateBreakAsync(BrakeTime brakeTime)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> UbdateBreakAsync(int Id, byte param)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ResponseChecker<BrakeTime>> GetBreakByIdAsinc(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<BrakeTime>> GetAllBreaksAsync()
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     public interface IBrakeTimeDataManager
     {
@@ -53,5 +84,13 @@ namespace Break.Module.Core.BreakWorker.OrchestratorService
          Task<bool> GetBusyStatus(int userId);
          Task<bool> CreateBusyStatus(int Userid, bool status);
          Task<bool> UpdateBusyStatus(int id, bool status);
+         Task<bool> CreateBreakeTimeData ();
+         Task<bool> GetBreakeTimeData ();
+
+         Task<string> CreateBreakAsync(BrakeTime brakeTime);
+         Task<string> UbdateBreakAsync(int Id,byte param);
+
+         Task<ResponseChecker<BrakeTime>> GetBreakByIdAsinc(int Id);
+         Task<List<BrakeTime>> GetAllBreaksAsync();
     }
 }

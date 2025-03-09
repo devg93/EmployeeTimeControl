@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 
 namespace Modules.Break.Module.Core.Dto;
 

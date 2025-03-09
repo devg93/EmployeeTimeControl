@@ -8,6 +8,8 @@ namespace Break.Module.Core.Abstraction.IServiceProvider
         ITimeHenldeLogService GetTimeHandleLogService();
         IbusyRepositoryCommand GetBusyRepositoryCommand();
         IbusyRepositoryQeury GetBusyRepositoryQeury();
+        IbreakRepositoryCommand GetibreakRepositoryCommand();
+        IbreakRepositoryQeury GetibreakRepositoryQeury();
 
     }
 
