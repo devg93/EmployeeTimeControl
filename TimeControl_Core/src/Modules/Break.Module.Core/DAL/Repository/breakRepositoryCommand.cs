@@ -14,8 +14,9 @@ public class breakRepositoryCommand : IbreakRepositoryCommand
         return "Break created";
     }
 
-    public async Task<bool> Save()
-    => await dbcontext.SaveChangesAsync() > 0;
+    public async Task<string> Save()
+    =>(await dbcontext.SaveChangesAsync() > 0) ? "Save successful" : "Save failed";
+    
 
     public async Task<string> UbdateBreakAsync(int Id, byte param)
     {
@@ -41,4 +42,6 @@ public class breakRepositoryCommand : IbreakRepositoryCommand
         await dbcontext.SaveChangesAsync();
         return "Break updated";
     }
+
+   
 }

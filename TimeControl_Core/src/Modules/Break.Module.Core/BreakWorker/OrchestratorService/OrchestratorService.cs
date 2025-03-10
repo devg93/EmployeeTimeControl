@@ -1,29 +1,29 @@
 
 //************************************ Service Orchestration ******************************************//
-// The AggregatorServiceBrakeTime class is a central component for coordinating the management of brake time data. 
+// The OrchestratorService class is a central component for coordinating the management of brake time data. 
 // It orchestrates the interactions between repositories witch DI modules 
 // in updating or creating brake time records. The class implements the following key responsibilities:
 // . Validates input data and retrieves necessary information from repositories.
 
-namespace Break.Module.Core.BreakWorker.OrchestratorService;
+namespace Break.Module.Core.BreakWorker.CommonServices.OrchestratorService;
 
-public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
+public class OrchestratorService : IOrchestratorService
 {
 
-    private readonly IBrakeTimeDataManager _brakeTimeDataManager;
-    private readonly IBrakeTimeProcessor _brakeTimeProcessor;
-    private readonly IBrakeTimeEvaluator _brakeTimeEvaluator;
+    private readonly IPersistenceService _brakeTimeDataManager;
+    private readonly IBrakeTimeHandler _brakeTimeProcessor;
+    private readonly ITimeValidator _timeVlidator;
 
 
-    public AggregatorServiceBrakeTime(
-    IBrakeTimeDataManager brakeTimeDataManager, IBrakeTimeProcessor brakeTimeProcessor, 
-    IBrakeTimeEvaluator brakeTimeEvaluator)
+    public OrchestratorService(
+    IPersistenceService brakeTimeDataManager, IBrakeTimeHandler timeVlidator, 
+    ITimeValidator brakeTimeEvaluator)
     {
        
 
         _brakeTimeDataManager = brakeTimeDataManager;
-        _brakeTimeProcessor = brakeTimeProcessor;
-        _brakeTimeEvaluator = brakeTimeEvaluator;
+        _brakeTimeProcessor = timeVlidator;
+        _timeVlidator = brakeTimeEvaluator;
 
     }
 
@@ -31,7 +31,7 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
     public async Task<bool> AddOrUpdateBrakeTime(BrakeTimeDtoReqvest entity, bool IpStatus)
     {
 
-        var brakeTimeResult = await _brakeTimeEvaluator.EvaluateBrakeTime(entity.UserId, IpStatus);
+        var brakeTimeResult = await _timeVlidator.TimeValidatorService(entity.UserId, IpStatus);
 
         bool BusyStatus = await _brakeTimeDataManager.GetBusyStatus(1);
         try
@@ -54,6 +54,4 @@ public class AggregatorServiceBrakeTime : IAggregatorServiceBrakeTime
         return true;
     }
 
-
-    //***************************************************************************************************************************//
 }
