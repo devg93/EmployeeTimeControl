@@ -20,7 +20,7 @@ global using Shared.Services.Tasks.PingCheker;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-global using Break.Module.Core.BreakWorker.CommonServices.OrchestratorService;
+global using Break.Module.Core.BreakWorker.CommonServices;
 
 global using Break.Module.Core.DAL.GetNewServicesFactory;
 
@@ -32,7 +32,7 @@ global using Modules.Break.Module.Core.Astractions.Irepository.Ibusy;
 global using Modules.Break.Module.Core.BreakWorker.Command;
 global using Modules.Break.Module.Core.DAL;
 
-global using Modules.Break.Module.Core.Mediator;
+
 
 global using Modules.Break.Module.Core.Repository.Busy.DAL;
 global using Modules.Break.Module.Core.Repository.DAL;
