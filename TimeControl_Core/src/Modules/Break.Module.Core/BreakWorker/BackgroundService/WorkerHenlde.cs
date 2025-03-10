@@ -36,3 +36,9 @@ public class WorkerHenlde : IWorkerHenlde
         }
     }
 }
+
+
+public interface IWorkerHenlde
+{
+    public Task AsyncMethodBreake();
+};

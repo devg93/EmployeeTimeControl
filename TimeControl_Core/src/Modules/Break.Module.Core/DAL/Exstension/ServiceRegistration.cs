@@ -26,11 +26,6 @@ public static class ServiceRegistration
         serviceDescriptors.AddScoped<IbreakRepositoryQeury, breakRepositoryQeury>();
         serviceDescriptors.AddScoped<IbusyRepositoryCommand, busyRepositoryCommand>();
         serviceDescriptors.AddScoped<IbusyRepositoryQeury, busyRepositoryQeury>();
-    
-        serviceDescriptors.AddScoped<IServicesFactory, ServicesFactory>();
-        serviceDescriptors.AddScoped<IServicesFacade,ServicesFacade>();
-        serviceDescriptors.AddScoped<IAggregatorServiceBrakeTime, AggregatorServiceBrakeTime>();
-
 
         return serviceDescriptors;
     }
@@ -42,7 +37,12 @@ public static class ServiceRegistration
         serviceDescriptors.AddHostedService<BreakWorkerCommand>();
         serviceDescriptors.AddScoped<IWorkerHenlde, WorkerHenlde>();
         serviceDescriptors.AddScoped<IBreakTimeUpdateMediator, BreakTimeUpdateMediator>();
-        serviceDescriptors.AddScoped<IAggregatorServiceBrakeTime, AggregatorServiceBrakeTime>();
+        serviceDescriptors.AddScoped<IServicesFactory, ServicesFactory>();
+        serviceDescriptors.AddScoped<IServicesFacade,ServicesFacade>();
+        serviceDescriptors.AddScoped<IOrchestratorService, OrchestratorService>();
+        serviceDescriptors.AddScoped<IPersistenceService, PersistenceService>();
+        serviceDescriptors.AddScoped<ITimeValidator, TimeValidator>();
+    
         // serviceDescriptors.addSharedServices();
 
 

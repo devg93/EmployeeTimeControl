@@ -1,7 +1,4 @@
 
-using System;
-
-
 namespace Modules.Break.Module.Core.Entity;
 
 public class DateTimeWorkSchedule

@@ -1,9 +1,7 @@
-using System.Threading.Tasks;
-using Modules.Break.Module.Core.Dto;
 
 
 namespace Modules.Break.Module.Core.Astractions.Iservices;
-    public interface IAggregatorServiceBrakeTime
+    public interface IOrchestratorService
     {
          Task<bool> AddOrUpdateBrakeTime(BrakeTimeDtoReqvest entity, bool Status);
 

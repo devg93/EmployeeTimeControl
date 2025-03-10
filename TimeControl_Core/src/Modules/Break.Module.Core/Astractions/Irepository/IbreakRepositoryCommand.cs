@@ -4,8 +4,8 @@ namespace Modules.Break.Module.Core.Astractions.Irepository;
     public interface IbreakRepositoryCommand
     {
     
-        public Task<string> CreateBreakAsync(BrakeTime brakeTime);
-        public Task<string> UbdateBreakAsync(int Id,byte param);
-        public Task<bool>Save();
+         Task<string> CreateBreakAsync(BrakeTime brakeTime);
+         Task<string> UbdateBreakAsync(int Id,byte param);
+         Task<string>Save();
 
     }
