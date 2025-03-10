@@ -1,5 +1,4 @@
 
-
 namespace Modules.Break.Module.Core.Astractions.Irepository;
 
     public interface IbreakRepositoryCommand

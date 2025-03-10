@@ -8,18 +8,9 @@ using TimeInTimeOut.Module.Api;
 using TimeInTimeOut.Module.Api.Controllers;
 
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
-
-
-
-
-
 
 builder.Services.AddControllers().AddApplicationPart(typeof(Modules.Break.Module.Api.Controllers.BreakController).Assembly);
 // builder.Services.AddControllers().AddApplicationPart(typeof(Modules.TimeInTimeOut.Module.Api.Controllers.TimeInTimeOutiController).Assembly);
