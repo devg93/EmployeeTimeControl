@@ -1,5 +1,5 @@
 
-namespace Break.Module.Core.BreakWorker.CommonServices.OrchestratorService
+namespace Break.Module.Core.BreakWorker.CommonServices
 {
     public class BrakeTimeHandler : IBrakeTimeHandler
     {
