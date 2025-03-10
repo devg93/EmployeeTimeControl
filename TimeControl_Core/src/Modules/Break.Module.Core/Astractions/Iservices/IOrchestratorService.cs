@@ -1,7 +1,7 @@
 
 
 namespace Modules.Break.Module.Core.Astractions.Iservices;
-    public interface IAggregatorServiceBrakeTime
+    public interface IOrchestratorService
     {
          Task<bool> AddOrUpdateBrakeTime(BrakeTimeDtoReqvest entity, bool Status);
 
