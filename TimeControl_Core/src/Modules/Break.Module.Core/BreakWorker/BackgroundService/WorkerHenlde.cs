@@ -9,7 +9,6 @@ public class WorkerHenlde : IWorkerHenlde
 
     private readonly ILogger<WorkerHenlde> logger;
     private readonly IPingSender pingSender;
-
     private readonly IOrchestratorService brakeTimeService;
     public WorkerHenlde(ILogger<WorkerHenlde> logger,IPingSender pingIpChecker, IOrchestratorService brakeTimeService)
     => ( this.logger, this.pingSender, this.brakeTimeService) =(logger, pingIpChecker, brakeTimeService);
