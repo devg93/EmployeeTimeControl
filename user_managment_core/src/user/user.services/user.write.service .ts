@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IredisReadService, IredisWriteService } from 'src/rediscache/contracrs';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { IuserWriteService, IuserCommandRepository, IuserReadService } from '../contracts/user.repository.Interface';
+
 import * as bcrypt from 'bcrypt';
+import { IuserCommandRepository, IuserReadService, IuserWriteService } from '../contracts/user.repository.Interface';
 @Injectable()
 export class UserWriteService implements IuserWriteService {
 
@@ -14,26 +15,31 @@ export class UserWriteService implements IuserWriteService {
 
    async registerService(body: any): Promise<any> {
 
-      const resUserForRedis = await this.redisReadService.redisfindUser(body.email);
-
-      // console.log(resUserForRedis)
-      if (resUserForRedis) {
+      const resUserForRedis= await this.redisReadService.redisfindUser(body.email);
+   
+      console.log(resUserForRedis)
+     if(resUserForRedis){
          return "user is already exist"
-      }
+     }
+   
+  
+   //   const resUser= await this.useReadService.getProfileByEmailService(body.email);
+   //     if(!resUser){
+   //        return "user is already exist"}
+        
+      const { password } = body;
+     
+      const hashedPassword = await bcrypt.hash(password, 10);
+      body.password = hashedPassword;
+    
 
-
-      //   const resUser= await this.useReadService.getProfileByEmailService(body.email);
-      //     if(!resUser){
-      //        return "user is already exist"}
-
- 
-         const res = await this.userrepositoryinterface.register(body);
-         if (res) {
-            console.log('Emitting user.created.event');
-
-            await this.eventEmitter.emit('user.created.event', body );
-        }
-         return res; 
+      const res = await this.userrepositoryinterface.register(body);
+      if (res) {
+         console.log('Emitting user.created.event');
+       
+         await this.eventEmitter.emit('user.created.event', body );
+     }
+   //    return res; 
    }
 
    async updateUserService(id: string, updateRegistracionDto: any): Promise<any> {
