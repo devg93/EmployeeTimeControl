@@ -4,37 +4,52 @@
 
 namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.BackgroundService
 {
-    public class TimeInTimeOutWorkerHendle:ITimeInTimeOutWorkerHendle
+    public class TimeInTimeOutWorkerHendle : ITimeInTimeOutWorkerHendle
     {
 
-    private readonly ILogger<TimeInTimeOutWorkerHendle> logger;
-    private readonly ITimeInTimeOutMediator breakTimeUpdateMediator;
-    private readonly IPingSender pingSender;
-    public TimeInTimeOutWorkerHendle(ILogger<TimeInTimeOutWorkerHendle> logger,ITimeInTimeOutMediator breakTimeUpdateMediator,IPingSender pingIpChecker)
-    => (this.breakTimeUpdateMediator, this.logger, this.pingSender) = (breakTimeUpdateMediator, logger, pingIpChecker);
+        private readonly ILogger<TimeInTimeOutWorkerHendle> logger;
 
-    public async Task TimeInTimeOutWorkerAsync()
-    {
-      
+        private readonly IOrchestratorService aggregatorServiceTimeInTimeOut;
+        private readonly IPingSender pingSender;
+        public TimeInTimeOutWorkerHendle(ILogger<TimeInTimeOutWorkerHendle> logger, IOrchestratorService aggregatorServiceTimeInTimeOut, IPingSender pingIpChecker)
+        => (this.aggregatorServiceTimeInTimeOut, this.logger, this.pingSender) = (aggregatorServiceTimeInTimeOut, logger, pingIpChecker);
+
+        public async Task TimeInTimeOutWorkerAsync()
         {
-            try
+
             {
-                // get user  -->>>>   from db
+                try
+                {
+                    // get user  -->>>>   from db
 
-                var PingResponseStatus = await pingSender.PingIp("192.168.1.204");
-              
-               await breakTimeUpdateMediator.UpdateTimeInTimeOutAsync(1, PingResponseStatus);
+                    var PingResponseStatus = await pingSender.PingIp("192.168.1.204");
 
-            }
 
-            catch (Exception ex)
-            {
+                    var Entity = new ComingAndgoingResponseDto
+                    {
+                        UserId = 1,
+                        OnlineTime = PingResponseStatus ? new List<DateTime> { DateTime.Now } : new List<DateTime>(),
+                        OflineTime = PingResponseStatus ? new List<DateTime>() : new List<DateTime> { DateTime.Now }
+                    };
 
-                logger.LogError(ex, "Error in WorkerServiceHenlde");
+                    await aggregatorServiceTimeInTimeOut.UpdateTimeInTimeOut(Entity, PingResponseStatus);
+                }
 
+                catch (Exception ex)
+                {
+
+                    logger.LogError(ex, "Error in WorkerServiceHenlde");
+
+                }
             }
         }
+
     }
-        
-    }
+}
+
+
+public interface ITimeInTimeOutWorkerHendle
+{
+    public Task TimeInTimeOutWorkerAsync();
+
 }
