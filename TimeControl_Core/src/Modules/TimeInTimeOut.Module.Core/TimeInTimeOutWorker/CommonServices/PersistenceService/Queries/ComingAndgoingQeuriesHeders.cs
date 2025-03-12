@@ -1,6 +1,6 @@
 
-namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Queries
-{
+namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.CommonServices.PersistenceServiceDb.Queries;
+
     public class ComingAndgoingQeuriesHeders : IRequestHandler<ComingAndgoingQeuries, ComingAndgoingResponseDto>
     {
         private readonly IcomingAndgoingRepositoryQeury comingAndgoingRepositoryQeury;
@@ -24,4 +24,3 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Queries
                 return new ComingAndgoingResponseDto{Id = 0, OnlineTime = null, OflineTime = null, UserId = 0};
         }
     }
-}
