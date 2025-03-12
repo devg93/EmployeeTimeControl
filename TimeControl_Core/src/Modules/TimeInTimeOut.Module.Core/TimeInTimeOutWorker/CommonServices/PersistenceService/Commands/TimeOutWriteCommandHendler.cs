@@ -1,6 +1,6 @@
 
-namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Commands
-{
+
+namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.CommonServices.PersistenceService.Commands;
     public class TimeOutWriteCommandHendler : IRequestHandler<TimeOutWriCommands, bool>
     {
          private readonly IcomingAndgoingRepositoryCommand comingAndgoingRepositoryCommand;
@@ -16,4 +16,3 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.DAL.Mediatr.Commands
             return await comingAndgoingRepositoryCommand.CreateTime(timeIn);
         }
     }
-}

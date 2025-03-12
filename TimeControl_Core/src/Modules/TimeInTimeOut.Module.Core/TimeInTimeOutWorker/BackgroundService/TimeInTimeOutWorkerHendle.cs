@@ -9,9 +9,9 @@ namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.BackgroundService
 
         private readonly ILogger<TimeInTimeOutWorkerHendle> logger;
 
-        private readonly IAggregatorServiceTimeInTimeOut aggregatorServiceTimeInTimeOut;
+        private readonly IOrchestratorService aggregatorServiceTimeInTimeOut;
         private readonly IPingSender pingSender;
-        public TimeInTimeOutWorkerHendle(ILogger<TimeInTimeOutWorkerHendle> logger, IAggregatorServiceTimeInTimeOut aggregatorServiceTimeInTimeOut, IPingSender pingIpChecker)
+        public TimeInTimeOutWorkerHendle(ILogger<TimeInTimeOutWorkerHendle> logger, IOrchestratorService aggregatorServiceTimeInTimeOut, IPingSender pingIpChecker)
         => (this.aggregatorServiceTimeInTimeOut, this.logger, this.pingSender) = (aggregatorServiceTimeInTimeOut, logger, pingIpChecker);
 
         public async Task TimeInTimeOutWorkerAsync()

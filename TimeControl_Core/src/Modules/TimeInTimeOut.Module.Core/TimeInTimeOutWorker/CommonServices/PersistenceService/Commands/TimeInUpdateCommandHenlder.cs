@@ -1,7 +1,7 @@
 
+namespace TimeInTimeOut.Module.Core.TimeInTimeOutWorker.CommonServices.PersistenceService.Commands;
 
-namespace TimeInTimeOut.Module.Core.DAL.Mediatr.Commands
-{
+
     public class TimeInUpdateCommandHenlder : IRequestHandler<TimeUpdateCommand, bool>
     {
           private readonly IcomingAndgoingRepositoryCommand comingAndgoingRepositoryCommand;
@@ -13,4 +13,3 @@ namespace TimeInTimeOut.Module.Core.DAL.Mediatr.Commands
            return true;
         }
     }
-}
