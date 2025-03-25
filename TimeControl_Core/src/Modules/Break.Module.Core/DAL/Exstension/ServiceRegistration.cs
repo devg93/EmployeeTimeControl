@@ -17,6 +17,12 @@ public static class ServiceRegistration
                 new MySqlServerVersion(new Version(8, 0, 30))
             ));
 
+        // serviceDescriptors.AddDbContext<DbInstance>(options =>
+        //  options.UseNpgsql(
+        //      "Host=localhost;Port=5432;Database=userdatabase;Username=postgres;Password=password;"
+        //  ));
+
+
 
         return serviceDescriptors;
     }
@@ -41,11 +47,11 @@ public static class ServiceRegistration
         serviceDescriptors.AddHostedService<BreakWorkerCommand>();
         serviceDescriptors.AddScoped<IWorkerHenlde, WorkerHenlde>();
         serviceDescriptors.AddScoped<IServicesFactory, ServicesFactory>();
-        serviceDescriptors.AddScoped<IServicesFacade,IServicesFacade>();
+        serviceDescriptors.AddScoped<IServicesFacade, IServicesFacade>();
         serviceDescriptors.AddScoped<IOrchestratorService, OrchestratorService>();
         serviceDescriptors.AddScoped<IPersistenceService, PersistenceService>();
         serviceDescriptors.AddScoped<ITimeValidator, TimeValidator>();
-    
+
         // serviceDescriptors.addSharedServices();
 
 

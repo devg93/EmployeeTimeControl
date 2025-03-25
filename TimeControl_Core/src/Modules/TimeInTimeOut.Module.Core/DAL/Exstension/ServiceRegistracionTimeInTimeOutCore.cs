@@ -1,7 +1,5 @@
 
 
-using TimeInTimeOut.Module.Core.TimeInTimeOutWorker.OrchestratorService;
-
 namespace Modules.TimeInTimeOut.Module.Core.DAL.Exstension;
 public static class ServiceRegistracionTimeInTimeOutCore
 {
@@ -35,8 +33,7 @@ public static class ServiceRegistracionTimeInTimeOutCore
 
         serviceDescriptors.AddHostedService<TimeInTimeOutWorkerCommand>();
         serviceDescriptors.AddScoped<ITimeInTimeOutWorkerHendle, TimeInTimeOutWorkerHendle>();
-        serviceDescriptors.AddScoped<ITimeInTimeOutMediator, TimeInTimeOutMediator>();
-        serviceDescriptors.AddScoped<IAggregatorServiceTimeInTimeOut, AggregatorServiceTimeInTimeOut>();
+        serviceDescriptors.AddScoped<IOrchestratorService, OrchestratorServiceServiceTimeInTimeOut>();
         serviceDescriptors.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 
